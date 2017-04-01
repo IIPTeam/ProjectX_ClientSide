@@ -8,8 +8,22 @@ import {
     TouchableHighlight,
     Image
 } from 'react-native';
+import ForgotPsw from "./forgotPsw";
 
 export default class Logon extends Component {
+    constructor(props){
+        super(props);
+        this.state = {};
+    }
+     _pressButtoon(){
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name:'ForgotPswPageComponent',
+                component:ForgotPsw,
+            })
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -41,7 +55,10 @@ export default class Logon extends Component {
                             />
                         </View>
                         <View>
-                            <Text style={styles.forgotPswLink}>Forgot Password</Text>
+                            <Text 
+                                style={styles.forgotPswLink}
+                                onPress={this._pressButtoon.bind(this)}
+                            >Forgot Password</Text>
                         </View>
 
                     </View>
@@ -52,7 +69,7 @@ export default class Logon extends Component {
                         }}
                         activeOpacity={0.7}
                         style={styles.logonButton}
-                        underlayColor='darkgreen'
+                        underlayColor='#008080'
                     >
                         <Text style={styles.logonButtonText}>Login</Text>
                     </TouchableHighlight>
@@ -99,7 +116,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        //borderRadius: 10
     },
     logonButtonText: {
         fontSize: 20,
@@ -111,7 +127,6 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         justifyContent: 'center',
-        //borderRadius: 10,
         marginTop: 10,
         marginBottom: 10
     },
@@ -127,8 +142,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: '#ffffff',
-        //padding: 20,
-        borderWidth: 1,
     },
     logonText: {
         padding: 5,
