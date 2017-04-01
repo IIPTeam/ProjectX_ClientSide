@@ -5,33 +5,46 @@ import {
     Text,
     View,
     TextInput,
-    TouchableHighlight
+    TouchableHighlight,
+    Image
 } from 'react-native';
 
 export default class Logon extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.inputBox}>
-                    <Text style={styles.logonText}>Staff ID:</Text>
-                    <TextInput
-                        style={styles.userNameInput}
-                        placeholder="Please enter username"
-                        underlineColorAndroid="transparent"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                </View>
-                <View style={styles.inputBox}>
-                    <Text style={styles.logonText}>Password:</Text>
-                    <TextInput
-                        style={styles.userNameInput}
-                        placeholder="Please enter password"
-                        underlineColorAndroid="transparent"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        secureTextEntry={true}
-                    />
+                <View style={styles.inputContainer}>
+                    <View style={styles.companyLogo}>
+                        <Image
+                            style={styles.logo}
+                            source={require('../image/chinaSoftLogo.jpg')}
+                        />
+                    </View>
+                    <View style={styles.namePswCont}>
+                        <View style={styles.inputBox}>
+                            <Text style={styles.logonText}>Staff ID:</Text>
+                            <TextInput
+                                style={styles.userNameInput}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                        </View>
+                        <View style={styles.inputBox}>
+                            <Text style={styles.logonText}>Password:</Text>
+                            <TextInput
+                                style={styles.userNameInput}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                secureTextEntry={true}
+                            />
+                        </View>
+                        <View>
+                            <Text style={styles.forgotPswLink}>Forgot Password</Text>
+                        </View>
+
+                    </View>
                 </View>
                 <View style={styles.logonButtonBox}>
                     <TouchableHighlight
@@ -50,31 +63,57 @@ export default class Logon extends Component {
 }
 
 const styles = StyleSheet.create({
+    forgotPswLink:{
+        textDecorationLine: 'underline',
+        color:'#00987b',
+        fontSize:20,
+        marginLeft:10,
+        fontSize:12
+    },
+    companyLogo:{
+        flex:1,
+        justifyContent: 'center',//（横轴）方向上位于容器的中心。
+        flexDirection: 'column',//纵向排列
+        alignItems: 'center'//（纵轴）方向上位于容器的中心
+    },
+    namePswCont:{
+        flex:1,
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        alignItems: 'flex-start'
+    },
+    inputContainer:{
+        flex: 1,
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
     logonButtonBox: {
         flexDirection: 'row',
+        alignItems: 'flex-end'
     },
     logonButton: {
-        backgroundColor: 'green',
+        backgroundColor: '#00897b',
         flex: 1,
         height: 50,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10
+        //borderRadius: 10
     },
     logonButtonText: {
         fontSize: 20,
         color: 'white'
     },
     inputBox: {
-        borderWidth: 2,
-        borderColor: 'green',
+        borderWidth: 1,
+        borderColor: '#00897b',
         height: 50,
         flexDirection: 'row',
         justifyContent: 'center',
-        borderRadius: 10,
+        //borderRadius: 10,
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 10
     },
     userNameInput: {
         flex: 1,
@@ -87,16 +126,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        padding: 20,
+        backgroundColor: '#ffffff',
+        //padding: 20,
         borderWidth: 1,
     },
     logonText: {
         padding: 5,
-        fontSize: 20,
+        fontSize: 18,
         marginRight: 5,
         marginTop: 5,
-        fontWeight: 'bold',
-        color: 'green'
+        color: '#00897b',
+        marginLeft:5
     }
 });
