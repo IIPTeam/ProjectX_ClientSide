@@ -9,6 +9,7 @@ import {
     Image
 } from 'react-native';
 import ForgotPsw from "./forgotPsw";
+import {CommonStyle} from '../theme/common-style';
 
 export default class Logon extends Component {
     constructor(props){
@@ -26,7 +27,7 @@ export default class Logon extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container,CommonStyle.themeColor]}>
                 <View style={styles.inputContainer}>
                     <View style={styles.companyLogo}>
                         <Image
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        //backgroundColor: '#ffffff',
     },
     logonText: {
         padding: 5,
