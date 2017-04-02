@@ -6,19 +6,32 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Navigator
 } from 'react-native';
 import Logon from './logon/logon';
 
 export default class setup extends Component {
   render() {
+    var defaultName = 'logonPage';
+    var defaultComponment = Logon;
     return (
-      <View style={styles.container}>
-          <Logon/>
-      </View>
+      <Navigator
+        //指定了默认的页面，也就是启动app之后会看到的第一屏，需要两个参数，name跟component
+        initialRoute={{ name:defaultName,component:defaultComponment}}
+        configureScene={(route)=>{
+          return Navigator.SceneConfigs.HorizontalSwipeJump;
+        }}
+        renderScene={(route, navigator) => {
+            let Component = route.component;
+            if(route.component){
+                return <Component  navigator={navigator} />
+            }
+        }}
+      />
+      
     );
   }
 }
