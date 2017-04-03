@@ -6,36 +6,58 @@ import {
     TextInput,
     TouchableHighlight,
     TouchableWithoutFeedback,
-    Image
+    Image,
+    Alert,
+    Console
 } from 'react-native';
-import ModifyPsw from "./modifyPsw";
+import Logon from "./logon";
 
+export default class ModifyPsw extends Component{
 
-export default class ForgotPsw extends Component{
     constructor(props){
         super(props);
         this.state = {};
     }
-    _pressButtoon(){
-    	const { navigator } = this.props;
-        if(navigator){
-            navigator.pop();
-        }
-    }
-    _pressSendVerifyButtoon(){
+
+    // 返回登录（取消修改）
+    _pressBackButtoon(){
     	const { navigator } = this.props;
         if(navigator){
             navigator.push({
-                name:'ModifyPswPageComponent',
-                component:ModifyPsw,
+                name:'LogonPageComponent',
+                component:Logon,
             })
         }
     }
+
+    //提交修改密码
+    _pressConfirmButtoon(){
+    	const { navigator } = this.props;
+        if(navigator){
+        	Alert.alert(
+            'Submit successfully',
+            'alertMessage',
+            [
+              {text: 'OK', onPress: () => console.log('update successfully!')},
+              {text: 'cancel', onPress: () => navigator.push({
+                name:'LogonPageComponent',
+                component:Logon,
+            	})}
+            ]
+          );
+        	navigator.push({
+                name:'LogonPageComponent',
+                component:Logon,
+            })
+        }
+    }
+
+
     render(){
         return (
-        	<View style={styles.forgotPswCont}>
+        	<View style={styles.modifyPswCont}>
 				<View style={styles.header}>
-					<TouchableWithoutFeedback onPress={this._pressButtoon.bind(this)}>
+					<TouchableWithoutFeedback onPress={this._pressBackButtoon.bind(this)}>
 				      <Image
 							style={styles.backIcon}
 							source={require('../image/backIcon.png')}
@@ -43,7 +65,7 @@ export default class ForgotPsw extends Component{
 				    </TouchableWithoutFeedback>
 					
 					<View style={styles.headerText}>
-						<Text style={styles.fogtPswTxt}>Forgot Password</Text>
+						<Text style={styles.fogtPswTxt}>Modify Password</Text>
 					</View>
 					<TouchableWithoutFeedback onPress={() => {
 						
@@ -57,7 +79,7 @@ export default class ForgotPsw extends Component{
 				<View style={styles.container}>
 					<View style={styles.topCont}>
 						<View style={styles.inputBox}>
-							<Text style={styles.forgotPswText}>Staff ID:</Text>
+							<Text style={styles.modifyPswText}>"Fill in verification code:"</Text>
 							<TextInput
 								style={styles.staffIdInput}
 								underlineColorAndroid="transparent"
@@ -66,7 +88,7 @@ export default class ForgotPsw extends Component{
 							/>
 						</View>
 						<View style={styles.inputBox}>
-							<Text style={styles.forgotPswText}>Phone Number:</Text>
+							<Text style={styles.modifyPswText}>"fill the new password:"</Text>
 							<TextInput
 								style={styles.staffIdInput}
 								underlineColorAndroid="transparent"
@@ -80,12 +102,12 @@ export default class ForgotPsw extends Component{
 				</View>
 				<View style={styles.footer}>
 					<TouchableHighlight
-						onPress={this._pressSendVerifyButtoon.bind(this)}
+						onPress={this._pressConfirmButtoon.bind(this)}
 						activeOpacity={0.7}
 						style={styles.verifyButton}
 						underlayColor='#008080'
 					>
-						<Text style={styles.verifyBtnText}>Send Verification Number</Text>
+						<Text style={styles.verifyBtnText}>Submit update password</Text>
 					</TouchableHighlight>
 				</View>
 			</View>
@@ -93,7 +115,7 @@ export default class ForgotPsw extends Component{
     }
 }
 const styles = StyleSheet.create({
-	forgotPswCont:{
+	modifyPswCont:{
 		flex:1,
 	},
 	header:{
@@ -137,7 +159,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    forgotPswText: {
+    modifyPswText: {
         padding: 5,
         fontSize: 18,
         marginRight: 5,
