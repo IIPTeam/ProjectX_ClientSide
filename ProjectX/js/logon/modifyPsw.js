@@ -78,8 +78,12 @@ export default class ModifyPsw extends Component{
 				</View>
 				<View style={styles.container}>
 					<View style={styles.topCont}>
+						<View style={styles.msgInputBox}>
+							<Text style={styles.senMessage}>Successfully sent SMS to 136****1987. Please check and fill in below form.</Text>
+						</View>
+					
 						<View style={styles.inputBox}>
-							<Text style={styles.modifyPswText}>"Fill in verification code:"</Text>
+							<Text style={styles.modifyPswText}>Verification Number:</Text>
 							<TextInput
 								style={styles.staffIdInput}
 								underlineColorAndroid="transparent"
@@ -88,7 +92,7 @@ export default class ModifyPsw extends Component{
 							/>
 						</View>
 						<View style={styles.inputBox}>
-							<Text style={styles.modifyPswText}>"fill the new password:"</Text>
+							<Text style={styles.modifyPswText}>New Password:</Text>
 							<TextInput
 								style={styles.staffIdInput}
 								underlineColorAndroid="transparent"
@@ -97,9 +101,13 @@ export default class ModifyPsw extends Component{
 								keyboardType='numeric'
 							/>
 						</View>
+						
 					</View>
-					<View style={styles.bottomCont}></View>
+					<View style={styles.bottomCont}>
+						<Text style={styles.resendText}>56...(Resend)</Text>
+					</View>
 				</View>
+				
 				<View style={styles.footer}>
 					<TouchableHighlight
 						onPress={this._pressConfirmButtoon.bind(this)}
@@ -107,7 +115,7 @@ export default class ModifyPsw extends Component{
 						style={styles.verifyButton}
 						underlayColor='#008080'
 					>
-						<Text style={styles.verifyBtnText}>Submit update password</Text>
+					<Text style={styles.verifyBtnText}>Submit update password</Text>
 					</TouchableHighlight>
 				</View>
 			</View>
@@ -143,23 +151,43 @@ const styles = StyleSheet.create({
 		flex:1,        
 	},
 	topCont:{
-		flex:1,
-		justifyContent: 'flex-end',
+		flex:4,
+		justifyContent: 'flex-start',
         flexDirection: 'column',
 	},
 	bottomCont:{
 		flex:1,
 	},
+    msgInputBox:{
+    	borderWidth: 1,
+        borderColor: '#00897b',
+        backgroundColor:"white",
+        height: 100,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginTop: 10,
+
+    },
 	inputBox: {
         borderWidth: 1,
         borderColor: '#00897b',
         height: 50,
+        backgroundColor:"white",
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 10,
-        marginBottom: 10
+        marginTop: 20
+    },
+    senMessage:{
+    	padding: 25,
+        fontSize: 18,
+        marginRight: 5,
+        marginTop: 5,
+        color: '#00897b',
+        marginLeft:5,
+        textAlign:"center",
     },
     modifyPswText: {
+    	alignItems:"center",
         padding: 5,
         fontSize: 18,
         marginRight: 5,
@@ -176,6 +204,18 @@ const styles = StyleSheet.create({
 	footer: {
         flexDirection: 'row',
         alignItems: 'flex-end'
+    },
+    resendText:{
+    	marginTop: 30,
+    	backgroundColor: '#00897b',
+        height: 43,
+        justifyContent: 'center',
+        fontSize: 20,
+        color: 'white',
+        alignItems: "center",
+        textAlign:"center",
+        lineHeight:33
+
     },
     verifyButton: {
         backgroundColor: '#00897b',
