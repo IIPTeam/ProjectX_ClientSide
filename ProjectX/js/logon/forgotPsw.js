@@ -5,10 +5,11 @@ import {
     View,
     TextInput,
     TouchableHighlight,
-    TouchableWithoutFeedback,
-    Image
+    TouchableWithoutFeedback
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
+import {BackBtnSvg} from '../image/backSvg';
+import {MenuBtnSvg} from '../image/meunSvg'
 
 
 export default class ForgotPsw extends Component{
@@ -35,23 +36,17 @@ export default class ForgotPsw extends Component{
         return (
         	<View style={styles.forgotPswCont}>
 				<View style={styles.header}>
-					<TouchableWithoutFeedback onPress={this._pressButtoon.bind(this)}>
-				      <Image
-							style={styles.backIcon}
-							source={require('../image/backIcon.png')}
-						/>
+					<TouchableWithoutFeedback style={styles.backBtn} onPress={this._pressButtoon.bind(this)}>
+                        {BackBtnSvg}
 				    </TouchableWithoutFeedback>
 					
 					<View style={styles.headerText}>
 						<Text style={styles.fogtPswTxt}>Forgot Password</Text>
 					</View>
-					<TouchableWithoutFeedback onPress={() => {
+					<TouchableWithoutFeedback style={styles.menuBtn}  onPress={() => {
 						
 					}}>
-						<Image
-							style={styles.menuIcon}
-							source={require('../image/menuIcon.jpg')}
-						/>
+                        {MenuBtnSvg}
 					</TouchableWithoutFeedback>
 				</View>
 				<View style={styles.container}>
@@ -102,9 +97,6 @@ const styles = StyleSheet.create({
 		height:52,
 		backgroundColor: '#00897b',
 	},
-	backIcon:{
-		width:45,
-	},
 	headerText:{
 		flex:1,
         justifyContent: 'center',
@@ -113,9 +105,6 @@ const styles = StyleSheet.create({
 	fogtPswTxt:{
 		color:'#ffffff',
 		fontSize:20
-	},
-	menuIcon:{
-		width:45,
 	},
 	container:{
 		flex:1,        
