@@ -9,7 +9,9 @@ import {
     Image
 } from 'react-native';
 import ForgotPsw from "./forgotPsw";
+import HomePage from '../homePage/homePage';
 import {CommonStyle} from '../theme/common-style';
+
 
 export default class Logon extends Component {
     constructor(props){
@@ -22,6 +24,15 @@ export default class Logon extends Component {
             navigator.push({
                 name:'ForgotPswPageComponent',
                 component:ForgotPsw,
+            })
+        }
+    }
+    _login(){
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name:'HomePageComponent',
+                component:HomePage,
             })
         }
     }
@@ -56,7 +67,7 @@ export default class Logon extends Component {
                             />
                         </View>
                         <View>
-                            <Text 
+                            <Text
                                 style={styles.forgotPswLink}
                                 onPress={this._pressButtoon.bind(this)}
                             >Forgot Password</Text>
@@ -67,6 +78,7 @@ export default class Logon extends Component {
                 <View style={styles.logonButtonBox}>
                     <TouchableHighlight
                         onPress={() => {
+                            this._login();
                         }}
                         activeOpacity={0.7}
                         style={styles.logonButton}
@@ -84,7 +96,6 @@ const styles = StyleSheet.create({
     forgotPswLink:{
         textDecorationLine: 'underline',
         color:'#00987b',
-        fontSize:20,
         marginLeft:10,
         fontSize:12
     },
