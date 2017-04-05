@@ -10,7 +10,10 @@ import {
     Alert,
     Console
 } from 'react-native';
-import Logon from "./logon";
+import ForgotPsw from "./forgotPsw";
+import HomePage from "../homePage/homePage";
+import {BackBtnSvg} from '../image/backSvg';
+import {MenuBtnSvg} from '../image/meunSvg';
 
 export default class ModifyPsw extends Component{
 
@@ -19,13 +22,13 @@ export default class ModifyPsw extends Component{
         this.state = {};
     }
 
-    // 返回登录（取消修改）
+    // 返回
     _pressBackButtoon(){
     	const { navigator } = this.props;
         if(navigator){
             navigator.push({
-                name:'LogonPageComponent',
-                component:Logon,
+                name:'ForgotPswPageComponent',
+                component:ForgotPsw,
             })
         }
     }
@@ -38,16 +41,19 @@ export default class ModifyPsw extends Component{
             'Submit successfully',
             'alertMessage',
             [
-              {text: 'OK', onPress: () => console.log('update successfully!')},
-              {text: 'cancel', onPress: () => navigator.push({
-                name:'LogonPageComponent',
-                component:Logon,
-            	})}
+              {text: 'OK', onPress: () => this._gotoHomePage(this)}
             ]
           );
-        	navigator.push({
-                name:'LogonPageComponent',
-                component:Logon,
+        }
+        
+    }
+
+    _gotoHomePage(){
+        const { navigator } = this.props;
+        if(navigator){
+            navigator.push({
+                    name:'HomePageComponent',
+                    component:HomePage,
             })
         }
     }
@@ -58,10 +64,7 @@ export default class ModifyPsw extends Component{
         	<View style={styles.modifyPswCont}>
 				<View style={styles.header}>
 					<TouchableWithoutFeedback onPress={this._pressBackButtoon.bind(this)}>
-				      <Image
-							style={styles.backIcon}
-							source={require('../image/backIcon.png')}
-						/>
+				      {BackBtnSvg}
 				    </TouchableWithoutFeedback>
 					
 					<View style={styles.headerText}>
@@ -69,12 +72,7 @@ export default class ModifyPsw extends Component{
 					</View>
 					<TouchableWithoutFeedback onPress={() => {
 						
-					}}>
-						<Image
-							style={styles.menuIcon}
-							source={require('../image/menuIcon.jpg')}
-						/>
-					</TouchableWithoutFeedback>
+					}}>{MenuBtnSvg}</TouchableWithoutFeedback>
 				</View>
 				<View style={styles.container}>
 					<View style={styles.topCont}>
