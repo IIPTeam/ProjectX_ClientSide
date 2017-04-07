@@ -11,12 +11,14 @@ import {
 import ForgotPsw from "./forgotPsw";
 import HomePage from '../homePage/homePage';
 import {CommonStyle} from '../theme/common-style';
-
+import Toast from 'react-native-easy-toast';
 
 export default class Logon extends Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {password:'',
+                     staffId: ''
+                    };
     }
      _pressButtoon(){
         const {navigator} = this.props;
@@ -27,14 +29,34 @@ export default class Logon extends Component {
             })
         }
     }
+    _validateData(value, type){
+        if(value&&value!=undefined){
+            var valueLength=value.length;
+            if(valueLength&&type=="si"&&valueLength!=10){
+               this.refs.toast.show(valueLength + ' bit staffId',1000); 
+            };
+            if(valueLength&&type=="pw"&&valueLength<=5||valueLength>=13) {
+               this.refs.toast.show(valueLength + ' bit password',1000);
+            };
+        }
+        
+        
+    }
     _login(){
         const {navigator} = this.props;
-        if (navigator) {
-            navigator.push({
-                name:'HomePageComponent',
-                component:HomePage,
-            })
+        if (!this.state.staffId||!this.state.password) {
+            this.refs.toast.show('fill in the staff id or password',1000);      
+        }else{
+            if (navigator) {
+                navigator.push({
+                    name:'HomePageComponent',
+                    component:HomePage,
+                })
+            }
         }
+
+
+        
     }
     render() {
         return (
@@ -54,6 +76,9 @@ export default class Logon extends Component {
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                                 autoCorrect={false}
+                                onChangeText={(staffId) => this.setState({staffId})}
+                                value={this.state.staffId}
+                                onBlur={(staffId) => this._validateData(this.state.staffId, "si")}
                             />
                         </View>
                         <View style={styles.inputBox}>
@@ -64,6 +89,9 @@ export default class Logon extends Component {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 secureTextEntry={true}
+                                onChangeText={(password) => this.setState({password})}
+                                value={this.state.password}
+                                onBlur={(password) => this._validateData(this.state.password,"pw")}
                             />
                         </View>
                         <View>
@@ -71,9 +99,11 @@ export default class Logon extends Component {
                                 style={styles.forgotPswLink}
                                 onPress={this._pressButtoon.bind(this)}
                             >Forgot Password</Text>
-                        </View>
 
+                        </View>
+                        <Toast ref="toast" style={styles.tostInfo} position='top'/>
                     </View>
+
                 </View>
                 <View style={styles.logonButtonBox}>
                     <TouchableHighlight
@@ -86,6 +116,7 @@ export default class Logon extends Component {
                     >
                         <Text style={styles.logonButtonText}>Login</Text>
                     </TouchableHighlight>
+                    
                 </View>
             </View>
         );
@@ -162,5 +193,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         color: '#00897b',
         marginLeft:5
+    },
+    tostInfo: {
+        backgroundColor:'#000'
     }
 });
