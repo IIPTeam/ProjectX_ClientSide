@@ -2,6 +2,8 @@
 1. 安装安卓模拟器
 2. 安装 node.js
 3. 安装 React Native Command Line Tools
+4. 安装 react-native-ease-toast
+	npm install react-native-ease-toast --save
 	npm link
 
 运行PorjectX项目:
