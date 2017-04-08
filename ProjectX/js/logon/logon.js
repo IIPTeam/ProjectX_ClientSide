@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import ForgotPsw from "./forgotPsw";
 import HomePage from '../homePage/homePage';
+import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 
 
@@ -47,25 +48,16 @@ export default class Logon extends Component {
                         />
                     </View>
                     <View style={styles.namePswCont}>
-                        <View style={styles.inputBox}>
-                            <Text style={styles.logonText}>Staff ID:</Text>
-                            <TextInput
-                                style={styles.userNameInput}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                            />
-                        </View>
-                        <View style={styles.inputBox}>
-                            <Text style={styles.logonText}>Password:</Text>
-                            <TextInput
-                                style={styles.userNameInput}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                secureTextEntry={true}
-                            />
-                        </View>
+                        <TextInputConpt 
+                            labelCont='staff ID:'
+                            placeholder=''
+                            ispassword={false}
+                        />
+                        <TextInputConpt 
+                            labelCont='Password:'
+                            placeholder=''
+                            ispassword={true}
+                        />
                         <View>
                             <Text
                                 style={styles.forgotPswLink}

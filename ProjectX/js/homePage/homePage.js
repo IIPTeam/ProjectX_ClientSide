@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
+import FocusImage from '../common/FocusImage';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ export default class HomePage extends Component {
         var homeView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
                 <Text style={{fontSize: 30}}>首页</Text>
+                <FocusImage/>
             </View>
         );
         var settingView=(

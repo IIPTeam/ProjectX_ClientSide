@@ -60,6 +60,7 @@ export default class ForgotPsw extends Component{
 							labelCont='Phone Number:'
 							placeholder=''
 							ispassword={false}
+							keyboardType='numeric'
 						/>
 					</View>
 					<View style={styles.bottomCont}></View>
