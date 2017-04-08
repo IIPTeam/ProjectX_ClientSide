@@ -22,7 +22,7 @@ export default class HomePage extends Component {
         var homeView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
                 <Text style={{fontSize: 30}}>首页</Text>
-                <FocusImage/>
+                <FocusImage/>        
             </View>
         );
         var settingView=(

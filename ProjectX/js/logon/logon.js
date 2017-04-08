@@ -12,6 +12,7 @@ import ForgotPsw from "./forgotPsw";
 import HomePage from '../homePage/homePage';
 import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
+import CallService from '../until/CallService';
 
 
 export default class Logon extends Component {
@@ -30,12 +31,32 @@ export default class Logon extends Component {
     }
     _login(){
         const {navigator} = this.props;
-        if (navigator) {
-            navigator.push({
-                name:'HomePageComponent',
-                component:HomePage,
+        let url = 'https://facebook.github.io/react-native/movies.json';
+        /*let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstParam: 'yourValue',
+                secondParam: 'yourOtherValue',
             })
-        }
+        }*/
+
+        CallService.fetchNetRepository(url).then((res)=> {
+            if (navigator && res.movies) {
+                navigator.push({
+                    name:'HomePageComponent',
+                    component:HomePage,
+                })
+            }
+        }).then((error)=> {
+            console.log(error);
+        }).catch((error)=> {
+            console.log(error);
+        })
+
     }
     render() {
         return (

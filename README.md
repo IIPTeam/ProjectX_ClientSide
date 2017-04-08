@@ -9,3 +9,7 @@
 3. 在CMD下进入ProjectX文件夹，执行npm install安装依赖包
 4. 启动安卓模拟器
 5. 在CMD下进入ProjectX文件夹，执行react-native run-android即可
+
+
+尝试解决echarts找不到tpl.html文件的问题
+http://www.tuicool.com/articles/fM3yyq
