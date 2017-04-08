@@ -9,6 +9,7 @@ import {
 
 import TabNavigator from 'react-native-tab-navigator';
 import FocusImage from '../common/FocusImage';
+import Echarts from '../Test/echartsNew';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ export default class HomePage extends Component {
         );
         var settingView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <Text style={{fontSize: 30}}>设置</Text>
+                <Echarts></Echarts>
             </View>
         );
         return (
