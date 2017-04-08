@@ -17,7 +17,7 @@ import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 export default class Logon extends Component {
 
@@ -137,15 +137,15 @@ export default class Logon extends Component {
 
     render() {
         return (
-            <ScrollView
-                ref={(scrollView) => {
-                    _scrollView = scrollView;
-                }}
-                automaticallyAdjustContentInsets={false}
-                horizontal={true}
-                style={[styles.scrollView, styles.horizontalScrollView]}
-            >
-                <View style={[styles.container, CommonStyle.themeColor]}>
+            <View style={[styles.container, CommonStyle.themeColor]}>
+                <ScrollView
+                    ref={(scrollView) => {
+                        _scrollView = scrollView;
+                    }}
+                    automaticallyAdjustContentInsets={false}
+                    horizontal={true}
+                    style={[styles.scrollView, styles.horizontalScrollView]}
+                >
                     <View style={styles.inputContainer}>
                         <View style={styles.companyLogo}>
                             <Image
@@ -188,20 +188,21 @@ export default class Logon extends Component {
                             <Toast ref="toast" style={styles.tostInfo} position='top'/>
                         </View>
                     </View>
-                    <View style={styles.logonButtonBox}>
-                        <TouchableHighlight
-                            onPress={() => {
-                                this._login();
-                            }}
-                            activeOpacity={0.7}
-                            style={styles.logonButton}
-                            underlayColor='#008080'
-                        >
-                            <Text style={styles.logonButtonText}>Login</Text>
-                        </TouchableHighlight>
-                    </View>
+
+                </ScrollView>
+                <View style={styles.logonButtonBox}>
+                    <TouchableHighlight
+                        onPress={() => {
+                            this._login();
+                        }}
+                        activeOpacity={0.7}
+                        style={styles.logonButton}
+                        underlayColor='#008080'
+                    >
+                        <Text style={styles.logonButtonText}>Login</Text>
+                    </TouchableHighlight>
                 </View>
-            </ScrollView>
+            </View>
         );
     }
 }
@@ -235,7 +236,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        width
     },
     logonButtonBox: {
         flexDirection: 'row',
@@ -274,7 +276,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        width
+        flex: 1,
         //backgroundColor: '#ffffff',
     },
     logonText: {
