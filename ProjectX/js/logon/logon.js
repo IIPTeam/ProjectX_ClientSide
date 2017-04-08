@@ -148,7 +148,6 @@ export default class Logon extends Component {
                         />
                     </View>
                     <View style={styles.namePswCont}>
-<<<<<<< HEAD
                         <TextInputConpt 
                             labelCont='staff ID:'
                             placeholder=''
@@ -159,7 +158,6 @@ export default class Logon extends Component {
                             placeholder=''
                             ispassword={true}
                         />
-=======
                         <View style={styles.inputBox}>
                             <Text style={styles.logonText}>Staff ID:</Text>
                             <TextInput
