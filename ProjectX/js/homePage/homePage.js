@@ -15,15 +15,22 @@ export default class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state={
-            selectedTab:'home'//默认选中home
+            selectedTab:'home',//默认选中home
+            userDetails:{}
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            userDetails:this.props.userDetails,
+        });
     }
 
     render(){
         var homeView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <Text style={{fontSize: 30}}>首页</Text>
-                <FocusImage/>        
+                <Text style={{fontSize: 30}}>Hello {this.state.userDetails.chName}</Text>
+                <FocusImage/>
             </View>
         );
         var settingView=(
