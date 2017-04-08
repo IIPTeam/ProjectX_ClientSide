@@ -82,7 +82,7 @@ export default class Logon extends Component {
             this.refs.toast.show('fill in the staff id or password',500);      
         }else{
             if(this._validateData(this.state.staffId,'si')&&this._validateData(this.state.password,'pw')){
-                let url = 'http://192.168.0.101:8090/test/test';
+                let url = 'http://192.168.0.101:8090/login/login';
                 let options = {
                     method: 'POST',
                     headers: {
@@ -90,8 +90,10 @@ export default class Logon extends Component {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        firstParam: 'yourValue',
-                        secondParam: 'yourOtherValue',
+                        "user":{
+                            "userName": this.state.staffId,
+                            "password": this.state.password
+                        }
                     })
                 }
 
@@ -100,6 +102,7 @@ export default class Logon extends Component {
                         navigator.push({
                             name: 'HomePageComponent',
                             component: HomePage,
+                            params: res
                         })
                     }
                 }).then((error) => {

@@ -15,10 +15,18 @@ import {
 import Swiper from 'react-native-swiper';
 
 export default class FocusImage extends Component{
-   
-    render(){  
+
+    render(){
       return(
-        <Swiper style={styles.wrapper} showsButtons={false}>
+        <Swiper style={styles.wrapper} height={240}
+                autoplay={true}
+                autoplayTimeout={3}
+                onMomentumScrollEnd={(e, state, context) => console.log('index:', state.index)}
+                dot={<View style={{backgroundColor: 'rgba(0,0,0,.2)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+                activeDot={<View style={{backgroundColor: '#000', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+                paginationStyle={{
+                    bottom: 23, left: 0, right: 10
+                }} loop>
             <View style={styles.slide1}>
               <Text style={styles.text}>Hello Swiper</Text>
             </View>
