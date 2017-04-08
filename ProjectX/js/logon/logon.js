@@ -30,21 +30,23 @@ export default class Logon extends Component {
     }
     _login(){
         const {navigator} = this.props;
-        let url = 'https://facebook.github.io/react-native/movies.json';
-        /*let options = {
+        /*
+        call service demo
+        let url = 'http://192.168.0.101:8090/test/test';
+        let options = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                firstParam: 'yourValue',
-                secondParam: 'yourOtherValue',
-            })
-        }*/
+         body: JSON.stringify({
+             firstParam: 'yourValue',
+             secondParam: 'yourOtherValue',
+             })
+        }
 
-        CallService.fetchNetRepository(url).then((res)=> {
-            if (navigator && res.movies) {
+        CallService.fetchNetRepository(url,options).then((res)=> {
+            if (navigator && res) {
                 navigator.push({
                     name:'HomePageComponent',
                     component:HomePage,
@@ -54,8 +56,13 @@ export default class Logon extends Component {
             console.log(error);
         }).catch((error)=> {
             console.log(error);
-        })
-
+        })*/
+        if (navigator) {
+            navigator.push({
+                name:'HomePageComponent',
+                component:HomePage,
+            })
+        }
     }
     render() {
         return (
