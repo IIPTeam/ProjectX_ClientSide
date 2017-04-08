@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
-import EchartsTest from '../Test/echarts';
+import EchartsNew from '../Test/echartsNew';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export default class HomePage extends Component {
     render(){
         var homeView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <EchartsTest/>
+                <EchartsNew/>
             </View>
         );
         var settingView=(
