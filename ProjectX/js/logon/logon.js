@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
 import HomePage from '../homePage/homePage';
+import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
@@ -147,6 +148,18 @@ export default class Logon extends Component {
                         />
                     </View>
                     <View style={styles.namePswCont}>
+<<<<<<< HEAD
+                        <TextInputConpt 
+                            labelCont='staff ID:'
+                            placeholder=''
+                            ispassword={false}
+                        />
+                        <TextInputConpt 
+                            labelCont='Password:'
+                            placeholder=''
+                            ispassword={true}
+                        />
+=======
                         <View style={styles.inputBox}>
                             <Text style={styles.logonText}>Staff ID:</Text>
                             <TextInput
@@ -173,6 +186,7 @@ export default class Logon extends Component {
                                 value={this.state.password}
                             />
                         </View>
+>>>>>>> origin/master
                         <View>
                             <Text
                                 style={styles.forgotPswLink}
