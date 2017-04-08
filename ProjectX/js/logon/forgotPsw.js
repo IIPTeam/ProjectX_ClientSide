@@ -8,9 +8,9 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
+import TextInputConpt from '../commonConponents/TextInputConpt';
 import {BackBtnSvg} from '../image/backSvg';
-import {MenuBtnSvg} from '../image/meunSvg'
-
+import {MenuBtnSvg} from '../image/meunSvg';
 
 export default class ForgotPsw extends Component{
     constructor(props){
@@ -51,25 +51,16 @@ export default class ForgotPsw extends Component{
 				</View>
 				<View style={styles.container}>
 					<View style={styles.topCont}>
-						<View style={styles.inputBox}>
-							<Text style={styles.forgotPswText}>Staff ID:</Text>
-							<TextInput
-								style={styles.staffIdInput}
-								underlineColorAndroid="transparent"
-								autoCapitalize="none"
-								autoCorrect={false}
-							/>
-						</View>
-						<View style={styles.inputBox}>
-							<Text style={styles.forgotPswText}>Phone Number:</Text>
-							<TextInput
-								style={styles.staffIdInput}
-								underlineColorAndroid="transparent"
-								autoCapitalize="none"
-								autoCorrect={false}
-								keyboardType='numeric'
-							/>
-						</View>
+						<TextInputConpt 
+							labelCont='staff ID:'
+							placeholder=''
+							ispassword={false}
+						/>
+						<TextInputConpt 
+							labelCont='Phone Number:'
+							placeholder=''
+							ispassword={false}
+						/>
 					</View>
 					<View style={styles.bottomCont}></View>
 				</View>

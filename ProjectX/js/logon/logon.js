@@ -13,6 +13,7 @@ import ModifyPsw from "./modifyPsw";
 import HomePage from '../homePage/homePage';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
+import CallService from '../until/CallService';
 
 export default class Logon extends Component {
     constructor(props){
@@ -69,6 +70,7 @@ export default class Logon extends Component {
     }
     _login(){
         const {navigator} = this.props;
+
         if (!this.state.staffId||!this.state.password) {
             this.refs.toast.show('fill in the staff id or password',500);      
         }else{
@@ -87,7 +89,7 @@ export default class Logon extends Component {
         }
         
     }
-    sendAjax(){
+    /*sendAjax(){
         fetch(url,{
             method:"POST",
             mode:"cors",
@@ -106,7 +108,33 @@ export default class Logon extends Component {
             }
         }).catch(function(e){
             Alert.alert("提示","系统错误");
-        });
+        });*/
+
+        let url = 'https://facebook.github.io/react-native/movies.json';
+        /*let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstParam: 'yourValue',
+                secondParam: 'yourOtherValue',
+            })
+        }*/
+
+        CallService.fetchNetRepository(url).then((res)=> {
+            if (navigator && res.movies) {
+                navigator.push({
+                    name:'HomePageComponent',
+                    component:HomePage,
+                })
+            }
+        }).then((error)=> {
+            console.log(error);
+        }).catch((error)=> {
+            console.log(error);
+        })
     }
     render() {
         return (

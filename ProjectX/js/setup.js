@@ -22,7 +22,9 @@ export default class setup extends Component {
         //指定了默认的页面，也就是启动app之后会看到的第一屏，需要两个参数，name跟component
         initialRoute={{ name:defaultName,component:defaultComponment}}
         configureScene={(route)=>{
-          return Navigator.SceneConfigs.HorizontalSwipeJump;
+            var conf = Navigator.SceneConfigs.HorizontalSwipeJump;
+            conf.gestures = { pop: false };
+            return conf;
         }}
         renderScene={(route, navigator) => {
             let Component = route.component;
@@ -31,7 +33,7 @@ export default class setup extends Component {
             }
         }}
       />
-      
+
     );
   }
 }

@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@remobile/react-native-echarts": "^1.0.7",
+    "native-echarts": "^0.3.0",
     "react": "15.4.2",
     "react-native": "0.42.3",
     "react-native-svg": "^5.1.7",
