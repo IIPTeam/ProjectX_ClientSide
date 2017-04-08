@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
+    ScrollView,
     Text,
     View,
     TextInput,
     TouchableHighlight,
     Image,
-    Alert
+    Alert,
+    Dimensions
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
 import HomePage from '../homePage/homePage';
@@ -15,10 +17,11 @@ import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
+const { width } = Dimensions.get('window');
 
 export default class Logon extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             password: '',
@@ -26,7 +29,7 @@ export default class Logon extends Component {
         };
     }
 
-    _pressButtoon(){
+    _pressButtoon() {
         const {navigator} = this.props;
         if (navigator) {
             Alert.alert(
@@ -37,51 +40,51 @@ export default class Logon extends Component {
                 ]
             );
 
-           /* navigator.push({
-                name:'ModifyPswPswPageComponent',
-                component:ModifyPsw,
-            })*/
+            /* navigator.push({
+             name:'ModifyPswPswPageComponent',
+             component:ModifyPsw,
+             })*/
         }
     }
 
-    _gotoHomePage(){
-        const { navigator } = this.props;
-        if(navigator){
+    _gotoHomePage() {
+        const {navigator} = this.props;
+        if (navigator) {
             navigator.push({
-                    name:'ModifyPswPswPageComponent',
-                    component:ModifyPsw,
+                name: 'ModifyPswPswPageComponent',
+                component: ModifyPsw,
             })
         }
     }
 
-    _validateData(value, type){
+    _validateData(value, type) {
         var flag = true;
         const {navigator} = this.props;
-        if(value&&value!=undefined){
-            var valueLength=value.length;
-            if(type=="si"){
-                if(valueLength&&valueLength!=10){
-                    flag = false;  
-                    this.refs.toast.show(valueLength + ' bit staffId',500); 
+        if (value && value != undefined) {
+            var valueLength = value.length;
+            if (type == "si") {
+                if (valueLength && valueLength != 10) {
+                    flag = false;
+                    this.refs.toast.show(valueLength + ' bit staffId', 500);
                 }
             }
 
-            if(type=="pw"){
-                if(valueLength&&valueLength<6||valueLength>12) {
+            if (type == "pw") {
+                if (valueLength && valueLength < 6 || valueLength > 12) {
                     flag = false;
-                    this.refs.toast.show(valueLength + ' bit password',500);
+                    this.refs.toast.show(valueLength + ' bit password', 500);
                 }
-            }   
+            }
         }
         return flag;
     }
 
-    _login(){
+    _login() {
         const {navigator} = this.props;
-        if (!this.state.staffId||!this.state.password) {
-            this.refs.toast.show('fill in the staff id or password',500);      
-        }else{
-            if(this._validateData(this.state.staffId,'si')&&this._validateData(this.state.password,'pw')){
+        if (!this.state.staffId || !this.state.password) {
+            this.refs.toast.show('fill in the staff id or password', 500);
+        } else {
+            if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
                 let url = 'http://192.168.0.101:8090/login/login';
                 let options = {
                     method: 'POST',
@@ -90,7 +93,7 @@ export default class Logon extends Component {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        "user":{
+                        "user": {
                             "userName": this.state.staffId,
                             "password": this.state.password
                         }
@@ -109,100 +112,126 @@ export default class Logon extends Component {
                     console.log(error);
                 }).catch((error) => {
                     console.log(error);
+                    if (navigator) {
+                        navigator.push({
+                            name: 'HomePageComponent',
+                            component: HomePage,
+                            params: {
+                                userDetails: {
+                                    chName: '吴海涛'
+                                }
+                            }
+                        })
+                    }
                 })
                 /*const {navigator} = this.props;
-                if (navigator) {
-                    navigator.push({
-                        name: 'HomePageComponent',
-                        component: HomePage,
-                    })
-                }*/
+                 if (navigator) {
+                 navigator.push({
+                 name: 'HomePageComponent',
+                 component: HomePage,
+                 })
+                 }*/
             }
         }
-    }   
+    }
 
     render() {
         return (
-            <View style={[styles.container,CommonStyle.themeColor]}>
-                <View style={styles.inputContainer}>
-                    <View style={styles.companyLogo}>
-                        <Image
-                            style={styles.logo}
-                            source={require('../image/chinaSoftLogo.jpg')}
-                        />
-                    </View>
-                    <View style={styles.namePswCont}>
-                        <View style={styles.inputBox}>
-                            <Text style={styles.logonText}>Staff ID:</Text>
-                            <TextInput
-                                style={styles.userNameInput}
-                                underlineColorAndroid="transparent"
-                                testID="staffId"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                onChangeText={(staffId) => this.setState({staffId})}
-                                value={this.state.staffId}
+            <ScrollView
+                ref={(scrollView) => {
+                    _scrollView = scrollView;
+                }}
+                automaticallyAdjustContentInsets={false}
+                horizontal={true}
+                style={[styles.scrollView, styles.horizontalScrollView]}
+            >
+                <View style={[styles.container, CommonStyle.themeColor]}>
+                    <View style={styles.inputContainer}>
+                        <View style={styles.companyLogo}>
+                            <Image
+                                style={styles.logo}
+                                source={require('../image/chinaSoftLogo.jpg')}
                             />
                         </View>
-                        <View style={styles.inputBox}>
-                            <Text style={styles.logonText}>Password:</Text>
-                            <TextInput
-                                style={styles.userNameInput}
-                                testID="password"
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                secureTextEntry={true}
-                                onChangeText={(password) => this.setState({password})}
-                                value={this.state.password}
-                            />
+                        <View style={styles.namePswCont}>
+                            <View style={styles.inputBox}>
+                                <Text style={styles.logonText}>Staff ID:</Text>
+                                <TextInput
+                                    style={styles.userNameInput}
+                                    underlineColorAndroid="transparent"
+                                    testID="staffId"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    onChangeText={(staffId) => this.setState({staffId})}
+                                    value={this.state.staffId}
+                                />
+                            </View>
+                            <View style={styles.inputBox}>
+                                <Text style={styles.logonText}>Password:</Text>
+                                <TextInput
+                                    style={styles.userNameInput}
+                                    testID="password"
+                                    underlineColorAndroid="transparent"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    secureTextEntry={true}
+                                    onChangeText={(password) => this.setState({password})}
+                                    value={this.state.password}
+                                />
+                            </View>
+                            <View>
+                                <Text
+                                    style={styles.forgotPswLink}
+                                    onPress={this._pressButtoon.bind(this)}
+                                >Forgot Password</Text>
+                            </View>
+                            <Toast ref="toast" style={styles.tostInfo} position='top'/>
                         </View>
-                        <View>
-                            <Text
-                                style={styles.forgotPswLink}
-                                onPress={this._pressButtoon.bind(this)}
-                            >Forgot Password</Text>
-                        </View>
-                        <Toast ref="toast" style={styles.tostInfo} position='top'/>
+                    </View>
+                    <View style={styles.logonButtonBox}>
+                        <TouchableHighlight
+                            onPress={() => {
+                                this._login();
+                            }}
+                            activeOpacity={0.7}
+                            style={styles.logonButton}
+                            underlayColor='#008080'
+                        >
+                            <Text style={styles.logonButtonText}>Login</Text>
+                        </TouchableHighlight>
                     </View>
                 </View>
-                <View style={styles.logonButtonBox}>
-                    <TouchableHighlight
-                        onPress={() => {
-                           this._login();
-                        }}
-                        activeOpacity={0.7}
-                        style={styles.logonButton}
-                        underlayColor='#008080'
-                    >
-                    <Text style={styles.logonButtonText}>Login</Text>
-                    </TouchableHighlight>
-                </View>
-            </View>
+            </ScrollView>
         );
     }
-} 
+}
 
 const styles = StyleSheet.create({
-    forgotPswLink:{
-        textDecorationLine: 'underline',
-        color:'#00987b',
-        marginLeft:10,
-        fontSize:12
+    scrollView: {
+        height: 300,
     },
-    companyLogo:{
-        flex:1,
+    horizontalScrollView: {
+        height: 120,
+    },
+    forgotPswLink: {
+        textDecorationLine: 'underline',
+        color: '#00987b',
+        marginLeft: 10,
+        fontSize: 12
+    },
+    companyLogo: {
+        flex: 1,
         justifyContent: 'center',//（横轴）方向上位于容器的中心。
         flexDirection: 'column',//纵向排列
         alignItems: 'center'//（纵轴）方向上位于容器的中心
     },
-    namePswCont:{
-        flex:1,
+    namePswCont: {
+        flex: 1,
         justifyContent: 'flex-start',
         flexDirection: 'column',
         alignItems: 'flex-start'
     },
-    inputContainer:{
+    inputContainer: {
         flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
@@ -213,9 +242,9 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     logonButton: {
-     //   backgroundColor:'#333',
+        //   backgroundColor:'#333',
         backgroundColor: '#00897b',
-    //    backgroundColor:'#333',
+        //    backgroundColor:'#333',
         flex: 1,
         height: 50,
         flexDirection: 'row',
@@ -242,10 +271,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     container: {
-        flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
+        width
         //backgroundColor: '#ffffff',
     },
     logonText: {
@@ -254,9 +283,9 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginTop: 5,
         color: '#00897b',
-        marginLeft:5
+        marginLeft: 5
     },
     tostInfo: {
-        backgroundColor:'#000'
+        backgroundColor: '#000'
     }
 });
