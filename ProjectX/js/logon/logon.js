@@ -31,6 +31,18 @@ export default class Logon extends Component {
     _login(){
         const {navigator} = this.props;
         let url = 'https://facebook.github.io/react-native/movies.json';
+        /*let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstParam: 'yourValue',
+                secondParam: 'yourOtherValue',
+            })
+        }*/
+
         CallService.fetchNetRepository(url).then((res)=> {
             if (navigator && res.movies) {
                 navigator.push({

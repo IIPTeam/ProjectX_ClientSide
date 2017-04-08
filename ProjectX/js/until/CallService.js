@@ -1,9 +1,9 @@
 'use strict';
 
 export default class CallService {
-    static fetchNetRepository(url) {
+    static fetchNetRepository(url,options) {
         return new Promise((resolve, reject) => {
-            fetch(url)
+            fetch(url,options)
                 .then((response) => response.json())
                 .catch((error) => {
                     reject(error);
