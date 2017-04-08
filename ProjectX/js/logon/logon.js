@@ -99,11 +99,16 @@ export default class Logon extends Component {
 
                 CallService.fetchNetRepository(url, options).then((res) => {
                     if (navigator && res) {
-                        navigator.push({
+                        if(res.ok) {
+                            navigator.push({
                             name: 'HomePageComponent',
                             component: HomePage,
                             params: res
-                        })
+                            })
+                            console.log(res);
+                        } else {
+                            Alert.alert("提示","请求失败");
+                        }
                     }
                 }).then((error) => {
                     console.log(error);
