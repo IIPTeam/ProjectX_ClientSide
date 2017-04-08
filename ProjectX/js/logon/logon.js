@@ -18,6 +18,7 @@ import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
 const {width} = Dimensions.get('window');
+const dismissKeyboard = require('dismissKeyboard');
 
 export default class Logon extends Component {
 
@@ -81,6 +82,7 @@ export default class Logon extends Component {
 
     _login() {
         const {navigator} = this.props;
+        dismissKeyboard();
         if (!this.state.staffId || !this.state.password) {
             this.refs.toast.show('fill in the staff id or password', 500);
         } else {
