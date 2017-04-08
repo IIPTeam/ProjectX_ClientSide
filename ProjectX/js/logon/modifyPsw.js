@@ -10,12 +10,12 @@ import {
     Alert,
     Console
 } from 'react-native';
-import ForgotPsw from "./forgotPsw";
+import Logon from "./logon";
 import HomePage from "../homePage/homePage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
 
-export default class ModifyPsw extends Component{
+export default class ModifyPsw extends Component {
 
     constructor(props){
         super(props);
@@ -27,25 +27,25 @@ export default class ModifyPsw extends Component{
     	const { navigator } = this.props;
         if(navigator){
             navigator.push({
-                name:'ForgotPswPageComponent',
-                component:ForgotPsw,
+                name:'LogonPageComponent',
+                component:Logon,
             })
         }
     }
 
     //提交修改密码
     _pressConfirmButtoon(){
-    	const { navigator } = this.props;
+    	/*const { navigator } = this.props;
         if(navigator){
         	Alert.alert(
-            'Submit successfully',
-            'alertMessage',
-            [
-              {text: 'OK', onPress: () => this._gotoHomePage(this)}
-            ]
-          );
-        }
-        
+                'Submit successfully',
+                'alertMessage',
+                [
+                  {text: 'OK', onPress: () => this._gotoHomePage(this)}
+                ]
+            );
+        }*/
+        this._gotoHomePage();
     }
 
     _gotoHomePage(){
@@ -57,8 +57,7 @@ export default class ModifyPsw extends Component{
             })
         }
     }
-
-
+    
     render(){
         return (
         	<View style={styles.modifyPswCont}>
