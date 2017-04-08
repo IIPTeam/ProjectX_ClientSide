@@ -110,7 +110,7 @@ export default class Logon extends Component {
             Alert.alert("提示","系统错误");
         });*/
 
-        let url = 'https://facebook.github.io/react-native/movies.json';
+        //let url = 'https://facebook.github.io/react-native/movies.json';
         /*let options = {
             method: 'POST',
             headers: {
@@ -123,7 +123,7 @@ export default class Logon extends Component {
             })
         }*/
 
-        CallService.fetchNetRepository(url).then((res)=> {
+        /*CallService.fetchNetRepository(url).then((res)=> {
             if (navigator && res.movies) {
                 navigator.push({
                     name:'HomePageComponent',
@@ -135,7 +135,7 @@ export default class Logon extends Component {
         }).catch((error)=> {
             console.log(error);
         })
-    }
+    }*/
     render() {
         return (
             <View style={[styles.container,CommonStyle.themeColor]}>

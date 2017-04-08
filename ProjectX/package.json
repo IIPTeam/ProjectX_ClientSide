@@ -12,6 +12,7 @@
     "react": "15.4.2",
     "react-native": "0.42.3",
     "react-native-easy-toast": "^1.0.5",
+    "react-native-simple-toast": "0.0.5",
     "react-native-svg": "^5.1.7",
     "react-native-tab-navigator": "^0.3.3"
   },
