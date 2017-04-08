@@ -10,13 +10,8 @@ export default class TextInputConpt extends Component{
 	static propTypes = {
 		labelCont: React.PropTypes.string,
         placeholder: React.PropTypes.string,
-        ispassword: React.PropTypes.bool
-    }
-
-    static defaultProps = {
-        labelCont: '名称',
-        placeholder: '内容',        
-        ispassword: false
+        ispassword: React.PropTypes.bool,
+        keyboardType:React.PropTypes.string
     }
 
     constructor(props){
@@ -28,7 +23,7 @@ export default class TextInputConpt extends Component{
     }
 
     render(){
-    	var { labelCont, placeholder, ispassword } = this.props;
+    	var { labelCont, placeholder, ispassword,keyboardType } = this.props;
         return (
 			<View View style={styles.txtBorder}>
 				<Text style={styles.txtLabel}>{labelCont}</Text>
@@ -43,6 +38,7 @@ export default class TextInputConpt extends Component{
 	                    	txtValue: text
 	                    })
                     }}
+                    keyboardType={keyboardType}
                     value={this.state.txtValue}
 				/>
 			</View>			

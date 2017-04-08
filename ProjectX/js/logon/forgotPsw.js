@@ -8,7 +8,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
-import TextInputConpt from '../commonConponents/TextInputConpt';
+import TextInputConpt from '../common/TextInputConpt';
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
 
@@ -60,6 +60,7 @@ export default class ForgotPsw extends Component{
 							labelCont='Phone Number:'
 							placeholder=''
 							ispassword={false}
+							keyboardType='numeric'
 						/>
 					</View>
 					<View style={styles.bottomCont}></View>
