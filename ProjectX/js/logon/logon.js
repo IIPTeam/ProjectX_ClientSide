@@ -148,16 +148,6 @@ export default class Logon extends Component {
                         />
                     </View>
                     <View style={styles.namePswCont}>
-                        <TextInputConpt 
-                            labelCont='staff ID:'
-                            placeholder=''
-                            ispassword={false}
-                        />
-                        <TextInputConpt 
-                            labelCont='Password:'
-                            placeholder=''
-                            ispassword={true}
-                        />
                         <View style={styles.inputBox}>
                             <Text style={styles.logonText}>Staff ID:</Text>
                             <TextInput
@@ -184,7 +174,6 @@ export default class Logon extends Component {
                                 value={this.state.password}
                             />
                         </View>
->>>>>>> origin/master
                         <View>
                             <Text
                                 style={styles.forgotPswLink}
