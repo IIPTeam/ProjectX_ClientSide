@@ -6,9 +6,10 @@ import {
     View,
     TextInput,
     TouchableHighlight,
-    Image
+    Image,
+    Alert
 } from 'react-native';
-import ForgotPsw from "./forgotPsw";
+import ModifyPsw from "./modifyPsw";
 import HomePage from '../homePage/homePage';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
@@ -20,43 +21,92 @@ export default class Logon extends Component {
                      staffId: ''
                     };
     }
-     _pressButtoon(){
+    _pressButtoon(){
         const {navigator} = this.props;
         if (navigator) {
+            Alert.alert(
+                'Submit successfully',
+                'alertMessage',
+                [
+                  {text: 'OK', onPress: () => this._gotoHomePage(this)}
+                ]
+            );
+           /* navigator.push({
+                name:'ModifyPswPswPageComponent',
+                component:ModifyPsw,
+            })*/
+        }
+    }
+    _gotoHomePage(){
+        const { navigator } = this.props;
+        if(navigator){
             navigator.push({
-                name:'ForgotPswPageComponent',
-                component:ForgotPsw,
+                    name:'ModifyPswPswPageComponent',
+                    component:ModifyPsw,
             })
         }
     }
     _validateData(value, type){
+        var flag = true;
+        const {navigator} = this.props;
         if(value&&value!=undefined){
             var valueLength=value.length;
-            if(valueLength&&type=="si"&&valueLength!=10){
-               this.refs.toast.show(valueLength + ' bit staffId',1000); 
-            };
-            if(valueLength&&type=="pw"&&valueLength<=5||valueLength>=13) {
-               this.refs.toast.show(valueLength + ' bit password',1000);
-            };
+            if(type=="si"){
+                if(valueLength&&valueLength!=10){
+                    flag = false;  
+                    this.refs.toast.show(valueLength + ' bit staffId',500); 
+                }
+            }
+            if(type=="pw"){
+                if(valueLength&&valueLength<6||valueLength>12) {
+                    flag = false;
+                    this.refs.toast.show(valueLength + ' bit password',500);
+                }
+            }   
         }
         
-        
+        return flag;
     }
     _login(){
         const {navigator} = this.props;
         if (!this.state.staffId||!this.state.password) {
-            this.refs.toast.show('fill in the staff id or password',1000);      
+            this.refs.toast.show('fill in the staff id or password',500);      
         }else{
-            if (navigator) {
-                navigator.push({
-                    name:'HomePageComponent',
-                    component:HomePage,
-                })
+  
+            
+            if(this._validateData(this.state.staffId,'si')&&this._validateData(this.state.password,'pw')){
+               // this.sendAjax();
+                if (navigator) {
+                    navigator.push({
+                        name:'HomePageComponent',
+                        component:HomePage,
+                    })
+                }
             }
+            
         }
-
-
         
+    }
+    sendAjax(){
+        fetch(url,{
+            method:"POST",
+            mode:"cors",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            body:'userName=aaa&password=bbb'
+        }).then(function(res){
+            if(res.ok){
+                res.jason().then(function(jason){
+                    console.info(jason);
+                    Alert.alert("提示","请求成功");
+                });
+            }else{
+                Alert.alert("提示","请求失败");
+            }
+        }).catch(function(e){
+            Alert.alert("提示","系统错误");
+        });
     }
     render() {
         return (
@@ -74,24 +124,25 @@ export default class Logon extends Component {
                             <TextInput
                                 style={styles.userNameInput}
                                 underlineColorAndroid="transparent"
+                                testID="staffId"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 onChangeText={(staffId) => this.setState({staffId})}
                                 value={this.state.staffId}
-                                onBlur={(staffId) => this._validateData(this.state.staffId, "si")}
+                    
                             />
                         </View>
                         <View style={styles.inputBox}>
                             <Text style={styles.logonText}>Password:</Text>
                             <TextInput
                                 style={styles.userNameInput}
+                                testID="password"
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 secureTextEntry={true}
                                 onChangeText={(password) => this.setState({password})}
                                 value={this.state.password}
-                                onBlur={(password) => this._validateData(this.state.password,"pw")}
                             />
                         </View>
                         <View>
@@ -114,15 +165,14 @@ export default class Logon extends Component {
                         style={styles.logonButton}
                         underlayColor='#008080'
                     >
-                        <Text style={styles.logonButtonText}>Login</Text>
+                    <Text style={styles.logonButtonText}>Login</Text>
                     </TouchableHighlight>
                     
                 </View>
             </View>
         );
     }
-}
-
+} 
 const styles = StyleSheet.create({
     forgotPswLink:{
         textDecorationLine: 'underline',
@@ -153,7 +203,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     logonButton: {
+     //   backgroundColor:'#333',
         backgroundColor: '#00897b',
+    
+    //    backgroundColor:'#333',
         flex: 1,
         height: 50,
         flexDirection: 'row',
