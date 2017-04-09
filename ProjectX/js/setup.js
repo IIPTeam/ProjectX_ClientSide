@@ -12,11 +12,14 @@ import {
   Navigator
 } from 'react-native';
 import Logon from './logon/logon';
+// import HomePage from './homePage/homePage';
 
 export default class setup extends Component {
   render() {
     var defaultName = 'logonPage';
     var defaultComponment = Logon;
+    // var defaultComponment = HomePage;
+    
     return (
       <Navigator
         //指定了默认的页面，也就是启动app之后会看到的第一屏，需要两个参数，name跟component

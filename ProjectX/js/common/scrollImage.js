@@ -14,11 +14,16 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
-export default class FocusImage extends Component{
-   
+export default class ScrollImage extends Component{
     render(){  
       return(
         <Swiper style={styles.wrapper} showsButtons={false}>
+        <Swiper 
+          style={styles.wrapper}
+          showsButtons={false}
+          autoplay={true}
+          index={3}
+          >
             <View style={styles.slide1}>
               <Text style={styles.text}>Hello Swiper</Text>
             </View>

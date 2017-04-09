@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
-import FocusImage from '../common/FocusImage';
+import ScrollImage from '../common/ScrollImage';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -21,8 +21,10 @@ export default class HomePage extends Component {
     render(){
         var homeView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <Text style={{fontSize: 30}}>首页</Text>
-                <FocusImage/>        
+                <View style={styles.homeHeader}>
+                   <Text>Main Page</Text> 
+                </View>
+                <ScrollImage/>
             </View>
         );
         var settingView=(
@@ -69,4 +71,10 @@ const styles = StyleSheet.create({
         width: 40,
         height: 33,
     },
+    homeHeader:{
+       flex:1, 
+    },
+    FocusBorder:{
+        flex:2,
+    }
 });
