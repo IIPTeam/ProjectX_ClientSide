@@ -16,3 +16,7 @@
 
 尝试解决echarts找不到tpl.html文件的问题
 http://www.tuicool.com/articles/fM3yyq
+
+Call service等待时候的overlay
+react-native-hud-view
+react-native-loading-spinner-overlay
