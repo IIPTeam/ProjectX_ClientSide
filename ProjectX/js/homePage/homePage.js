@@ -9,13 +9,21 @@ import {
 
 import TabNavigator from 'react-native-tab-navigator';
 import ScrollImage from '../common/ScrollImage';
+import Echarts from '../Test/echartsNew';
 
 export default class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state={
-            selectedTab:'home'//默认选中home
+            selectedTab:'home',//默认选中home
+            userDetails:{}
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            userDetails:this.props.userDetails,
+        });
     }
 
     render(){
@@ -25,11 +33,13 @@ export default class HomePage extends Component {
                    <Text>Main Page</Text> 
                 </View>
                 <ScrollImage/>
+                    <Text style={{fontSize: 30}}>Hello {this.state.userDetails.chName}</Text>
+                <ScrollImage/>
             </View>
         );
         var settingView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <Text style={{fontSize: 30}}>设置</Text>
+                <Echarts></Echarts>
             </View>
         );
         return (

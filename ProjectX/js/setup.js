@@ -32,7 +32,7 @@ export default class setup extends Component {
         renderScene={(route, navigator) => {
             let Component = route.component;
             if(route.component){
-                return <Component  navigator={navigator} />
+                return <Component {...route.params} navigator={navigator} />
             }
         }}
       />

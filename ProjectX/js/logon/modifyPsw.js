@@ -11,6 +11,7 @@ import {
     Console
 } from 'react-native';
 import Logon from "./logon";
+import PopSpan from "./popSpan";
 import HomePage from "../homePage/homePage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
@@ -19,7 +20,11 @@ export default class ModifyPsw extends Component {
 
     constructor(props){
         super(props);
-        this.state = {};
+        this.state= {
+            timerCount:10,
+            timerTitle:'sec left for re-send code'
+        };
+        this._timeForResend();
     }
 
     // 返回
@@ -54,10 +59,45 @@ export default class ModifyPsw extends Component {
             navigator.push({
                     name:'HomePageComponent',
                     component:HomePage,
+                    params: {
+                        userDetails: {
+                            chName: '吴海涛'
+                        }
+                    }
             })
         }
     }
+
+    _timeForResend(){
+        var lefttimerCount=this.state.timerCount;
+        this.interval=setInterval(() =>{
+            lefttimerCount=this.state.timerCount-1;
+            if(lefttimerCount===0){
+                this.interval&&clearInterval(this.interval);
+                this.setState({
+                    timerCount:"",
+                    timerTitle:'resend verify code'
+                });
+                }else{
+                    this.setState({
+                    timerCount:lefttimerCount,
+                });
+            }
+        },1000)
+    }
+
+    _resendVerifyCode(){
+        if (!this.state.timerCount) {
+            this.popSpan.showPop( "Please input your Staff ID number", "Staff ID", "Send Verification Num", true, this );
+        }
+    }
+
     
+    componentDidUnMount() {
+        this.timer && clearTimeout(this.timer);
+
+    }
+
     render(){
         return (
         	<View style={styles.modifyPswCont}>
@@ -101,7 +141,14 @@ export default class ModifyPsw extends Component {
 						
 					</View>
 					<View style={styles.bottomCont}>
-						<Text style={styles.resendText}>56...(Resend)</Text>
+                    <TouchableHighlight
+                        style={styles.resendButton}
+                        // activeOpacity={0.7}
+                        underlayColor='#00897b'
+                        onPress={this._resendVerifyCode.bind(this)}
+                    >
+						<Text style={styles.resendText}>{this.state.timerCount} {this.state.timerTitle}</Text>
+                    </TouchableHighlight>
 					</View>
 				</View>
 				
@@ -115,10 +162,13 @@ export default class ModifyPsw extends Component {
 					<Text style={styles.verifyBtnText}>Submit update password</Text>
 					</TouchableHighlight>
 				</View>
+                <PopSpan ref={popSpan => this.popSpan=popSpan} position='top'/>
 			</View>
         );
     }
 }
+
+
 const styles = StyleSheet.create({
 	modifyPswCont:{
 		flex:1,
@@ -203,7 +253,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     resendText:{
-    	marginTop: 30,
     	backgroundColor: '#00897b',
         height: 43,
         justifyContent: 'center',
@@ -212,6 +261,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         textAlign:"center",
         lineHeight:33
+
+    },
+    resendButton:{
+        marginTop: 30,
+        backgroundColor: '#00897b',
+        height: 43,
+        alignItems: "center",
 
     },
     verifyButton: {
