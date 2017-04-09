@@ -7,8 +7,7 @@ import {
     TouchableHighlight,
     TouchableWithoutFeedback,
     Image,
-    Alert,
-    Console
+    Alert
 } from 'react-native';
 import Logon from "./logon";
 import PopSpan from "./popSpan";
@@ -31,10 +30,7 @@ export default class ModifyPsw extends Component {
     _pressBackButtoon(){
     	const { navigator } = this.props;
         if(navigator){
-            navigator.push({
-                name:'LogonPageComponent',
-                component:Logon,
-            })
+            navigator.pop();
         }
     }
 
