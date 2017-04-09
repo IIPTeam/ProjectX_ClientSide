@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
-import ScrollImage from '../common/ScrollImage';
+import ScrollImage from '../common/scrollImage';
 import Echarts from '../Test/echartsNew';
 
 export default class HomePage extends Component {
