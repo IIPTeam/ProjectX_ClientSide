@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 // import Edit from "./edit";
 import {CommonStyle} from '../theme/common-style';
+import {PersonalBtnSvg} from '../image/PersonalSvg';
+import {BackBtnSvg} from '../image/backSvg';
+
 
 export default class PersonalPage extends Component {
     constructor(props){
@@ -39,8 +42,8 @@ export default class PersonalPage extends Component {
                 <View style={{flexDirection: 'row',alignItems: 'flex-start'}}>
                     <View style={{backgroundColor: '#D1D1D1',flex: 1,height: 100,flexDirection: 'row',
                                     justifyContent: 'center',alignItems: 'center',}}> 
-                        <Image style={{width:80,height:80,borderRadius:27}} source={require('../image/personalPage/man.jpg')}/>
-                        <Text style={{fontSize: 20,color: 'white'}}> 王昌 & Scott C Wang {'\n'}{'\n'} SE @ HSBC line </Text>
+                       {PersonalBtnSvg}
+                        <Text style={{fontSize: 20,color: 'white'}}> 董静 & Eline J Dong {'\n'}{'\n'} SE @ HSBC line </Text>
                     </View>
                 </View> 
                 <View style={{flexDirection: 'row',alignItems: 'flex-start'}}>
