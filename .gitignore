@@ -1,1 +1,3 @@
 .idea/*
+*.bundle
+ProjectX/android/app/src/main/assets/index.android.bundle
