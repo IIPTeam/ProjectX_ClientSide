@@ -8,9 +8,22 @@ import {
     Image
 } from 'react-native';
 // import Edit from "./edit";
+import ApplicationPage from "./myApplicationPage";
+import MySetPage from "./mySettingPage";
+import MyApprovalPage from "./myApprovalPage";
 import {CommonStyle} from '../theme/common-style';
+import {MenuBtnSvg} from '../image/meunSvg';
 import {PersonalBtnSvg} from '../image/PersonalSvg';
 import {BackBtnSvg} from '../image/backSvg';
+import {MyApplicationBtnSvg} from '../image/MyApplicationSvg';
+import {MyApprovalBtnSvg} from '../image/MyApprovalSvg';
+import {Tbc1BtnSvg} from '../image/TBC1Svg';
+import {Tbc2BtnSvg} from '../image/TBC2Svg';
+import {Tbc3BtnSvg} from '../image/TBC3Svg';
+import {MySettingBtnSvg} from '../image/MySettingSvg';
+
+
+
 
 
 export default class PersonalPage extends Component {
@@ -18,15 +31,34 @@ export default class PersonalPage extends Component {
         super(props);
         this.state = {};
     }
-     _pressButtoon(){
+     _myAppPressButtoon(){
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
-                name:'EditComponent',
-                component:Edit,
+                name: 'ApplicationPageComponent',
+                component: ApplicationPage
             })
         }
     }
+    _mySetPressButtoon(){
+        const{navigator}=this.props;
+        if(navigator){
+            navigator.push({
+                name:'MySetPageComponent',
+                component:MySetPage
+            })
+        }   
+
+     }
+     _myApprovalBtn(){
+        const{navigator}=this.props;
+        if(navigator){
+            navigator.push({
+                name:'MyApprovalPageComponent',
+                component:MyApprovalPage
+            })
+        }
+     }
     render() {
         return (
             <View style={[styles.container,CommonStyle.themeColor]}>               
@@ -36,7 +68,7 @@ export default class PersonalPage extends Component {
                         <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}> 
                             <Text style={{fontSize: 20,color: 'white'}}>Personal Page</Text> 
                         </View> 
-                        <Image style={{width:30,height:40,}} source={require('../image/personalPage/menuIcon.jpg')}/>
+                        {MenuBtnSvg}
                     </View>                                           
                 </View>              
                 <View style={{flexDirection: 'row',alignItems: 'flex-start'}}>
@@ -59,9 +91,9 @@ export default class PersonalPage extends Component {
                     <View style={{backgroundColor: '#ffffff',flex: 1,height: 50,flexDirection: 'row',
                                     justifyContent: 'flex-start',alignItems: 'center',borderWidth: 1,
                                     borderColor: '#00897b'}}>
-                        <Image style={{width:40,height:20,}} source={require('../image/personalPage/modifyIcon.jpg')}/>
+                        {MyApplicationBtnSvg}
                         <View style={{flex: 1}}>
-                            <Text style={{fontSize: 20,color: '#00897b'}}> My Application</Text>  
+                            <Text style={{fontSize: 20,color: '#00897b'}} onPress={this._myAppPressButtoon.bind(this)}> My Application</Text>  
                         </View>                      
                         <Image style={{width:20,height:40,margin:10}} source={require('../image/personalPage/onIcon.jpg')}/>
                     </View>
@@ -70,9 +102,9 @@ export default class PersonalPage extends Component {
                     <View style={{backgroundColor: '#ffffff',flex: 1,height: 50,flexDirection: 'row',
                                     justifyContent: 'flex-start',alignItems: 'center',borderWidth: 1,
                                     borderColor: '#00897b'}}>
-                        <Image style={{width:40,height:20,}} source={require('../image/personalPage/pencilIcon.jpg')}/>
+                        {MyApprovalBtnSvg}
                         <View style={{flex: 1}}>
-                            <Text style={{fontSize: 20,color: '#00897b'}}> My Approval</Text>
+                            <Text style={{fontSize: 20,color: '#00897b'}} onPress={this._myApprovalBtn.bind(this)}> My Approval</Text>
                         </View>   
                     <Image style={{width:20,height:40,margin:10}} source={require('../image/personalPage/onIcon.jpg')}/>
                     </View>                      
@@ -81,7 +113,7 @@ export default class PersonalPage extends Component {
                     <View style={{backgroundColor: '#ffffff',flex: 1,height: 50,flexDirection: 'row',
                                     justifyContent: 'flex-start',alignItems: 'center',borderWidth: 1,
                                     borderColor: '#00897b'}}>
-                        <Image style={{width:40,height:20,}} source={require('../image/personalPage/flagIcon.jpg')}/>
+                        {Tbc3BtnSvg}
                         <View style={{flex: 1}}>
                             <Text style={{fontSize: 20,color: '#00897b'}}> TBC</Text>
                         </View>   
@@ -92,7 +124,7 @@ export default class PersonalPage extends Component {
                     <View style={{backgroundColor: '#ffffff',flex: 1,height: 50,flexDirection: 'row',
                                     justifyContent: 'flex-start',alignItems: 'center',borderWidth: 1,
                                     borderColor: '#00897b'}}>
-                        <Image style={{width:40,height:20,}} source={require('../image/personalPage/clockIcon.jpg')}/>
+                        {Tbc2BtnSvg}
                         <View style={{flex: 1}}>
                             <Text style={{fontSize: 20,color: '#00897b'}}> TBC</Text>
                         </View>   
@@ -103,7 +135,7 @@ export default class PersonalPage extends Component {
                     <View style={{backgroundColor: '#ffffff',flex: 1,height: 50,flexDirection: 'row',
                                     justifyContent: 'flex-start',alignItems: 'center',borderWidth: 1,
                                     borderColor: '#00897b'}}>
-                        <Image style={{width:40,height:20,}} source={require('../image/personalPage/piceIcon.jpg')}/>
+                        {Tbc1BtnSvg}
                         <View style={{flex: 1}}>
                             <Text style={{fontSize: 20,color: '#00897b'}}> TBC</Text>
                         </View>   
@@ -114,9 +146,9 @@ export default class PersonalPage extends Component {
                     <View style={{backgroundColor: '#ffffff',flex: 1,height: 50,flexDirection: 'row',
                                     justifyContent: 'flex-start',alignItems: 'center',borderWidth: 1,
                                     borderColor: '#00897b'}}>
-                        <Image style={{width:40,height:20,}} source={require('../image/personalPage/setIcon.jpg')}/>
+                        {MySettingBtnSvg}
                         <View style={{flex: 1}}>
-                            <Text style={{fontSize: 20,color: '#00897b'}}> My Setting</Text>  
+                            <Text style={{fontSize: 20,color: '#00897b'}} onPress={this._mySetPressButtoon.bind(this)}> My Setting</Text>  
                         </View>   
                     <Image style={{width:20,height:40,margin:10}} source={require('../image/personalPage/onIcon.jpg')}/>
                     </View>                      
