@@ -19,6 +19,7 @@ import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
 const {width} = Dimensions.get('window');
 const dismissKeyboard = require('dismissKeyboard');
+import HudView from 'react-native-easy-hud';
 
 export default class Logon extends Component {
 
@@ -87,6 +88,7 @@ export default class Logon extends Component {
             this.refs.toast.show('fill in the staff id or password', 500);
         } else {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
+                this._hud.show();
                 let url = 'http://192.168.0.101:8090/login/login';
                 let options = {
                     method: 'POST',
@@ -103,6 +105,7 @@ export default class Logon extends Component {
                 }
 
                 CallService.fetchNetRepository(url, options).then((res) => {
+                    this._hud.hide();
                     if (navigator && res) {
                         navigator.push({
                             name: 'HomePageComponent',
@@ -111,8 +114,10 @@ export default class Logon extends Component {
                         })
                     }
                 }).then((error) => {
+                    this._hud.hide();
                     console.log(error);
                 }).catch((error) => {
+                    this._hud.hide();
                     console.log(error);
                     if (navigator) {
                         navigator.push({
@@ -204,6 +209,10 @@ export default class Logon extends Component {
                         <Text style={styles.logonButtonText}>Login</Text>
                     </TouchableHighlight>
                 </View>
+                <HudView
+                    ref={(hud) => {this._hud = hud}}
+                    delay={0}
+                />
             </View>
         );
     }
