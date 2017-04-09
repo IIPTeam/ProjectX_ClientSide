@@ -52,10 +52,7 @@ export default class ModifyPsw extends Component {
     _pressBackButtoon(){
     	const { navigator } = this.props;
         if(navigator){
-            navigator.push({
-                name:'LogonPageComponent',
-                component:Logon,
-            })
+            navigator.pop();
         }
     }
 
