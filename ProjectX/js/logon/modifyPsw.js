@@ -6,15 +6,14 @@ import {
     TextInput,
     TouchableHighlight,
     TouchableWithoutFeedback,
-    Image,
-    Alert,
-    Console
+    BackAndroid
 } from 'react-native';
 import Logon from "./logon";
 import PopSpan from "./popSpan";
 import HomePage from "../homePage/homePage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
+import Platform from 'Platform';
 
 export default class ModifyPsw extends Component {
 
@@ -26,6 +25,28 @@ export default class ModifyPsw extends Component {
         };
         this._timeForResend();
     }
+
+    componentWillMount() {
+        if (Platform.OS === 'android') {
+            BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+    componentWillUnmount() {
+        if (Platform.OS === 'android') {
+            BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+
+    onBackAndroid = () => {
+        const { navigator } = this.props;
+        const routers = navigator.getCurrentRoutes();
+        console.log('当前路由长度：'+routers.length);
+        if (routers.length > 1) {
+            navigator.pop();
+            return true;//接管默认行为
+        }
+        return false;//默认行为
+    };
 
     // 返回
     _pressBackButtoon(){
