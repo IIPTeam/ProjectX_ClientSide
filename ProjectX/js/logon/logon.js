@@ -12,11 +12,13 @@ import {
     Dimensions
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
+import PopSpan from "./popSpan";
 import HomePage from '../homePage/homePage';
 import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
+
 const {width} = Dimensions.get('window');
 const dismissKeyboard = require('dismissKeyboard');
 
@@ -33,22 +35,19 @@ export default class Logon extends Component {
     _pressButtoon() {
         const {navigator} = this.props;
         if (navigator) {
-            Alert.alert(
+            /*Alert.alert(
                 'Submit successfully',
                 'alertMessage',
                 [
-                    {text: 'OK', onPress: () => this._gotoHomePage(this)}
+                    {text: 'OK', onPress: () => this._gotoModifyPswPage(this)}
                 ]
-            );
-
-            /* navigator.push({
-             name:'ModifyPswPswPageComponent',
-             component:ModifyPsw,
-             })*/
+            );*/
+            // this._gotoModifyPswPage(this);
+            this._gotoPopSpanPage(this);
         }
     }
 
-    _gotoHomePage() {
+    _gotoModifyPswPage() {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -56,6 +55,17 @@ export default class Logon extends Component {
                 component: ModifyPsw,
             })
         }
+    }
+
+    _gotoPopSpanPage() {
+        // var sendStaffId="";
+        // if (this.state.staffId) {
+        //     sendStaffId = this.state.staffId;
+        // } else {
+        //     sendStaffId = ""
+        // }
+        this.popSpan.showPop( "Please input your Staff ID number", "Staff ID", "Send Verification Num", false, this );
+        
     }
 
     _validateData(value, type) {
@@ -87,7 +97,7 @@ export default class Logon extends Component {
             this.refs.toast.show('fill in the staff id or password', 500);
         } else {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
-                let url = 'http://192.168.0.101:8090/login/login';
+                let url = 'http://192.168.1.103:8090/login/login';
                 let options = {
                     method: 'POST',
                     headers: {
@@ -195,8 +205,8 @@ export default class Logon extends Component {
                             <Toast ref="toast" style={styles.tostInfo} position='top'/>
                         </View>
                     </View>
-
                 </ScrollView>
+
                 <View style={styles.logonButtonBox}>
                     <TouchableHighlight
                         onPress={() => {
@@ -209,6 +219,8 @@ export default class Logon extends Component {
                         <Text style={styles.logonButtonText}>Login</Text>
                     </TouchableHighlight>
                 </View>
+
+                <PopSpan ref={popSpan => this.popSpan=popSpan} position='top'/>
             </View>
         );
     }
@@ -244,11 +256,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        width
     },
     logonButtonBox: {
         flexDirection: 'row',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+
     },
     logonButton: {
         //   backgroundColor:'#333',
