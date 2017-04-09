@@ -267,6 +267,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
+        width
     },
     logonButtonBox: {
         flexDirection: 'row',
