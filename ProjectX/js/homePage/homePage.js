@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
-import FocusImage from '../common/FocusImage';
+import ScrollImage from '../common/ScrollImage';
 import Echarts from '../Test/echartsNew';
 
 export default class HomePage extends Component {
@@ -29,8 +29,12 @@ export default class HomePage extends Component {
     render(){
         var homeView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <Text style={{fontSize: 30}}>Hello {this.state.userDetails.chName}</Text>
-                <FocusImage/>
+                <View style={styles.homeHeader}>
+                   <Text>Main Page</Text> 
+                </View>
+                <ScrollImage/>
+                    <Text style={{fontSize: 30}}>Hello {this.state.userDetails.chName}</Text>
+                <ScrollImage/>
             </View>
         );
         var settingView=(
@@ -77,4 +81,10 @@ const styles = StyleSheet.create({
         width: 40,
         height: 33,
     },
+    homeHeader:{
+       flex:1, 
+    },
+    FocusBorder:{
+        flex:2,
+    }
 });
