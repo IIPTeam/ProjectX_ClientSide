@@ -10,6 +10,8 @@ import {
 import TabNavigator from 'react-native-tab-navigator';
 import FocusImage from '../common/FocusImage';
 import Echarts from '../Test/echartsNew';
+import PersonalPage from "../personalPage/personalPage";
+import {PersonalBtnSvg} from '../image/PersonalSvg';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -19,7 +21,15 @@ export default class HomePage extends Component {
             userDetails:{}
         }
     }
-
+_pressPersonBtn(){
+        const { navigator } = this.props;
+        if(navigator){
+            navigator.push({
+                name:'PersonalPageComponent',
+                component:PersonalPage,
+            })
+        }
+    }
     componentDidMount(){
         this.setState({
             userDetails:this.props.userDetails,
@@ -58,6 +68,15 @@ export default class HomePage extends Component {
                     renderIcon={() => <Image style={styles.img} source={require('../image/backIcon.png') }/>}
                     renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
                     onPress={() => this.setState({ selectedTab: 'setting' })}
+                >
+                    {settingView}
+                </TabNavigator.Item>
+                 <TabNavigator.Item
+                    selected={this.state.selectedTab === 'personal'}
+                    title="personal"
+                    renderIcon={() => {PersonalBtnSvg}}
+                    renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
+                    onPress={this._pressPersonBtn.bind(this)}
                 >
                     {settingView}
                 </TabNavigator.Item>
