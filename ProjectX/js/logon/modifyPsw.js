@@ -8,7 +8,6 @@ import {
     TouchableWithoutFeedback,
     BackAndroid
 } from 'react-native';
-import Logon from "./logon";
 import PopSpan from "./popSpan";
 import HomePage from "../homePage/homePage";
 import {BackBtnSvg} from '../image/backSvg';

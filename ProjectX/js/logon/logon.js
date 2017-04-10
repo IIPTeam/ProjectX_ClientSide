@@ -37,12 +37,12 @@ export default class Logon extends Component {
         const {navigator} = this.props;
         if (navigator) {
             /*Alert.alert(
-                'Submit successfully',
-                'alertMessage',
-                [
-                    {text: 'OK', onPress: () => this._gotoModifyPswPage(this)}
-                ]
-            );*/
+             'Submit successfully',
+             'alertMessage',
+             [
+             {text: 'OK', onPress: () => this._gotoModifyPswPage(this)}
+             ]
+             );*/
             // this._gotoModifyPswPage(this);
             this._gotoPopSpanPage(this);
         }
@@ -65,8 +65,8 @@ export default class Logon extends Component {
         // } else {
         //     sendStaffId = ""
         // }
-        this.popSpan.showPop( "Please input your Staff ID number", "Staff ID", "Send Verification Num", false, this );
-        
+        this.popSpan.showPop("Please input your Staff ID number", "Staff ID", "Send Verification Num", false, this);
+
     }
 
     _validateData(value, type) {
@@ -100,7 +100,7 @@ export default class Logon extends Component {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
 
                 this._hud.show();
-                let url = 'http://192.168.1.103:8090/login/login';
+                /*let url = 'http://192.168.1.103:8090/login/login';
                 let options = {
                     method: 'POST',
                     headers: {
@@ -118,15 +118,15 @@ export default class Logon extends Component {
                 CallService.fetchNetRepository(url, options).then((res) => {
                     this._hud.hide();
                     if (navigator && res) {
-                        if(res) {
+                        if (res) {
                             navigator.push({
-                            name: 'HomePageComponent',
-                            component: HomePage,
-                            params: res
+                                name: 'HomePageComponent',
+                                component: HomePage,
+                                params: res
                             })
                             console.log(res);
                         } else {
-                            Alert.alert("提示","请求失败");
+                            Alert.alert("提示", "请求失败");
                         }
                     }
                 }).then((error) => {
@@ -146,14 +146,19 @@ export default class Logon extends Component {
                             }
                         })
                     }
-                })
-                /*const {navigator} = this.props;
-                 if (navigator) {
-                 navigator.push({
-                 name: 'HomePageComponent',
-                 component: HomePage,
-                 })
-                 }*/
+                })*/
+                const {navigator} = this.props;
+                if (navigator) {
+                    navigator.push({
+                        name: 'HomePageComponent',
+                        component: HomePage,
+                        params: {
+                            userDetails: {
+                                chName: '吴海涛'
+                            }
+                        }
+                    })
+                }
             }
         }
     }
@@ -227,9 +232,11 @@ export default class Logon extends Component {
                 </View>
 
 
-                <PopSpan ref={popSpan => this.popSpan=popSpan} position='top'/>
+                <PopSpan ref={popSpan => this.popSpan = popSpan} position='top'/>
                 <HudView
-                    ref={(hud) => {this._hud = hud}}
+                    ref={(hud) => {
+                        this._hud = hud
+                    }}
                     delay={0}
                 />
             </View>

@@ -3,13 +3,14 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
+    Dimensions,
     Image
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
-import ScrollImage from '../common/scrollImage';
+import MainPage from './mainPage';
 import Echarts from '../Test/echartsNew';
+const {width} = Dimensions.get('window');
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -27,16 +28,6 @@ export default class HomePage extends Component {
     }
 
     render(){
-        var homeView=(
-            <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
-                <View style={styles.homeHeader}>
-                   <Text>Main Page</Text> 
-                </View>
-                <ScrollImage/>
-                    <Text style={{fontSize: 30}}>Hello {this.state.userDetails.chName}</Text>
-                <ScrollImage/>
-            </View>
-        );
         var settingView=(
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffff0044'}]}>
                 <Echarts></Echarts>
@@ -54,7 +45,7 @@ export default class HomePage extends Component {
                     badgeText="9+"//消息数目
                     onPress={() => this.setState({ selectedTab: 'home' })}
                 >
-                    {homeView}
+                    <MainPage userDetails={this.state.userDetails}></MainPage>
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'setting'}
@@ -74,15 +65,20 @@ const styles = StyleSheet.create({
         flex:1,
     },
     center:{
-        justifyContent:'center',
-        alignItems:'center'
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     img: {
         width: 40,
         height: 33,
     },
     homeHeader:{
-       flex:1, 
+        alignItems: 'center',
+        height:52,
+        backgroundColor: '#00897b',
+        justifyContent: 'center',
+        marginBottom:5,
+        width
     },
     FocusBorder:{
         flex:2,

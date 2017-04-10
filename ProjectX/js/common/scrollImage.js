@@ -28,7 +28,7 @@ export default class ScrollImage extends Component{
 
     render(){
       return(
-        <Swiper style={styles.wrapper} height={240}
+        <Swiper style={styles.wrapper} height={200}
                 autoplay={true}
                 autoplayTimeout={3}
                 onMomentumScrollEnd={(e, state, context) => console.log('index:', state.index)}
