@@ -45,7 +45,7 @@ export default class HomePage extends Component {
                     badgeText="9+"//消息数目
                     onPress={() => this.setState({ selectedTab: 'home' })}
                 >
-                    <MainPage userDetails={this.state.userDetails}></MainPage>
+                    <MainPage homeProps={this.props}></MainPage>
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'setting'}

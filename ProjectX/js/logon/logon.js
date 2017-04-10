@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     ScrollView,
     Text,
@@ -8,16 +7,13 @@ import {
     TextInput,
     TouchableHighlight,
     Image,
-    Alert,
     Dimensions
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
 import PopSpan from "./popSpan";
 import HomePage from '../homePage/homePage';
-import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
-import CallService from '../until/CallService';
 
 const {width} = Dimensions.get('window');
 const dismissKeyboard = require('dismissKeyboard');
