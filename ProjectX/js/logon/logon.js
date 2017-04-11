@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    AppRegistry,
+    //AppRegistry,
     StyleSheet,
     ScrollView,
     Text,
@@ -14,7 +14,7 @@ import {
 import ModifyPsw from "./modifyPsw";
 import PopSpan from "./popSpan";
 import HomePage from '../homePage/homePage';
-import TextInputConpt from '../common/TextInputConpt';
+//import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
 import CallService from '../until/CallService';
@@ -70,18 +70,18 @@ export default class Logon extends Component {
     }
 
     _validateData(value, type) {
-        var flag = true;
+        let flag = true;
         const {navigator} = this.props;
-        if (value && value != undefined) {
-            var valueLength = value.length;
-            if (type == "si") {
-                if (valueLength && valueLength != 10) {
+        if (value && value !== undefined) {
+            let valueLength = value.length;
+            if (type === "si") {
+                if (valueLength && valueLength !== 10) {
                     flag = false;
                     this.refs.toast.show(valueLength + ' bit staffId', 500);
                 }
             }
 
-            if (type == "pw") {
+            if (type === "pw") {
                 if (valueLength && valueLength < 6 || valueLength > 12) {
                     flag = false;
                     this.refs.toast.show(valueLength + ' bit password', 500);
@@ -95,7 +95,7 @@ export default class Logon extends Component {
         const {navigator} = this.props;
         dismissKeyboard();
         if (!this.state.staffId || !this.state.password) {
-            this.refs.toast.show('fill in the staff id or password', 500);
+            this.refs.toast.show('fill in the staff id or password ', 500);
         } else {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
 

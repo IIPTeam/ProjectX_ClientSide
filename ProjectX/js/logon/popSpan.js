@@ -1,18 +1,14 @@
-'use strict';  
-import React, { Component } from 'react';  
-import {  
-  StyleSheet,  
-  View,  
-  Image,  
-  Text,  
-  TextInput,
-  TouchableHighlight,  
-  Animated,  
-  Easing,  
-  Dimensions,  
-} from 'react-native';  
-  
-import TimerMixin from 'react-timer-mixin';  
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+    TextInput,
+  TouchableHighlight,
+  Animated,
+  Easing,
+  Dimensions,
+} from 'react-native';
   
 const {width, height} = Dimensions.get('window');  
 const navigatorH = 160; // navigator height  
@@ -21,7 +17,7 @@ const [left, top] = [0, 0];  
 const [middleLeft, middleTop] = [(width - aWidth) / 2, (height - aHeight) / 2];  
   
 const styles = StyleSheet.create({
-    container: {  
+    container: {
         position:"absolute",  
         width:width,  
         height:height,  
@@ -45,12 +41,11 @@ const styles = StyleSheet.create({
         backgroundColor:"#fff",  
         alignItems:"center",  
         justifyContent:"space-between",  
-    },  
+    },
     tipTitleView: {  
         height:60, 
         borderBottomWidth:1, 
         borderBottomColor:"#888", 
-        flexDirection:'column',  
         alignItems:'center',
         flexDirection: 'column',
         justifyContent:'center',
@@ -134,9 +129,9 @@ export default class PopSpan extends Component {  
     }  
 
 
-    showPop (title:string,inputBoxName:string,buttonName:string,isCurrentpage:false,obj:Object) {  
-        this.parent = obj; 
-        this.parent.isCurrentpage = isCurrentpage;
+    showPop (title,inputBoxName,buttonName,isCurrentPage,pageData) {  
+        this.parent = pageData; 
+        this.parent.isCurrentPage = isCurrentPage;
         if(this.state.hide){  
               this.setState({
                 staffId:this.parent.state.staffId, 
@@ -197,7 +192,7 @@ export default class PopSpan extends Component {  
     }  
     
     //取消  
-    iknow(event) {  
+    submitRequest(event) {  
         if(!this.state.hide){  
             this.exitOut();  
         }  
@@ -208,7 +203,7 @@ export default class PopSpan extends Component {  
         //console.log(msg);  
         if(!this.state.hide){  
             this.exitOut();
-            if(!this.parent.isCurrentpage){
+            if(!this.parent.isCurrentPage){
                 this.parent._gotoModifyPswPage();
             }
             // this.parent.setState({staffId:this.parent.staffId});  
@@ -222,12 +217,12 @@ export default class PopSpan extends Component {  
             return (  
             <View style={styles.container}>
                 <Animated.View style={ styles.mask }>
-                    <Text></Text>
+                    <Text> </Text>
                 </Animated.View>
 
                 <Animated.View
                     style={[
-                        styles.tip , 
+                        styles.tip, 
                         {transform: [{  
                             translateY: this.state.offset.interpolate({  
                                 inputRange: [0, 1],  
@@ -237,7 +232,7 @@ export default class PopSpan extends Component {  
                     ]}
                 >
                     <View style={styles.tipTitleView}>
-                        <Text style={styles.tipTitleText} onPress={this.iknow.bind(this)}>{this.state.title}</Text>
+                        <Text style={styles.tipTitleText} onPress={this.submitRequest.bind(this)}>{this.state.title}</Text>
                     </View>
 
 

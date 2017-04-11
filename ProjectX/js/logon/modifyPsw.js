@@ -8,7 +8,6 @@ import {
     TouchableWithoutFeedback,
     BackAndroid
 } from 'react-native';
-import Logon from "./logon";
 import PopSpan from "./popSpan";
 import HomePage from "../homePage/homePage";
 import {BackBtnSvg} from '../image/backSvg';
@@ -32,6 +31,7 @@ export default class ModifyPsw extends Component {
         }
     }
     componentWillUnmount() {
+		this.timer && clearTimeout(this.timer);
         if (Platform.OS === 'android') {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
@@ -49,7 +49,7 @@ export default class ModifyPsw extends Component {
     };
 
     // 返回
-    _pressBackButtoon(){
+    _pressBackButton(){
     	const { navigator } = this.props;
         if(navigator){
             navigator.pop();
@@ -87,10 +87,10 @@ export default class ModifyPsw extends Component {
     }
 
     _timeForResend(){
-        var lefttimerCount=this.state.timerCount;
+        let leftTimerCount=this.state.timerCount;
         this.interval=setInterval(() =>{
-            lefttimerCount=this.state.timerCount-1;
-            if(lefttimerCount===0){
+            leftTimerCount=this.state.timerCount-1;
+            if(leftTimerCount===0){
                 this.interval&&clearInterval(this.interval);
                 this.setState({
                     timerCount:"",
@@ -98,7 +98,7 @@ export default class ModifyPsw extends Component {
                 });
                 }else{
                     this.setState({
-                    timerCount:lefttimerCount,
+                    timerCount:leftTimerCount,
                 });
             }
         },1000)
@@ -110,17 +110,12 @@ export default class ModifyPsw extends Component {
         }
     }
 
-    
-    componentDidUnMount() {
-        this.timer && clearTimeout(this.timer);
-
-    }
 
     render(){
         return (
         	<View style={styles.modifyPswCont}>
 				<View style={styles.header}>
-					<TouchableWithoutFeedback onPress={this._pressBackButtoon.bind(this)}>
+					<TouchableWithoutFeedback onPress={this._pressBackButton.bind(this)}>
 				      {BackBtnSvg}
 				    </TouchableWithoutFeedback>
 					
