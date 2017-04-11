@@ -4,7 +4,8 @@ import {
     Text,
     View,
     Dimensions,
-    Image
+    Image,
+    ScrollView
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
@@ -15,6 +16,7 @@ const {width} = Dimensions.get('window');
 export default class HomePage extends Component {
     constructor(props) {
         super(props);
+        
         this.state={
             selectedTab:'home',//默认选中home
             userDetails:{}

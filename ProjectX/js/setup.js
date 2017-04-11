@@ -12,13 +12,15 @@ import {
   Navigator
 } from 'react-native';
 import Logon from './logon/logon';
-// import HomePage from './homePage/homePage';
+//import HomePage from './homePage/homePage';
+// import ScrollViewDemo from './Test/scrollView';
 
 export default class setup extends Component {
   render() {
     var defaultName = 'logonPage';
     var defaultComponment = Logon;
-    // var defaultComponment = HomePage;
+    //var defaultComponment = HomePage;
+    // var defaultComponment = ScrollViewDemo;
     
     return (
       <Navigator

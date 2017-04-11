@@ -4,7 +4,11 @@ import {
     Text,
     View,
     Dimensions,
-    TouchableWithoutFeedback
+    ScrollView,
+    Image,
+    TextInput,
+    TouchableWithoutFeedback,
+    TouchableOpacity
 } from 'react-native';
 
 import ScrollImage from '../common/scrollImage';
@@ -12,7 +16,7 @@ const {width} = Dimensions.get('window');
 import {BackBtnSvg} from '../image/backSvg';
 import OTApplyMain from '../otApply/otApplyMain';
 
-export default class HomePage extends Component {
+export default class MainPage extends Component {
     constructor(props) {
         super(props);
     }
@@ -32,16 +36,63 @@ export default class HomePage extends Component {
         return (
             <View style={[styles.flex,styles.center,{backgroundColor: '#ffffff'}]}>
                 <View style={styles.homeHeader}>
-                    <Text style={{fontSize: 30}}>Hello {this.props.homeProps.userDetails.chName}</Text>
+                    <Text style={{fontSize: 30}}>Hello {/*this.props.homeProps.userDetails.chName*/}</Text>
                 </View>
-                <ScrollImage/>
-                <View style={styles.toolbox}>
-                    <TouchableWithoutFeedback onPress={()=>{
-                        this._goToOTPage();
-                    }}>
-                        {BackBtnSvg}
-                    </TouchableWithoutFeedback>
-                </View>
+                    <ScrollView  ref={(scrollView) => { _scrollView = scrollView; }}>
+                        <ScrollImage/>
+                        <View style={styles.toolbox}>
+                            <TouchableWithoutFeedback onPress={()=>{
+                                this._goToOTPage();
+                            }}>
+                                {BackBtnSvg}
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                        <View style={{height:30}}>
+                            <Text> 11111111 </Text>
+                        </View>
+                    </ScrollView>
             </View>
         );
     }
@@ -72,5 +123,66 @@ const styles = StyleSheet.create({
     },
     toolbox:{
         backgroundColor: '#00897b',
-    }
+    },
+
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+    title_view:{
+        flexDirection:'row',
+        height:50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:'#27b5ee',
+    },
+    title_text:{
+        color:'white',
+        fontSize:20,
+        textAlign:'center'
+    },
+    three_image_view:{
+        paddingTop: 15,
+        flexDirection:'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor:'white',
+    },
+    vertical_view:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:'white',
+        paddingBottom:15,
+    },
+    top_text:{
+        marginTop:5,
+        color:'black',
+        fontSize:16,
+        textAlign:'center'
+    },
+    rectangle_view:{
+        paddingTop:8,
+        paddingBottom:8,
+        paddingLeft:15,
+        paddingRight:15,
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor:'white',
+        borderBottomColor:'#dedfe0',
+        borderBottomWidth:1,
+    },
+    rectangle_text:{
+        color:'black',
+        fontSize:16,
+        textAlign:'center',
+        paddingLeft:8,
+    },
+    button: {
+        margin: 7,
+        padding: 5,
+        alignItems: 'center',
+        backgroundColor: '#eaeaea',
+        borderRadius: 3,
+    },
 });
