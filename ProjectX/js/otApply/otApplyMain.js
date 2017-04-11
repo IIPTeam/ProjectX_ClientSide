@@ -6,8 +6,17 @@ import {
     ScrollView,
     TouchableHighlight,
 } from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import {
+  CameraKitCamera,
+  CameraKitGalleryView
+} from 'react-native-camera-kit';
 
 export default class OTApplyMain extends Component {
+    constructor(props){
+        super(props)
+        this.state = {date:"2016-05-15"}
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -22,6 +31,18 @@ export default class OTApplyMain extends Component {
                             <Text style={styles.rectangle_text} >
                                 Apply info
                             </Text>
+                            <CameraKitGalleryView
+                                      ref={(gallery) => {
+                                          this.gallery = gallery;
+                                         }}
+                                      style={{width: 100}}
+                                      minimumInteritemSpacing={10}
+                                      minimumLineSpacing={10}
+                                      columnCount={3}
+                                      onTapImage={(event) => {
+                                          //result.nativeEvent.selected - ALL selected images Photos Framework ids 
+                                      }}
+                            />
                         </View>
                     </View>
                     <View style={styles.rectangle_view}>
@@ -50,6 +71,24 @@ export default class OTApplyMain extends Component {
                             <Text style={styles.rectangle_text} >
                                 Date
                             </Text>
+                             <DatePicker
+                                style={{width: 200}}
+                                date={this.state.date}
+                                mode="datetime"
+                                androidMode="spinner"
+                                placeholder="select date"
+                                format="YYYY-MM-DD HH:mm"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                showIcon={false}
+                                customStyles={{
+                                    dateInput: {
+                                        marginLeft: 36,
+                                        borderWidth: 0
+                                      }
+                                }}
+                                onDateChange={(date) => {this.setState({date: date})}}
+                              />   
                         </View>
                     </View>
                     <View style={styles.rectangle_view}>
