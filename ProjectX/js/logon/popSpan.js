@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
+    StyleSheet,
+    View,
+    Text,
     TextInput,
-  TouchableHighlight,
-  Animated,
-  Easing,
-  Dimensions,
+    TouchableHighlight,
+    Animated,
+    Easing,
+    Dimensions,
 } from 'react-native';
+import Toast from 'react-native-easy-toast';
   
 const {width, height} = Dimensions.get('window');  
 const navigatorH = 160; // navigator height  
@@ -107,6 +108,10 @@ const styles = StyleSheet.create({
         width:aWidth*0.8,  
         backgroundColor:'#383838',  
         opacity:0.8,  
+    },
+
+    toastInfo: {
+        backgroundColor: '#000'
     }
 });
   
@@ -189,27 +194,27 @@ export default class PopSpan extends Component {  
             )
         ]).start();
         setTimeout(() => this.setState({hide: true}),500);  
-    }  
+    }
     
-    //取消  
-    submitRequest(event) {  
-        if(!this.state.hide){  
-            this.exitOut();  
-        }  
-    }  
-    
-    //选择  
-    sendRequest(messageData) {  
+    //cancel
+    cancelBack() {
+        this.exitOut();
+    }
+    //submit
+    sendRequest() {  
         //console.log(msg);  
         if(!this.state.hide){  
-            this.exitOut();
-            if(!this.parent.isCurrentPage){
+            if(this.state.staffId.length===10){
+                this.exitOut();
+                this.parent._getNewStaffId(this.state.staffId);
                 this.parent._gotoModifyPswPage();
+            } else {
+                this.refs.popToast.show("need 10 bit Staff ID", 500);
             }
             // this.parent.setState({staffId:this.parent.staffId});  
         }
     }
-  
+
     render() {  
         if(this.state.hide){  
             return (<View/>);
@@ -232,8 +237,9 @@ export default class PopSpan extends Component {  
                     ]}
                 >
                     <View style={styles.tipTitleView}>
-                        <Text style={styles.tipTitleText} onPress={this.submitRequest.bind(this)}>{this.state.title}</Text>
+                        <Text style={styles.tipTitleText} onPress={this.cancelBack.bind(this)}>{this.state.title}</Text>
                     </View>
+
 
 
                     <View style={styles.tipContentView}>
@@ -251,6 +257,7 @@ export default class PopSpan extends Component {  
                         </View>
                         <TouchableHighlight 
                             style={styles.button} 
+                            activeOpacity={0.7}
                             underlayColor='#f0f0f0' 
                             onPress={this.sendRequest.bind(this,this.state.staffId)}
                         >
@@ -258,6 +265,7 @@ export default class PopSpan extends Component {  
                         </TouchableHighlight>
                     </View>
 
+                    <Toast ref="popToast" style={styles.toastInfo} position='top'/>
                 </Animated.View>
             </View>
             );

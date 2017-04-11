@@ -27,10 +27,13 @@ export default class Logon extends Component {
         super(props);
         this.state = {
             password: '',
-            staffId: ''
+            staffId: '',
         };
     }
 
+    _getNewStaffId(NewStaffId){
+        this.state.staffId = NewStaffId;
+    }
     _pressButtoon() {
         const {navigator} = this.props;
         if (navigator) {
@@ -52,6 +55,9 @@ export default class Logon extends Component {
             navigator.push({
                 name: 'ModifyPswPswPageComponent',
                 component: ModifyPsw,
+                params:{
+                    staffId:this.state.staffId,
+                }
             })
         }
     }
@@ -323,7 +329,7 @@ const styles = StyleSheet.create({
         color: '#00897b',
         marginLeft: 5
     },
-    tostInfo: {
+    toastInfo: {
         backgroundColor: '#000'
     }
 });

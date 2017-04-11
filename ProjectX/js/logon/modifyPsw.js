@@ -8,30 +8,33 @@ import {
     TouchableWithoutFeedback,
     BackAndroid
 } from 'react-native';
-import PopSpan from "./popSpan";
-import HomePage from "../homePage/homePage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
+import HomePage from "../homePage/homePage";
 import Platform from 'Platform';
+import Toast from 'react-native-easy-toast';
 
 export default class ModifyPsw extends Component {
 
     constructor(props){
         super(props);
         this.state= {
+            staffId:this.props.staffId,
             timerCount:10,
             timerTitle:'sec left for re-send code'
         };
-        this._timeForResend();
     }
 
     componentWillMount() {
+        //start timer for resend verify code
+        this._timeForResend();
         if (Platform.OS === 'android') {
             BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
     componentWillUnmount() {
-		this.timer && clearTimeout(this.timer);
+		//clear the timer for resend verify code
+        clearInterval(this.interval);
         if (Platform.OS === 'android') {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
@@ -71,12 +74,13 @@ export default class ModifyPsw extends Component {
         this._gotoHomePage();
     }
 
-    _gotoHomePage(){
+    _gotoHomePage(pageDate){
         const { navigator } = this.props;
         if(navigator){
             navigator.push({
                     name:'HomePageComponent',
                     component:HomePage,
+                    // params: pageDate
                     params: {
                         userDetails: {
                             chName: '吴海涛'
@@ -106,8 +110,18 @@ export default class ModifyPsw extends Component {
 
     _resendVerifyCode(){
         if (!this.state.timerCount) {
-            this.popSpan.showPop( "Please input your Staff ID number", "Staff ID", "Send Verification Num", true, this );
+            this._resendVerifyCodeCallService();
+
         }
+    }
+
+    _resendVerifyCodeCallService(){
+        if (this.state.staffId&&this.state.staffId.length===10) {
+            this.refs.toast.show("send verify code successfully", 500);
+        } else {
+            this.refs.toast.show("send verify code FAILED", 500);
+        }
+
     }
 
 
@@ -151,12 +165,12 @@ export default class ModifyPsw extends Component {
 								keyboardType='numeric'
 							/>
 						</View>
-						
+						<Toast ref="toast" style={styles.toastInfo} position='top'/>
 					</View>
 					<View style={styles.bottomCont}>
                     <TouchableHighlight
                         style={styles.resendButton}
-                        // activeOpacity={0.7}
+                        activeOpacity={0.7}
                         underlayColor='#00897b'
                         onPress={this._resendVerifyCode.bind(this)}
                     >
@@ -175,7 +189,6 @@ export default class ModifyPsw extends Component {
 					<Text style={styles.verifyBtnText}>Submit update password</Text>
 					</TouchableHighlight>
 				</View>
-                <PopSpan ref={popSpan => this.popSpan=popSpan} position='top'/>
 			</View>
         );
     }
