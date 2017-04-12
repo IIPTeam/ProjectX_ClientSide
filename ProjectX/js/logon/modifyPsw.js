@@ -20,6 +20,8 @@ export default class ModifyPsw extends Component {
         super(props);
         this.state= {
             staffId:this.props.staffId,
+            verifyCode:'',
+            newPsw:'',
             timerCount:10,
             timerTitle:'sec left for re-send code'
         };
@@ -61,17 +63,15 @@ export default class ModifyPsw extends Component {
 
     //提交修改密码
     _pressConfirmButtoon(){
-    	/*const { navigator } = this.props;
-        if(navigator){
-        	Alert.alert(
-                'Submit successfully',
-                'alertMessage',
-                [
-                  {text: 'OK', onPress: () => this._gotoHomePage(this)}
-                ]
-            );
-        }*/
-        this._gotoHomePage();
+
+        if(this._checkValidation()){
+            this.refs.toast.show("successfully!!!", 500);
+
+            this._gotoHomePage();
+        } else {
+            this.refs.toast.show(" 4 bit verify code or 6-12 bit new password", 1000);
+        }
+        
     }
 
     _gotoHomePage(pageDate){
@@ -124,6 +124,12 @@ export default class ModifyPsw extends Component {
 
     }
 
+    _checkValidation(){
+        let pwExp=/^[0-9a-zA-Z]{6,12}$/;
+        let verifyExp=/^[0-9]{6}$/;
+        return verifyExp.test(this.state.verifyCode)&&pwExp.test(this.state.newPsw);
+
+    }
 
     render(){
         return (
@@ -153,6 +159,8 @@ export default class ModifyPsw extends Component {
 								underlineColorAndroid="transparent"
 								autoCapitalize="none"
 								autoCorrect={false}
+                                onChangeText={(verifyCode) => this.setState({verifyCode})}
+                                value={this.state.verifyCode}
 							/>
 						</View>
 						<View style={styles.inputBox}>
@@ -163,6 +171,8 @@ export default class ModifyPsw extends Component {
 								autoCapitalize="none"
 								autoCorrect={false}
 								keyboardType='numeric'
+                                onChangeText={(newPsw) => this.setState({newPsw})}
+                                value={this.state.newPsw}
 							/>
 						</View>
 						<Toast ref="toast" style={styles.toastInfo} position='top'/>
