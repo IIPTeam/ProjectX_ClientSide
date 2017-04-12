@@ -74,7 +74,7 @@ _pressPersonBtn(){
                  <TabNavigator.Item
                     selected={this.state.selectedTab === 'personal'}
                     title="personal"
-                    renderIcon={() => {PersonalBtnSvg}}
+                    renderIcon={() => <Image style={styles.img} source={require('../image/personalPage/man.jpg') }/>}
                     renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
                     onPress={this._pressPersonBtn.bind(this)}
                 >
