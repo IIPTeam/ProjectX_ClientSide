@@ -31,18 +31,6 @@ export default class OTApplyMain extends Component {
                             <Text style={styles.rectangle_text} >
                                 Apply info
                             </Text>
-                            <CameraKitGalleryView
-                                      ref={(gallery) => {
-                                          this.gallery = gallery;
-                                         }}
-                                      style={{width: 100}}
-                                      minimumInteritemSpacing={10}
-                                      minimumLineSpacing={10}
-                                      columnCount={3}
-                                      onTapImage={(event) => {
-                                          //result.nativeEvent.selected - ALL selected images Photos Framework ids 
-                                      }}
-                            />
                         </View>
                     </View>
                     <View style={styles.rectangle_view}>

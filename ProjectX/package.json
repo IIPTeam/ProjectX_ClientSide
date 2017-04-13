@@ -11,7 +11,6 @@
     "native-echarts": "^0.3.0",
     "react": "15.4.2",
     "react-native": "0.42.3",
-    "react-native-camera-kit": "^5.2.13",
     "react-native-datepicker": "^1.4.6",
     "react-native-easy-hud": "0.0.8",
     "react-native-easy-toast": "^1.0.5",
