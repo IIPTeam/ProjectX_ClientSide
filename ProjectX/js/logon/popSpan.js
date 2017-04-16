@@ -10,7 +10,10 @@ import {
     Dimensions,
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
-  
+import HudView from 'react-native-easy-hud';
+import ModifyPsw from "./modifyPsw";
+import CallService from "../until/CallService";
+
 const {width, height} = Dimensions.get('window');  
 const navigatorH = 160; // navigator height  
 const [aWidth, aHeight] = [330, 260];  
@@ -129,7 +132,10 @@ export default class PopSpan extends Component {  
             hide:true,    
             staffId:"",    
         };
-         
+        this.pagedata={
+            staffId:this.state.staffId,
+            vCode:''
+        };
         this.parent = {}; 
     }  
 
@@ -200,14 +206,69 @@ export default class PopSpan extends Component {  
     cancelBack() {
         this.exitOut();
     }
+
+    gotoModifyPswPage() {
+        const {navigator} = this.parent.props;
+        if (navigator) {
+            navigator.push({
+                name: 'ModifyPswPswPageComponent',
+                component: ModifyPsw,
+                params:{
+                    pageData:this.pagedata
+                }
+            })
+        }
+        console.log(navigator);
+    }
+
+    callservices(){
+        let url = 'http://192.168.1.103:8083/fgtPaswrd/fgtPaswrd';
+        let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user": {
+                    "userName": this.state.staffId
+                }
+            })
+        };
+
+
+
+        CallService.fetchNetRepository(url, options).then((res) => {
+            this._hud.hide();
+            if (res) {
+                res.staffId= this.state.staffId;
+                console.log(res);
+                this.pagedata = res ;                   
+            } else {
+                if (!res.vCode.validUesr){
+                   Alert.alert("Failed", "unknow");
+                }
+            }
+        }).then((error) => {
+            this._hud.hide();
+             this.pagedata =  error;
+            console.log(error);
+        }).catch((error) => {
+            this._hud.hide();
+             // this.pagedata =  error;
+            console.log(error);
+        })
+    }
+
     //submit
     sendRequest() {  
         //console.log(msg);  
         if(!this.state.hide){  
             if(this.state.staffId.length===10){
+                this._hud.show();
+                // this.callservices();
+                this.gotoModifyPswPage();
                 this.exitOut();
-                this.parent._getNewStaffId(this.state.staffId);
-                this.parent._gotoModifyPswPage();
             } else {
                 this.refs.popToast.show("need 10 bit Staff ID", 500);
             }
@@ -255,6 +316,12 @@ export default class PopSpan extends Component {  
                                 value={this.state.staffId}
                             />
                         </View>
+                        <HudView
+                            ref={(hud) => {
+                                this._hud = hud
+                            }}
+                            delay={0}
+                        />
                         <TouchableHighlight 
                             style={styles.button} 
                             activeOpacity={0.7}

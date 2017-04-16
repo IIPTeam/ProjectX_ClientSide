@@ -8,21 +8,22 @@ import {
     TouchableWithoutFeedback,
     BackAndroid
 } from 'react-native';
+import Toast from 'react-native-easy-toast';
+import HudView from 'react-native-easy-hud';
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
 import HomePage from "../homePage/homePage";
 import Platform from 'Platform';
-import Toast from 'react-native-easy-toast';
 
 export default class ModifyPsw extends Component {
 
     constructor(props){
         super(props);
         this.state= {
-            staffId:this.props.staffId,
-            verifyCode:'',
+            staffId:this.props.pageData.staffId,
+            //verifyCode:this.props.pageData.vCodes,
             newPsw:'',
-            timerCount:10,
+            timerCount:1,
             timerTitle:'sec left for re-send code'
         };
     }
@@ -69,7 +70,7 @@ export default class ModifyPsw extends Component {
 
             this._gotoHomePage();
         } else {
-            this.refs.toast.show(" 4 bit verify code or 6-12 bit new password", 1000);
+            this.refs.toast.show(" 6 bit verify code or 6-12 bit new password", 1000);
         }
         
     }
@@ -110,18 +111,58 @@ export default class ModifyPsw extends Component {
 
     _resendVerifyCode(){
         if (!this.state.timerCount) {
-            this._resendVerifyCodeCallService();
+            this._resendVerifyCodeCallService(this);
 
         }
     }
 
     _resendVerifyCodeCallService(){
         if (this.state.staffId&&this.state.staffId.length===10) {
-            this.refs.toast.show("send verify code successfully", 500);
+            // this._callForgotPaw().then((res) => {
+            //     if (!res.err){
+                    // this.state.verifyCode = res.vCode.vCode;
+                    this.refs.toast.show("send verify code successfully", 500);                    
+            //     }
+            //     this.refs.toast.show("send verify code FAILED", 500);
+            // });
         } else {
-            this.refs.toast.show("send verify code FAILED", 500);
+                this.refs.toast.show("staffId is : "+this.state.staffId, 500);
+        }
+    }
+
+    _callForgotPaw(){
+        this._hud.show();
+        let url = 'http://192.168.1.103:8083/fgtPaswrd/fgtPaswrd';
+        let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user": {
+                    "userName": this.state.staffId
+                }
+            })
         }
 
+        CallService.fetchNetRepository(url, options).then((res) => {
+            if (res) {
+                this._hud.hide();
+                console.log(res);
+                return res;
+            } else {
+                if (!res.vCode.validUesr){
+                   return res.err="this is a error";
+                }
+            }
+        }).then((error) => {
+            this._hud.hide();
+            console.log(error);
+        }).catch((error) => {
+            this._hud.hide();
+            console.log(error);
+        })
     }
 
     _checkValidation(){
@@ -171,10 +212,17 @@ export default class ModifyPsw extends Component {
 								autoCapitalize="none"
 								autoCorrect={false}
 								keyboardType='numeric'
+                                secureTextEntry={true}
                                 onChangeText={(newPsw) => this.setState({newPsw})}
                                 value={this.state.newPsw}
 							/>
 						</View>
+                        <HudView
+                            ref={(hud) => {
+                                this._hud = hud
+                            }}
+                            delay={0}
+                        />
 						<Toast ref="toast" style={styles.toastInfo} position='top'/>
 					</View>
 					<View style={styles.bottomCont}>
