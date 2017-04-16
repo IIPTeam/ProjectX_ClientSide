@@ -122,7 +122,9 @@ export default class ModifyPsw extends Component {
             // this._callForgotPaw().then((res) => {
             //     if (!res.err){
                     // this.state.verifyCode = res.vCode.vCode;
-                    this.refs.toast.show("send verify code successfully", 500);                    
+                    this.refs.toast.show("send verify code successfully", 500);   
+                    this.state.timerCount=6;
+                    this._timeForResend();                 
             //     }
             //     this.refs.toast.show("send verify code FAILED", 500);
             // });
