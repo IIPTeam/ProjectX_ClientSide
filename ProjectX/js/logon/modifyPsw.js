@@ -20,10 +20,11 @@ export default class ModifyPsw extends Component {
     constructor(props){
         super(props);
         this.state= {
-            staffId:this.props.pageData.staffId,
+          //  staffId:this.props.pageData.staffId,
+          staffId:"1234567890",
             //verifyCode:this.props.pageData.vCodes,
             newPsw:'',
-            timerCount:1,
+            timerCount:5,
             timerTitle:'sec left for re-send code'
         };
     }
@@ -121,7 +122,9 @@ export default class ModifyPsw extends Component {
             // this._callForgotPaw().then((res) => {
             //     if (!res.err){
                     // this.state.verifyCode = res.vCode.vCode;
-                    this.refs.toast.show("send verify code successfully", 500);                    
+                    this.refs.toast.show("send verify code successfully", 500);   
+                    this.state.timerCount=6;
+                    this._timeForResend();                 
             //     }
             //     this.refs.toast.show("send verify code FAILED", 500);
             // });
