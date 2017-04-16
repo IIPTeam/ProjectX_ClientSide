@@ -11,16 +11,20 @@ import {
     Alert,
     Console
 } from 'react-native';
+import RNAnimatedTabs from 'rn-animated-tabs';
 import Tabs from 'react-native-tabs';
 import PersonalPage from "./personalPage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
+const DATA = ['OT Content', 'Leave Content'];
 
 export default class ApplicationPage extends Component {
 
     constructor(props){
         super(props);
-       this.state = {page:'Submited'};
+            this.state = {
+            currentTab: 0
+        }
     }
     _pressBackButtoon(){
         const { navigator } = this.props;
@@ -31,7 +35,7 @@ export default class ApplicationPage extends Component {
             })
         }
     }
-   
+   handleTabChange = (value) => this.setState({ currentTab: value });
     render(){
         var self = this;
         return (
@@ -49,27 +53,15 @@ export default class ApplicationPage extends Component {
 					}}>{MenuBtnSvg}</TouchableWithoutFeedback>
 				</View>
 				<View style={styles.container}>
-                    <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
-                          selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
-                        <Text name="Submited">Submited</Text>
-                        <Text name="Approved" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Approved</Text>
-                        <Text name="Denied">Denied</Text>
-                        <Text name="History" selectedStyle={{color:'green'}}>History</Text>
-                    </Tabs>
-                    <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
-                          selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
-                        <Text name="OTApplication" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>OT Application</Text>
-                        <Text name="leaveApplication" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Leave Application</Text>
-                    </Tabs>
-                      <Text style={styles.welcome}>
-                          Welcome to React Native
-                      </Text>
-                      <Text style={styles.instructions}>
-                          Selected page: {this.state.page}
-                      </Text>
+                    <RNAnimatedTabs
+                      tabTitles={['OT Application', 'Leave Application']}
+                      onChangeTab={this.handleTabChange} />
+                     <View style={[styles.container, styles.center]}>
+                       <Text>
+                         {DATA[this.state.currentTab]}
+                       </Text>
+                   </View>
                 </View>
-				
-				
 			</View>
         );
     }
