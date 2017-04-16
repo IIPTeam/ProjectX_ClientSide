@@ -11,15 +11,16 @@ import {
     Dimensions
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
+import CallService from "../until/CallService";
 import PopSpan from "./popSpan";
 import HomePage from '../homePage/homePage';
 //import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
 import Toast from 'react-native-easy-toast';
+import HudView from 'react-native-easy-hud';
 
 const {width} = Dimensions.get('window');
 const dismissKeyboard = require('dismissKeyboard');
-import HudView from 'react-native-easy-hud';
 
 export default class Logon extends Component {
 
@@ -28,6 +29,7 @@ export default class Logon extends Component {
         this.state = {
             password: '',
             staffId: '',
+            // staffId: '1231231231',
         };
     }
 
@@ -49,17 +51,19 @@ export default class Logon extends Component {
         }
     }
 
-    _gotoModifyPswPage() {
+    _gotoModifyPswPage(pageData) {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
                 name: 'ModifyPswPswPageComponent',
                 component: ModifyPsw,
                 params:{
+                    pageData:pageData,
                     staffId:this.state.staffId,
                 }
             })
         }
+        console.log(navigator);
     }
 
     _gotoPopSpanPage() {
@@ -104,7 +108,7 @@ export default class Logon extends Component {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
 
                 this._hud.show();
-                /*let url = 'http://192.168.1.103:8090/login/login';
+                let url = 'http://192.168.1.103:8090/login/login';
                 let options = {
                     method: 'POST',
                     headers: {
@@ -150,8 +154,8 @@ export default class Logon extends Component {
                             }
                         })
                     }
-                })*/
-                const {navigator} = this.props;
+                })
+               /* const {navigator} = this.props;
                 if (navigator) {
                     navigator.push({
                         name: 'HomePageComponent',
@@ -162,7 +166,7 @@ export default class Logon extends Component {
                             }
                         }
                     })
-                }
+                }*/
             }
         }
     }
