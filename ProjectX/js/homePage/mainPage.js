@@ -15,10 +15,12 @@ import ScrollImage from '../common/scrollImage';
 const {width} = Dimensions.get('window');
 import {BackBtnSvg} from '../image/backSvg';
 import OTApplyMain from '../otApply/otApplyMain';
+import SwipeList from '../common/swipeList';
 
 export default class MainPage extends Component {
     constructor(props) {
         super(props);
+
     }
 
     _goToOTPage(){
@@ -40,57 +42,19 @@ export default class MainPage extends Component {
                 </View>
                     <ScrollView  ref={(scrollView) => { _scrollView = scrollView; }}>
                         <ScrollImage/>
-                        <View style={styles.toolbox}>
-                            <TouchableWithoutFeedback onPress={()=>{
-                                this._goToOTPage();
-                            }}>
-                                {BackBtnSvg}
-                            </TouchableWithoutFeedback>
+                        <View>
+
                         </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
-                        </View>
-                        <View style={{height:30}}>
-                            <Text> 11111111 </Text>
+                        {/*<View style={styles.toolbox}>*/}
+                            {/*<TouchableWithoutFeedback onPress={()=>{*/}
+                                {/*this._goToOTPage();*/}
+                            {/*}}>*/}
+                                {/*{BackBtnSvg}*/}
+                            {/*</TouchableWithoutFeedback>*/}
+                        {/*</View>*/}
+
+                        <View>
+                            <SwipeList />
                         </View>
                     </ScrollView>
             </View>
