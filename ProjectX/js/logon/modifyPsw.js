@@ -23,7 +23,7 @@ export default class ModifyPsw extends Component {
             staffId:this.props.pageData.staffId,
             //verifyCode:this.props.pageData.vCodes,
             newPsw:'',
-            timerCount:1,
+            timerCount:5,
             timerTitle:'sec left for re-send code'
         };
     }
