@@ -20,7 +20,8 @@ export default class ModifyPsw extends Component {
     constructor(props){
         super(props);
         this.state= {
-            staffId:this.props.pageData.staffId,
+          //  staffId:this.props.pageData.staffId,
+          staffId:"1234567890",
             //verifyCode:this.props.pageData.vCodes,
             newPsw:'',
             timerCount:5,
