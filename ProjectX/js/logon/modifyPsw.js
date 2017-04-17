@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {
 	StyleSheet,
+    ScrollView,
     Text,
     View,
     TextInput,
     TouchableHighlight,
     TouchableWithoutFeedback,
-    BackAndroid
+    BackAndroid,
+    Dimensions
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import HudView from 'react-native-easy-hud';
@@ -14,7 +16,8 @@ import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
 import HomePage from "../homePage/homePage";
 import Platform from 'Platform';
-
+const dismissKeyboard = require('dismissKeyboard');
+const {width} = Dimensions.get('window');
 export default class ModifyPsw extends Component {
 
     constructor(props){
@@ -24,6 +27,7 @@ export default class ModifyPsw extends Component {
           staffId:"1234567890",
             //verifyCode:this.props.pageData.vCodes,
             newPsw:'',
+            verifyCode:'',
             timerCount:5,
             timerTitle:'sec left for re-send code'
         };
@@ -65,7 +69,7 @@ export default class ModifyPsw extends Component {
 
     //提交修改密码
     _pressConfirmButtoon(){
-
+        dismissKeyboard();
         if(this._checkValidation()){
             this.refs.toast.show("successfully!!!", 500);
 
@@ -118,6 +122,7 @@ export default class ModifyPsw extends Component {
     }
 
     _resendVerifyCodeCallService(){
+        dismissKeyboard();
         if (this.state.staffId&&this.state.staffId.length===10) {
             // this._callForgotPaw().then((res) => {
             //     if (!res.err){
@@ -177,20 +182,28 @@ export default class ModifyPsw extends Component {
 
     render(){
         return (
-        	<View style={styles.modifyPswCont}>
-				<View style={styles.header}>
-					<TouchableWithoutFeedback onPress={this._pressBackButton.bind(this)}>
-				      {BackBtnSvg}
-				    </TouchableWithoutFeedback>
-					
-					<View style={styles.headerText}>
-						<Text style={styles.fogtPswTxt}>Modify Password</Text>
-					</View>
-					<TouchableWithoutFeedback onPress={() => {
-						
-					}}>{MenuBtnSvg}</TouchableWithoutFeedback>
-				</View>
-				<View style={styles.container}>
+            <View style={styles.modifyPswCont}>
+                <View style={styles.header}>
+                    <TouchableWithoutFeedback onPress={this._pressBackButton.bind(this)}>
+                      {BackBtnSvg}
+                    </TouchableWithoutFeedback>
+                    
+                    <View style={styles.headerText}>
+                        <Text style={styles.fogtPswTxt}>Modify Password</Text>
+                    </View>
+                    <TouchableWithoutFeedback onPress={() => {
+                        
+                    }}>{MenuBtnSvg}</TouchableWithoutFeedback>
+                </View>
+                <View style={styles.container}>
+                    <ScrollView
+                            ref={(scrollView) => {
+                                _scrollView = scrollView;
+                            }}
+                            automaticallyAdjustContentInsets={false}
+                            horizontal={false}
+                            style={[styles.scrollView, styles.horizontalScrollView]}
+                        >
 					<View style={styles.topCont}>
 						<View style={styles.msgInputBox}>
 							<Text style={styles.senMessage}>Successfully sent SMS to 136****1987. Please check and fill in below form.</Text>
@@ -208,18 +221,29 @@ export default class ModifyPsw extends Component {
 							/>
 						</View>
 						<View style={styles.inputBox}>
-							<Text style={styles.modifyPswText}>New Password:</Text>
+							<Text style={styles.modifyPswText}>New  Password:</Text>
 							<TextInput
 								style={styles.staffIdInput}
 								underlineColorAndroid="transparent"
 								autoCapitalize="none"
 								autoCorrect={false}
-								keyboardType='numeric'
                                 secureTextEntry={true}
                                 onChangeText={(newPsw) => this.setState({newPsw})}
-                                value={this.state.newPsw}
+                                value={this.state.newPsw}s
 							/>
 						</View>
+                        <View style={styles.inputBox}>
+                            <Text style={styles.modifyPswText}>Confirm Password:</Text>
+                            <TextInput
+                                style={styles.staffIdInput}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                secureTextEntry={true}
+                                onChangeText={(conNewPsw) => this.setState({conNewPsw})}
+                                value={this.state.conNewPsw}
+                            />
+                        </View>
                         <HudView
                             ref={(hud) => {
                                 this._hud = hud
@@ -238,19 +262,20 @@ export default class ModifyPsw extends Component {
 						<Text style={styles.resendText}>{this.state.timerCount} {this.state.timerTitle}</Text>
                     </TouchableHighlight>
 					</View>
-				</View>
-				
-				<View style={styles.footer}>
-					<TouchableHighlight
-						onPress={this._pressConfirmButtoon.bind(this)}
-						activeOpacity={0.7}
-						style={styles.verifyButton}
-						underlayColor='#008080'
-					>
-					<Text style={styles.verifyBtnText}>Submit update password</Text>
-					</TouchableHighlight>
-				</View>
-			</View>
+                </ScrollView>
+                </View>
+                
+                <View style={styles.footer}>
+                    <TouchableHighlight
+                        onPress={this._pressConfirmButtoon.bind(this)}
+                        activeOpacity={0.7}
+                        style={styles.verifyButton}
+                        underlayColor='#008080'
+                    >
+                    <Text style={styles.verifyBtnText}>Submit update password</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
         );
     }
 }
@@ -260,6 +285,9 @@ const styles = StyleSheet.create({
 	modifyPswCont:{
 		flex:1,
 	},
+    scrollView: {
+        height: 30,
+    },
 	header:{
 		flexDirection: 'row',
         alignItems: 'center',
