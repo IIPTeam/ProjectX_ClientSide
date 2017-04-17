@@ -8,11 +8,13 @@ import {
     TextInput,
     TouchableHighlight,
     Image,
-    Dimensions
+    Dimensions,
+    BackAndroid
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
 import CallService from "../until/CallService";
 import PopSpan from "./popSpan";
+import Platform from 'Platform';
 import HomePage from '../homePage/homePage';
 //import TextInputConpt from '../common/TextInputConpt';
 import {CommonStyle} from '../theme/common-style';
@@ -27,11 +29,32 @@ export default class Logon extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isShow:false,
             password: '',
             staffId: '',
             // staffId: '1231231231',
         };
     }
+
+    componentWillMount() {
+        if (Platform.OS === 'android') {
+            BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+    componentWillUnmount() {
+        if (Platform.OS === 'android') {
+            BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+    onBackAndroid = () => {
+        if(this.state.isShow){ 
+            this.state.isShow=false;
+            console.log("this is close "+this.state.isShow);
+            return true;//接管默认行为
+        }
+        return false;//默认行为
+    }
+
 
     _getNewStaffId(NewStaffId){
         this.state.staffId = NewStaffId;
@@ -73,6 +96,8 @@ export default class Logon extends Component {
         // } else {
         //     sendStaffId = ""
         // }
+        this.state.isShow=true;
+        console.log("this is open "+this.state.isShow);
         this.popSpan.showPop("Please input your Staff ID number", "Staff ID", "Send Verification Num", false, this);
 
     }

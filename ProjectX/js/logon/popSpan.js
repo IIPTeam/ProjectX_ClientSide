@@ -8,116 +8,20 @@ import {
     Animated,
     Easing,
     Dimensions,
+    BackAndroid
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import HudView from 'react-native-easy-hud';
 import ModifyPsw from "./modifyPsw";
 import CallService from "../until/CallService";
-
+import Platform from 'Platform';
+const dismissKeyboard = require('dismissKeyboard');
 const {width, height} = Dimensions.get('window');  
-const navigatorH = 160; // navigator height  
+const navigatorH = 100; // navigator height  
 const [aWidth, aHeight] = [330, 260];  
 const [left, top] = [0, 0];  
 const [middleLeft, middleTop] = [(width - aWidth) / 2, (height - aHeight) / 2];  
-  
-const styles = StyleSheet.create({
-    container: {
-        position:"absolute",  
-        width:width,  
-        height:height,  
-        left:left,  
-        top:top,  
-    },  
-    mask: {  
-        justifyContent:"center",  
-        backgroundColor:"#383838",  
-        opacity:0.8,  
-        position:"absolute",  
-        width:width,  
-        height:height,  
-        left:left,  
-        top:top,  
-    },  
-    tip: {  
-        width:aWidth,  
-        height:aHeight,  
-        left:middleLeft,  
-        backgroundColor:"#fff",  
-        alignItems:"center",  
-        justifyContent:"space-between",  
-    },
-    tipTitleView: {  
-        height:60, 
-        borderBottomWidth:1, 
-        borderBottomColor:"#888", 
-        alignItems:'center',
-        flexDirection: 'column',
-        justifyContent:'center',
-        paddingLeft:12,  
-        paddingRight:12,  
-    },
-    tipTitleText:{  
-        color:"#00897b",  
-        fontSize:18,  
-    },
-    tipContentView: {  
-        width:aWidth,  
-        height:200,  
-        flexDirection:'column',  
-        alignItems:'center',  
-        justifyContent:'center',  
-    },  
-    tipInputBox: {  
-        height:60,
-        width:aWidth-40,
-        borderWidth:1, 
-        borderColor:"#00897b",   
-        alignItems:'center',
-        flexDirection: 'row',
-        justifyContent:'center',
-        paddingLeft:12,  
-        paddingRight:12,
-        marginBottom: 30,  
-    },  
-    tipText:{  
-        color:"#00897b",  
-        fontSize:18,
-        textAlign:"left",  
-    },
-    userNameInput:{
-        height:60,  
-        width:aWidth-130,
-        marginLeft: 10,  
-    },  
-    button: {  
-        height: 45,
-        width:aWidth-40,
-        backgroundColor: '#00897b',  
-        justifyContent: 'center',  
-        // borderColor: '#e6454a',  
-        //borderWidth: 1,  
-        //borderRadius: 4,  
-        //alignSelf: 'stretch',  
-        //marginLeft: 10,  
-        //marginRight: 10,  
-    },  
-    buttonText: {  
-        color:"#fff",  
-        fontSize:18,  
-        textAlign:"center",  
-    },  
-    gap:{  
-        height:1,  
-        width:aWidth*0.8,  
-        backgroundColor:'#383838',  
-        opacity:0.8,  
-    },
-
-    toastInfo: {
-        backgroundColor: '#000'
-    }
-});
-  
+   
 export default class PopSpan extends Component {  
 
     constructor(props) {  
@@ -154,7 +58,22 @@ export default class PopSpan extends Component {  
         }  
     } 
 
-    componentDidMount() {  
+    componentWillMount() {
+        if (Platform.OS === 'android') {
+            BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+    componentWillUnmount() {
+        if (Platform.OS === 'android') {
+            BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+    onBackAndroid = () => {
+        if(!this.state.hide){ 
+            this.exitOut();
+            return true;//接管默认行为
+        }
+        return false;
     }
 
     //显示动画  
@@ -260,9 +179,14 @@ export default class PopSpan extends Component {  
         })
     }
 
+    hideKeyboard(){
+        dismissKeyboard();
+    }
+
     //submit
     sendRequest() {  
         //console.log(msg);  
+        dismissKeyboard();
         if(!this.state.hide){  
             if(this.state.staffId.length===10){
                 this._hud.show();
@@ -298,12 +222,18 @@ export default class PopSpan extends Component {  
                     ]}
                 >
                     <View style={styles.tipTitleView}>
-                        <Text style={styles.tipTitleText} onPress={this.cancelBack.bind(this)}>{this.state.title}</Text>
+                        <Text style={styles.tipTitleText}>{this.state.title}</Text>
                     </View>
 
 
 
                     <View style={styles.tipContentView}>
+                        <HudView
+                            ref={(hud) => {
+                                this._hud = hud
+                            }}
+                            delay={0}
+                        />
                         <View style={styles.tipInputBox}>                        
                             <Text style={styles.tipText}>{this.state.inputBoxName}</Text>
                             <TextInput
@@ -312,16 +242,11 @@ export default class PopSpan extends Component {  
                                 testID="staffId"
                                 autoCapitalize="none"
                                 autoCorrect={false}
+                                onBlur={() => this.hideKeyboard()}
                                 onChangeText={(staffId) => this.setState({staffId})}
                                 value={this.state.staffId}
                             />
                         </View>
-                        <HudView
-                            ref={(hud) => {
-                                this._hud = hud
-                            }}
-                            delay={0}
-                        />
                         <TouchableHighlight 
                             style={styles.button} 
                             activeOpacity={0.7}
@@ -338,4 +263,102 @@ export default class PopSpan extends Component {  
             );
         }
     } 
-}  
+} 
+const styles = StyleSheet.create({
+    container: {
+        position:"absolute",  
+        width:width,  
+        height:height,  
+        left:left,  
+        top:top,  
+    },  
+    mask: {  
+        justifyContent:"center",  
+        backgroundColor:"#383838",  
+        opacity:0.8,  
+        position:"absolute",  
+        width:width,  
+        height:height,  
+        left:left,  
+        top:top,  
+    },  
+    tip: {  
+        width:aWidth,  
+        height:aHeight,  
+        left:middleLeft,  
+        backgroundColor:"#fff",  
+        alignItems:"center",  
+        justifyContent:"space-between",  
+    },
+    tipTitleView: {  
+        height:60, 
+        borderBottomWidth:1, 
+        borderBottomColor:"#888", 
+        alignItems:'center',
+        flexDirection: 'column',
+        justifyContent:'center',
+        paddingLeft:12,  
+        paddingRight:12,  
+    },
+    tipTitleText:{  
+        color:"#00897b",  
+        fontSize:18,  
+    },
+    tipContentView: {  
+        width:aWidth,  
+        height:200,  
+        flexDirection:'column',  
+        alignItems:'center',  
+        justifyContent:'center',  
+    },  
+    tipInputBox: {  
+        height:60,
+        width:aWidth-40,
+        borderWidth:1, 
+        borderColor:"#00897b",   
+        alignItems:'center',
+        flexDirection: 'row',
+        justifyContent:'center',
+        paddingLeft:12,  
+        paddingRight:12,
+        marginBottom: 30,  
+    },  
+    tipText:{  
+        color:"#00897b",  
+        fontSize:18,
+        textAlign:"left",  
+    },
+    userNameInput:{
+        height:60,  
+        width:aWidth-130,
+        marginLeft: 10,  
+    },  
+    button: {  
+        height: 45,
+        width:aWidth-40,
+        backgroundColor: '#00897b',  
+        justifyContent: 'center',  
+        // borderColor: '#e6454a',  
+        //borderWidth: 1,  
+        //borderRadius: 4,  
+        //alignSelf: 'stretch',  
+        //marginLeft: 10,  
+        //marginRight: 10,  
+    },  
+    buttonText: {  
+        color:"#fff",  
+        fontSize:18,  
+        textAlign:"center",  
+    },  
+    gap:{  
+        height:1,  
+        width:aWidth*0.8,  
+        backgroundColor:'#383838',  
+        opacity:0.8,  
+    },
+
+    toastInfo: {
+        backgroundColor: '#000'
+    }
+});
+  
