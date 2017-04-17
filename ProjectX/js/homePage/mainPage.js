@@ -4,18 +4,14 @@ import {
     Text,
     View,
     Dimensions,
-    ScrollView,
-    Image,
-    TextInput,
-    TouchableWithoutFeedback,
-    TouchableOpacity
+    ScrollView
 } from 'react-native';
 
 import ScrollImage from '../common/scrollImage';
 const {width} = Dimensions.get('window');
-import {BackBtnSvg} from '../image/backSvg';
 import OTApplyMain from '../otApply/otApplyMain';
 import SwipeList from '../common/swipeList';
+import OfficeSupplyIcon from '../image/OfficeSupplyIcon';
 
 export default class MainPage extends Component {
     constructor(props) {
@@ -23,7 +19,7 @@ export default class MainPage extends Component {
 
     }
 
-    _goToOTPage(){
+    _goToOTPage() {
         const {navigator} = this.props.homeProps;
         if (navigator) {
             navigator.push({
@@ -34,39 +30,61 @@ export default class MainPage extends Component {
         }
     }
 
-    render(){
+    render() {
         return (
-            <View style={[styles.flex,styles.center,{backgroundColor: '#ffffff'}]}>
+            <View style={[styles.flex, styles.center, {backgroundColor: '#ffffff'}]}>
                 <View style={styles.homeHeader}>
                     <Text style={{fontSize: 30}}>Hello {/*this.props.homeProps.userDetails.chName*/}</Text>
                 </View>
-                    <ScrollView  ref={(scrollView) => { _scrollView = scrollView; }}>
-                        <ScrollImage/>
-                        <View>
-
+                <ScrollView ref={(scrollView) => {
+                    _scrollView = scrollView;
+                }}>
+                    <ScrollImage/>
+                    <View style={styles.functionBar}>
+                        <View style={styles.functionBarRow}>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Time sheet'/>
+                            </View>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='OT Apply' pressEvent={() => this._goToOTPage()}/>
+                            </View>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Leave Apply'/>
+                            </View>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Cust-Workflow'/>
+                            </View>
                         </View>
-                        {/*<View style={styles.toolbox}>*/}
-                            {/*<TouchableWithoutFeedback onPress={()=>{*/}
-                                {/*this._goToOTPage();*/}
-                            {/*}}>*/}
-                                {/*{BackBtnSvg}*/}
-                            {/*</TouchableWithoutFeedback>*/}
-                        {/*</View>*/}
-
-                        <View>
-                            <SwipeList />
+                        <View style={styles.functionBarRow}>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Knowledge'/>
+                            </View>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Office Supply'/>
+                            </View>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Activity'/>
+                            </View>
+                            <View style={styles.functionIcon}>
+                                <OfficeSupplyIcon iconInfo='Other'/>
+                            </View>
                         </View>
-                    </ScrollView>
+                    </View>
+
+                    <View>
+                        <SwipeList />
+                    </View>
+                </ScrollView>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    flex:{
-        flex:1,
+    flex: {
+        flex: 1,
     },
-    center:{
+    center: {
         flexDirection: 'column',
         alignItems: 'center',
     },
@@ -74,18 +92,18 @@ const styles = StyleSheet.create({
         width: 40,
         height: 33,
     },
-    homeHeader:{
+    homeHeader: {
         alignItems: 'center',
-        height:52,
+        height: 52,
         backgroundColor: '#00897b',
         justifyContent: 'center',
-        marginBottom:5,
+        marginBottom: 5,
         width
     },
-    FocusBorder:{
-        flex:2,
+    FocusBorder: {
+        flex: 2,
     },
-    toolbox:{
+    toolbox: {
         backgroundColor: '#00897b',
     },
 
@@ -93,54 +111,54 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-    title_view:{
-        flexDirection:'row',
-        height:50,
+    title_view: {
+        flexDirection: 'row',
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#27b5ee',
+        backgroundColor: '#27b5ee',
     },
-    title_text:{
-        color:'white',
-        fontSize:20,
-        textAlign:'center'
+    title_text: {
+        color: 'white',
+        fontSize: 20,
+        textAlign: 'center'
     },
-    three_image_view:{
+    three_image_view: {
         paddingTop: 15,
-        flexDirection:'row',
+        flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor:'white',
+        backgroundColor: 'white',
     },
-    vertical_view:{
+    vertical_view: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'white',
-        paddingBottom:15,
+        backgroundColor: 'white',
+        paddingBottom: 15,
     },
-    top_text:{
-        marginTop:5,
-        color:'black',
-        fontSize:16,
-        textAlign:'center'
+    top_text: {
+        marginTop: 5,
+        color: 'black',
+        fontSize: 16,
+        textAlign: 'center'
     },
-    rectangle_view:{
-        paddingTop:8,
-        paddingBottom:8,
-        paddingLeft:15,
-        paddingRight:15,
-        flexDirection:'row',
+    rectangle_view: {
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 15,
+        paddingRight: 15,
+        flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor:'white',
-        borderBottomColor:'#dedfe0',
-        borderBottomWidth:1,
+        backgroundColor: 'white',
+        borderBottomColor: '#dedfe0',
+        borderBottomWidth: 1
     },
-    rectangle_text:{
-        color:'black',
-        fontSize:16,
-        textAlign:'center',
-        paddingLeft:8,
+    rectangle_text: {
+        color: 'black',
+        fontSize: 16,
+        textAlign: 'center',
+        paddingLeft: 8,
     },
     button: {
         margin: 7,
@@ -149,4 +167,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#eaeaea',
         borderRadius: 3,
     },
+    functionBar: {
+        flexDirection: 'column',
+        borderWidth: 1,
+        borderColor: '#00897b',
+        marginTop: 5,
+    },
+    functionBarRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    functionIcon: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
