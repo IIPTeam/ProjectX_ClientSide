@@ -10,15 +10,19 @@ import {
     Alert,
     Console
 } from 'react-native';
+import RNAnimatedTabs from 'rn-animated-tabs';
 import PersonalPage from "./personalPage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
+const DATA = ['OT Content', 'Leave Content'];
 
 export default class MySetPage extends Component {
 
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {
+            currentTab: 0
+        }
     }
     _pressBackButtoon(){
         const { navigator } = this.props;
@@ -29,7 +33,7 @@ export default class MySetPage extends Component {
             })
         }
     }
-   
+   handleTabChange = (value) => this.setState({ currentTab: value });
     render(){
         return (
         	<View style={styles.ApplicationCont}>
@@ -46,7 +50,16 @@ export default class MySetPage extends Component {
 					}}>{MenuBtnSvg}</TouchableWithoutFeedback>
 				</View>
 				
-				
+			<View style={styles.container}>
+            <RNAnimatedTabs
+              tabTitles={['OT Application', 'Leave Application']}
+              onChangeTab={this.handleTabChange} />
+             <View style={[styles.container, styles.center]}>
+               <Text>
+                 {DATA[this.state.currentTab]}
+               </Text>
+             </View>
+     </View>
 				
 			</View>
         );
@@ -74,4 +87,11 @@ const styles = StyleSheet.create({
         color:'#ffffff',
         fontSize:20
     },
+    container: {
+    flex: 1
+    },
+    center: {
+      justifyContent: 'center',
+      alignItems: 'center'
+  }
 });
