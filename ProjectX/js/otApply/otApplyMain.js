@@ -5,10 +5,12 @@ import {
     View,
     ScrollView,
     TouchableHighlight,
+    TouchableWithoutFeedback,
     BackAndroid
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Platform from 'Platform';
+import PickerPage from '../common/pickerPage';
 
 export default class OTApplyMain extends Component {
     constructor(props) {
@@ -19,6 +21,7 @@ export default class OTApplyMain extends Component {
         this.state = {
             startTime: nowDate + " 08:00",
             endTime: nowDate + " 16:00",
+            project: ""
         }
     }
 
@@ -43,6 +46,34 @@ export default class OTApplyMain extends Component {
         }
         return false;//默认行为
     };
+
+    _pickProject=()=> {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'pickerPage',
+                component: PickerPage,
+                params: {
+                    options: [{
+                        "value": "CMB",
+                        "label": "CMB"
+                    },{
+                        "value": "SMP",
+                        "label": "SMP"
+                    },{
+                        "value": "IIP",
+                        "label": "IIP"
+                    }],
+                    selectedOption: this.state.project,
+                    getSelect: (option) => {
+                        this.setState({
+                            project: option
+                        })
+                    }
+                }
+            })
+        }
+    }
 
     render() {
         return (
@@ -87,9 +118,13 @@ export default class OTApplyMain extends Component {
                             <Text style={[styles.rectangle_text, styles.rectangle_text_left]}>
                                 Project:
                             </Text>
-                            <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                IIP
-                            </Text>
+                            <TouchableWithoutFeedback onPress={this._pickProject.bind(this)}>
+                                <View style={styles.flex}>
+                                    <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                        {this.state.project || 'Please select'}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                     </View>
                     <View style={[styles.rectangle_view,{
@@ -208,83 +243,6 @@ export default class OTApplyMain extends Component {
                             </Text>
                         </View>
                     </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                羽毛球
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                火车票
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                视频
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                羽毛球
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                火车票
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                视频
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                羽毛球
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                火车票
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                视频
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                羽毛球
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.rectangle_view}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styles.rectangle_text}>
-                                火车票
-                            </Text>
-                        </View>
-                    </View>
                 </ScrollView>
                 <TouchableHighlight
                     onPress={() => {
@@ -302,9 +260,12 @@ export default class OTApplyMain extends Component {
 }
 
 const styles = StyleSheet.create({
+    flex:{
+        flex: 1
+    },
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#ffffff',
     },
     title_view: {
         flexDirection: 'row',
