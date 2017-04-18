@@ -7,20 +7,20 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 
-export default class PickerPage extends Component{
-    constructor(props){
+export default class PickerPage extends Component {
+    constructor(props) {
         super(props);
     }
 
-    _selectOption=(option)=> {
-        const {navigator}=this.props;
+    _selectOption = (option) => {
+        const {navigator} = this.props;
         this.props.getSelect(option);
         if (navigator) {
             navigator.pop();
         }
     }
 
-    render(){
+    render() {
         return (
             <View style={styles.container}>
                 <View style={styles.title_view}>
@@ -31,15 +31,16 @@ export default class PickerPage extends Component{
                 <View style={styles.pickerCont}>
                     <ScrollView ref={(scrollView) => {
                         _scrollView = scrollView;
-                    }} >
-                    {this.props.options.map((aOption) =>
-                        <TouchableWithoutFeedback key={aOption.value} onPress={() => this._selectOption(aOption.value)} >
-                            <View style={styles.pickerItem}>
+                    }}>
+                        {this.props.options.map((aOption) =>
+                            <TouchableWithoutFeedback key={aOption.value}
+                                                      onPress={() => this._selectOption(aOption.value)}>
+                                <View style={styles.pickerItem}>
                                     <View>
-                                         <Text style={styles.pickerText}>{aOption.label}</Text>
+                                        <Text style={styles.pickerText}>{aOption.label}</Text>
                                     </View>
-                            </View>
-                        </TouchableWithoutFeedback>
+                                </View>
+                            </TouchableWithoutFeedback>
                         )}
                     </ScrollView>
                 </View>
@@ -64,9 +65,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center'
     },
-    pickerCont:{
-
-    },
+    pickerCont: {},
     pickerItem: {
         paddingTop: 8,
         paddingBottom: 8,
