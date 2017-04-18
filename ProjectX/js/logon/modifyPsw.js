@@ -29,7 +29,8 @@ export default class ModifyPsw extends Component {
             newPsw:'',
             verifyCode:'',
             timerCount:5,
-            timerTitle:'sec left for re-send code'
+            timerTitle:'sec left for re-send code',
+            conNewPsw:''
         };
     }
 
@@ -176,10 +177,16 @@ export default class ModifyPsw extends Component {
     _checkValidation(){
         let pwExp=/^[0-9a-zA-Z]{6,12}$/;
         let verifyExp=/^[0-9]{6}$/;
-        return verifyExp.test(this.state.verifyCode)&&pwExp.test(this.state.newPsw);
+        let confirmExp=/^[0-9a-zA-Z]{6,12}$/;
+        return verifyExp.test(this.state.verifyCode)&&pwExp.test(this.state.newPsw)&&confirmExp.test(this.state.conNewPsw)&&(this.state.newPsw==this.state.conNewPsw);
 
     }
+    _compareValue(conNewPsw){
+        if(conNewPsw&&this.state.newPsw&&(conNewPsw!=this.state.newPsw)){
+            this.refs.toast.show("please enter the same password", 500);
+        }
 
+    }
     render(){
         return (
             <View style={styles.modifyPswCont}>
@@ -242,6 +249,7 @@ export default class ModifyPsw extends Component {
                                 secureTextEntry={true}
                                 onChangeText={(conNewPsw) => this.setState({conNewPsw})}
                                 value={this.state.conNewPsw}
+                                onBlur={() => this._compareValue(this.state.conNewPsw)}
                             />
                         </View>
                         <HudView
