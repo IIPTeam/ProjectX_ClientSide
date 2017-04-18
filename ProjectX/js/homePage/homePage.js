@@ -66,7 +66,7 @@ export default class HomePage extends Component {
                     renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
                     onPress={() => this.setState({ selectedTab: 'personal' })}
                 >
-                    <Personal></Personal>
+                    <Personal homeProps={this.props}></Personal>
                 </TabNavigator.Item>
             </TabNavigator>
       );

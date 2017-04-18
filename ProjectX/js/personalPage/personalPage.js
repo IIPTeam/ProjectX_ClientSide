@@ -32,8 +32,8 @@ export default class PersonalPage extends Component {
         super(props);
         this.state = {};
     }
-     _myAppPressButtoon(){
-        const {navigator} = this.props;
+     _myAppPressButton(){
+        const {navigator} = this.props.homeProps;
         if (navigator) {
             navigator.push({
                 name: 'ApplicationPageComponent',
@@ -94,8 +94,8 @@ export default class PersonalPage extends Component {
                                     borderColor: '#00897b'}}>
                         {MyApplicationBtnSvg}
                         <View style={{flex: 1}}>
-                            <Text style={{fontSize: 20,color: '#00897b'}} onPress={this._myAppPressButtoon.bind(this)}> My Application</Text>  
-                        </View>                      
+                            <Text style={{fontSize: 20,color: '#00897b'}} onPress={this._myAppPressButton.bind(this)}> My Application</Text>
+                        </View>
                         {ApplyBtnSvg}
                     </View>
                 </View>                                            

@@ -204,6 +204,13 @@ export default class OTApplyMain extends Component {
                     <View style={styles.rectangle_view}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={styles.rectangle_text}>
+                                Time
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.rectangle_view}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={styles.rectangle_text}>
                                 Duration
                             </Text>
                         </View>

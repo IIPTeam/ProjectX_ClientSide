@@ -35,7 +35,9 @@ export default class PickerPage extends Component {
                         {this.props.options.map((aOption) =>
                             <TouchableWithoutFeedback key={aOption.value}
                                                       onPress={() => this._selectOption(aOption.value)}>
-                                <View style={styles.pickerItem}>
+                                <View style={[styles.pickerItem, {
+                                    backgroundColor: aOption.value == this.props.selectedOption ? '#dedfe0' : '#ffffff'
+                                }]}>
                                     <View>
                                         <Text style={styles.pickerText}>{aOption.label}</Text>
                                     </View>
@@ -74,7 +76,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        backgroundColor: 'white',
         borderBottomColor: '#dedfe0',
         borderBottomWidth: 1,
         height: 50,
