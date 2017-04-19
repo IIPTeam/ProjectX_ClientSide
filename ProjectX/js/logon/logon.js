@@ -41,11 +41,13 @@ export default class Logon extends Component {
             BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
+
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
+
     onBackAndroid = () => {
         if(this.state.isShow){ 
             this.state.isShow=false;
@@ -59,47 +61,34 @@ export default class Logon extends Component {
     _getNewStaffId(NewStaffId){
         this.state.staffId = NewStaffId;
     }
+
     _pressButtoon() {
         const {navigator} = this.props;
         if (navigator) {
-            /*Alert.alert(
-             'Submit successfully',
-             'alertMessage',
-             [
-             {text: 'OK', onPress: () => this._gotoModifyPswPage(this)}
-             ]
-             );*/
-            // this._gotoModifyPswPage(this);
             this._gotoPopSpanPage(this);
         }
     }
 
-    _gotoModifyPswPage(pageData) {
-        const {navigator} = this.props;
-        if (navigator) {
-            navigator.push({
-                name: 'ModifyPswPswPageComponent',
-                component: ModifyPsw,
-                params:{
-                    pageData:pageData,
-                    staffId:this.state.staffId,
-                }
-            })
-        }
-        console.log(navigator);
-    }
+    // _gotoModifyPswPage(pageData) {
+    //     const {navigator} = this.props;
+    //     console.log('this will sent to modify pageData ');
+    //     console.log(pageData);
+    //     if (navigator) {
+    //         navigator.push({
+    //             name: 'ModifyPswPswPageComponent',
+    //             component: ModifyPsw,
+    //             params:{
+    //                 pageData:pageData
+    //             }
+    //         })
+    //     }
+    //     console.log(navigator);
+    // }
 
     _gotoPopSpanPage() {
-        // var sendStaffId="";
-        // if (this.state.staffId) {
-        //     sendStaffId = this.state.staffId;
-        // } else {
-        //     sendStaffId = ""
-        // }
         this.state.isShow=true;
         console.log("this is open "+this.state.isShow);
         this.popSpan.showPop("Please input your Staff ID number", "Staff ID", "Send Verification Num", false, this);
-
     }
 
     _validateData(value, type) {
@@ -146,7 +135,7 @@ export default class Logon extends Component {
                             "password": this.state.password
                         }
                     })
-                }
+                };
 
                 CallService.fetchNetRepository(url, options).then((res) => {
                     this._hud.hide();
@@ -155,43 +144,32 @@ export default class Logon extends Component {
                             navigator.push({
                                 name: 'HomePageComponent',
                                 component: HomePage,
-                                params: res
+                                params: {
+                                    userDetails: {
+                                        chName: res.userDetails.chName
+                                    }
+                                }
                             })
                             console.log(res);
                         } else {
-                            Alert.alert("提示", "请求失败");
+                            Alert.alert("system messages", "logon failed!");
                         }
                     }
-                }).then((error) => {
-                    this._hud.hide();
-                    console.log(error);
                 }).catch((error) => {
                     this._hud.hide();
-                    console.log(error);
+                    console.log(error + 'B/E service did not start!');
                     if (navigator) {
                         navigator.push({
                             name: 'HomePageComponent',
                             component: HomePage,
                             params: {
                                 userDetails: {
-                                    chName: '吴海涛'
+                                    chName: '吴海涛 Dummy'
                                 }
                             }
                         })
                     }
                 })
-               /* const {navigator} = this.props;
-                if (navigator) {
-                    navigator.push({
-                        name: 'HomePageComponent',
-                        component: HomePage,
-                        params: {
-                            userDetails: {
-                                chName: '吴海涛'
-                            }
-                        }
-                    })
-                }*/
             }
         }
     }

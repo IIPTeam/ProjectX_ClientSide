@@ -34,7 +34,7 @@ export default class MainPage extends Component {
         return (
             <View style={[styles.flex, styles.center, {backgroundColor: '#ffffff'}]}>
                 <View style={styles.homeHeader}>
-                    <Text style={{fontSize: 30}}>Hello {/*this.props.homeProps.userDetails.chName*/}</Text>
+                    <Text style={{fontSize: 30}}>Hello {this.props.homeProps.userDetails.chName}</Text>
                 </View>
                 <ScrollView ref={(scrollView) => {
                     _scrollView = scrollView;
