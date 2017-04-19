@@ -34,7 +34,7 @@ export default class PopSpan extends Component {  
             inputBoxName: "",  
             buttonName: "",  
             hide:true,    
-            staffId:"",    
+            staffId:""
         };
         this.pagedata={
             staffId:this.state.staffId,
@@ -63,11 +63,13 @@ export default class PopSpan extends Component {  
             BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
+
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
+
     onBackAndroid = () => {
         if(!this.state.hide){ 
             this.exitOut();
@@ -126,20 +128,6 @@ export default class PopSpan extends Component {  
         this.exitOut();
     }
 
-    gotoModifyPswPage() {
-        const {navigator} = this.parent.props;
-        if (navigator) {
-            navigator.push({
-                name: 'ModifyPswPswPageComponent',
-                component: ModifyPsw,
-                params:{
-                    pageData:this.pagedata
-                }
-            })
-        }
-        console.log(navigator);
-    }
-
     callservices(){
         let url = 'http://192.168.1.103:8083/fgtPaswrd/fgtPaswrd';
         let options = {
@@ -155,26 +143,34 @@ export default class PopSpan extends Component {  
             })
         };
 
-
-
         CallService.fetchNetRepository(url, options).then((res) => {
             this._hud.hide();
             if (res) {
                 res.staffId= this.state.staffId;
+                console.log('[callservice success] normal ');
                 console.log(res);
-                this.pagedata = res ;                   
+                const {navigator} = this.parent.props;
+                if (navigator) {
+                    navigator.push({
+                        name: 'ModifyPswPswPageComponent',
+                        component: ModifyPsw,
+                        params: res
+                    })
+                    console.log('[gotoModifyPswPage]this is sent to ModifyPsw page data ');
+                    console.log(this.pagedata);
+                }              
             } else {
                 if (!res.vCode.validUesr){
                    Alert.alert("Failed", "unknow");
+                   console.log('[callservice success] adnormal ');
+                   console.log(res);
                 }
             }
-        }).then((error) => {
-            this._hud.hide();
-             this.pagedata =  error;
-            console.log(error);
         }).catch((error) => {
             this._hud.hide();
-             // this.pagedata =  error;
+            // this.pagedata = error;
+            return error;
+            console.log('[callservice Failed] error messages: ');
             console.log(error);
         })
     }
@@ -190,16 +186,28 @@ export default class PopSpan extends Component {  
         if(!this.state.hide){  
             if(this.state.staffId.length===10){
                 this._hud.show();
-                // this.callservices();
-                this.gotoModifyPswPage();
+                this.callservices();
                 this.exitOut();
             } else {
                 this.refs.popToast.show("need 10 bit Staff ID", 500);
             }
-            // this.parent.setState({staffId:this.parent.staffId});  
+            this.parent.setState({staffId:this.parent.staffId});  
         }
     }
 
+    gotoModifyPswPage(pageData) {
+        const {navigator} = this.parent.props;
+        if (navigator) {
+            navigator.push({
+                name: 'ModifyPswPswPageComponent',
+                component: ModifyPsw,
+                params: this.pageData
+            })
+            console.log('[gotoModifyPswPage]this is sent to ModifyPsw page data ');
+            console.log(this.pagedata);
+        }
+    }
+    
     render() {  
         if(this.state.hide){  
             return (<View/>);
