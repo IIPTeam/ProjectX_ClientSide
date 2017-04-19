@@ -21,7 +21,10 @@ export default class OTApplyMain extends Component {
         this.state = {
             startTime: nowDate + " 08:00",
             endTime: nowDate + " 16:00",
-            project: ""
+            project: "",
+            reason: "",
+            Supervisor: "",
+            rm: ""
         }
     }
 
@@ -68,6 +71,84 @@ export default class OTApplyMain extends Component {
                     getSelect: (option) => {
                         this.setState({
                             project: option
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    _pickReason=()=> {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'pickerPage',
+                component: PickerPage,
+                params: {
+                    options: [{
+                        "value": "For Demo",
+                        "label": "For Demo"
+                    },{
+                        "value": "For Release",
+                        "label": "For Release"
+                    },{
+                        "value": "I volunteered to work overtime,I volunteered to work overtime",
+                        "label": "I volunteered to work overtime,I volunteered to work overtime"
+                    }],
+                    selectedOption: this.state.reason,
+                    getSelect: (option) => {
+                        this.setState({
+                            reason: option
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    _pickSupervisor=()=> {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'pickerPage',
+                component: PickerPage,
+                params: {
+                    options: [{
+                        "value": "Frank Wu",
+                        "label": "Frank Wu"
+                    },{
+                        "value": "Darcy Yao",
+                        "label": "Darcy Yao"
+                    }],
+                    selectedOption: this.state.supervisor,
+                    getSelect: (option) => {
+                        this.setState({
+                            supervisor: option
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    _pickRM=()=> {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'pickerPage',
+                component: PickerPage,
+                params: {
+                    options: [{
+                        "value": "Xiao Su",
+                        "label": "Xiao Su"
+                    },{
+                        "value": "Xiao Rui",
+                        "label": "Xiao Rui"
+                    }],
+                    selectedOption: this.state.rm,
+                    getSelect: (option) => {
+                        this.setState({
+                            rm: option
                         })
                     }
                 }
@@ -220,6 +301,13 @@ export default class OTApplyMain extends Component {
                             <Text style={styles.rectangle_text}>
                                 Reason
                             </Text>
+                            <TouchableWithoutFeedback onPress={this._pickReason.bind(this)}>
+                                <View style={styles.flex}>
+                                    <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                        {this.state.reason || 'Please select'}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                     </View>
                     <View style={styles.rectangle_view}>
@@ -234,6 +322,13 @@ export default class OTApplyMain extends Component {
                             <Text style={styles.rectangle_text}>
                                 Supervisor
                             </Text>
+                            <TouchableWithoutFeedback onPress={this._pickSupervisor.bind(this)}>
+                                <View style={styles.flex}>
+                                    <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                        {this.state.supervisor || 'Please select'}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                     </View>
                     <View style={styles.rectangle_view}>
@@ -241,6 +336,13 @@ export default class OTApplyMain extends Component {
                             <Text style={styles.rectangle_text}>
                                 RM
                             </Text>
+                            <TouchableWithoutFeedback onPress={this._pickRM.bind(this)}>
+                                <View style={styles.flex}>
+                                    <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                        {this.state.rm || 'Please select'}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                     </View>
                 </ScrollView>
