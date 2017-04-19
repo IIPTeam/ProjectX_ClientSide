@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    AppRegistry,
 	StyleSheet,
     Text,
     View,
@@ -10,15 +11,20 @@ import {
     Alert,
     Console
 } from 'react-native';
+import RNAnimatedTabs from 'rn-animated-tabs';
+import Tabs from 'react-native-tabs';
 import PersonalPage from "./personalPage";
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
+const DATA = ['OT Content', 'Leave Content'];
 
 export default class ApplicationPage extends Component {
 
     constructor(props){
         super(props);
-        this.state = {};
+            this.state = {
+            currentTab: 0
+        }
     }
     _pressBackButtoon(){
         const { navigator } = this.props;
@@ -29,8 +35,9 @@ export default class ApplicationPage extends Component {
             })
         }
     }
-   
+   handleTabChange = (value) => this.setState({ currentTab: value });
     render(){
+        var self = this;
         return (
         	<View style={styles.ApplicationCont}>
 				<View style={styles.header}>
@@ -45,9 +52,16 @@ export default class ApplicationPage extends Component {
 						
 					}}>{MenuBtnSvg}</TouchableWithoutFeedback>
 				</View>
-				
-				
-				
+				<View style={styles.container}>
+                    <RNAnimatedTabs
+                      tabTitles={['OT Application', 'Leave Application']}
+                      onChangeTab={this.handleTabChange} />
+                     <View style={[styles.container, styles.center]}>
+                       <Text>
+                         {DATA[this.state.currentTab]}
+                       </Text>
+                   </View>
+                </View>
 			</View>
         );
     }
@@ -74,4 +88,21 @@ const styles = StyleSheet.create({
         color:'#ffffff',
         fontSize:20
     },
+    container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginTop: 10,
+  },
 });
+AppRegistry.registerComponent('ApplicationPage', () => ApplicationPage);

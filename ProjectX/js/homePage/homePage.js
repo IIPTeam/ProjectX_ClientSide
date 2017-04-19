@@ -11,6 +11,7 @@ import {
 import TabNavigator from 'react-native-tab-navigator';
 import MainPage from './mainPage';
 import Echarts from '../Test/echartsNew';
+import Personal from '../personalPage/personalPage';
 const {width} = Dimensions.get('window');
 
 export default class HomePage extends Component {
@@ -57,6 +58,15 @@ export default class HomePage extends Component {
                     onPress={() => this.setState({ selectedTab: 'setting' })}
                 >
                     {settingView}
+                </TabNavigator.Item>
+                <TabNavigator.Item
+                    selected={this.state.selectedTab === 'personal'}
+                    title="personal"
+                    renderIcon={() => <Image style={styles.img} source={require('../image/personalPage/man.jpg') }/>}
+                    renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
+                    onPress={() => this.setState({ selectedTab: 'personal' })}
+                >
+                    <Personal></Personal>
                 </TabNavigator.Item>
             </TabNavigator>
       );
