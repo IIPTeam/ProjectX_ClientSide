@@ -11,6 +11,7 @@ import {
 import DatePicker from 'react-native-datepicker';
 import Platform from 'Platform';
 import PickerPage from '../common/pickerPage';
+import InputArea from '../common/inputAreaPage';
 
 export default class OTApplyMain extends Component {
     constructor(props) {
@@ -67,6 +68,7 @@ export default class OTApplyMain extends Component {
                         "value": "IIP",
                         "label": "IIP"
                     }],
+                    title: 'Project',
                     selectedOption: this.state.project,
                     getSelect: (option) => {
                         this.setState({
@@ -82,23 +84,14 @@ export default class OTApplyMain extends Component {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
-                name: 'pickerPage',
-                component: PickerPage,
+                name: 'InputArea',
+                component: InputArea,
                 params: {
-                    options: [{
-                        "value": "For Demo",
-                        "label": "For Demo"
-                    },{
-                        "value": "For Release",
-                        "label": "For Release"
-                    },{
-                        "value": "I volunteered to work overtime,I volunteered to work overtime",
-                        "label": "I volunteered to work overtime,I volunteered to work overtime"
-                    }],
+                    title: 'OT Reason',
                     selectedOption: this.state.reason,
-                    getSelect: (option) => {
+                    getContent: (content) => {
                         this.setState({
-                            reason: option
+                            reason: content
                         })
                     }
                 }
@@ -120,6 +113,7 @@ export default class OTApplyMain extends Component {
                         "value": "Darcy Yao",
                         "label": "Darcy Yao"
                     }],
+                    title: 'Supervisor',
                     selectedOption: this.state.supervisor,
                     getSelect: (option) => {
                         this.setState({
@@ -145,6 +139,7 @@ export default class OTApplyMain extends Component {
                         "value": "Xiao Rui",
                         "label": "Xiao Rui"
                     }],
+                    title: 'RM',
                     selectedOption: this.state.rm,
                     getSelect: (option) => {
                         this.setState({
@@ -153,6 +148,13 @@ export default class OTApplyMain extends Component {
                     }
                 }
             })
+        }
+    }
+
+    submitOTApply=()=>{
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.pop();
         }
     }
 
@@ -180,7 +182,7 @@ export default class OTApplyMain extends Component {
                                 Staff Name:
                             </Text>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                郭宝刚
+                                吴海涛
                             </Text>
                         </View>
                     </View>
@@ -300,7 +302,7 @@ export default class OTApplyMain extends Component {
                             <TouchableWithoutFeedback onPress={this._pickReason.bind(this)}>
                                 <View style={styles.flex}>
                                     <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                        {this.state.reason || 'Please select'}
+                                        {this.state.reason || 'Please input'}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -344,7 +346,7 @@ export default class OTApplyMain extends Component {
                 </ScrollView>
                 <TouchableHighlight
                     onPress={() => {
-
+                        this.submitOTApply();
                     }}
                     activeOpacity={0.7}
                     style={styles.button}

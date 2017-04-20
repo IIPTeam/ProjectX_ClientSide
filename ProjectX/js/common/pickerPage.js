@@ -25,7 +25,7 @@ export default class PickerPage extends Component {
             <View style={styles.container}>
                 <View style={styles.title_view}>
                     <Text style={styles.title_text}>
-                        OT Apply
+                        {this.props.title}
                     </Text>
                 </View>
                 <View style={styles.pickerCont}>
