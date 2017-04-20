@@ -10,6 +10,7 @@ import {
 import ScrollImage from '../common/scrollImage';
 const {width} = Dimensions.get('window');
 import OTApplyMain from '../otApply/otApplyMain';
+import LeaveApplyMain from '../leaveApply/leaveApplyMain';
 import SwipeList from '../common/swipeList';
 import OfficeSupplyIcon from '../image/OfficeSupplyIcon';
 
@@ -30,11 +31,22 @@ export default class MainPage extends Component {
         }
     }
 
+    _goToLeavePage(){
+        const {navigator} = this.props.homeProps;
+        if (navigator) {
+            navigator.push({
+                name: 'LeaveApplyMainPage',
+                component: LeaveApplyMain,
+                params: {}
+            })
+        }
+    }
+
     render() {
         return (
             <View style={[styles.flex, styles.center, {backgroundColor: '#ffffff'}]}>
                 <View style={styles.homeHeader}>
-                    <Text style={{fontSize: 30}}>Hello {/*this.props.homeProps.userDetails.chName*/}</Text>
+                    <Text style={{fontSize: 30}}>Hello {this.props.homeProps.userDetails.chName}</Text>
                 </View>
                 <ScrollView ref={(scrollView) => {
                     _scrollView = scrollView;
@@ -49,7 +61,7 @@ export default class MainPage extends Component {
                                 <OfficeSupplyIcon iconInfo='OT Apply' pressEvent={() => this._goToOTPage()}/>
                             </View>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='Leave Apply'/>
+                                <OfficeSupplyIcon iconInfo='Leave Apply' pressEvent={() => this._goToLeavePage()}/>
                             </View>
                             <View style={styles.functionIcon}>
                                 <OfficeSupplyIcon iconInfo='Cust-Workflow'/>

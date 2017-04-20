@@ -12,7 +12,7 @@ import DatePicker from 'react-native-datepicker';
 import Platform from 'Platform';
 import PickerPage from '../common/pickerPage';
 
-export default class OTApplyMain extends Component {
+export default class LeaveApplyMain extends Component {
     constructor(props) {
         super(props)
         var dateFormat = require('dateformat');
@@ -22,7 +22,9 @@ export default class OTApplyMain extends Component {
             startTime: nowDate + " 08:00",
             endTime: nowDate + " 16:00",
             project: "",
+            leaveType: "",
             reason: "",
+            backup: "",
             Supervisor: "",
             rm: ""
         }
@@ -78,6 +80,34 @@ export default class OTApplyMain extends Component {
         }
     }
 
+    _pickLeaveType=()=> {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'pickerPage',
+                component: PickerPage,
+                params: {
+                    options: [{
+                        "value": "Annual Leave",
+                        "label": "Annual Leave"
+                    },{
+                        "value": "Sick Leave",
+                        "label": "Sick Leave"
+                    },{
+                        "value": "Exchange Leave",
+                        "label": "Exchange Leave"
+                    }],
+                    selectedOption: this.state.leaveType,
+                    getSelect: (option) => {
+                        this.setState({
+                            leaveType: option
+                        })
+                    }
+                }
+            })
+        }
+    }
+
     _pickReason=()=> {
         const {navigator} = this.props;
         if (navigator) {
@@ -86,19 +116,47 @@ export default class OTApplyMain extends Component {
                 component: PickerPage,
                 params: {
                     options: [{
-                        "value": "For Demo",
-                        "label": "For Demo"
+                        "value": "Sick",
+                        "label": "Sick"
                     },{
-                        "value": "For Release",
-                        "label": "For Release"
+                        "value": "Annual",
+                        "label": "Annual"
                     },{
-                        "value": "I volunteered to work overtime,I volunteered to work overtime",
-                        "label": "I volunteered to work overtime,I volunteered to work overtime"
+                        "value": "I do not want to work,I do not want to work",
+                        "label": "I do not want to work,I do not want to work"
                     }],
                     selectedOption: this.state.reason,
                     getSelect: (option) => {
                         this.setState({
                             reason: option
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    _pickBackup=()=> {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'pickerPage',
+                component: PickerPage,
+                params: {
+                    options: [{
+                        "value": "Jason Zhang",
+                        "label": "Jason Zhang"
+                    },{
+                        "value": "Alice Wang",
+                        "label": "Alice Wang"
+                    },{
+                        "value": "Bob Guo",
+                        "label": "Bob Guo"
+                    }],
+                    selectedOption: this.state.backup,
+                    getSelect: (option) => {
+                        this.setState({
+                            backup: option
                         })
                     }
                 }
@@ -161,7 +219,7 @@ export default class OTApplyMain extends Component {
             <View style={styles.container}>
                 <View style={styles.title_view}>
                     <Text style={styles.title_text}>
-                        OT Apply
+                        Leave Apply
                     </Text>
                 </View>
                 <ScrollView ref={(scrollView) => {
@@ -206,6 +264,30 @@ export default class OTApplyMain extends Component {
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
+                        </View>
+                    </View>
+                    <View style={styles.rectangle_view}>
+                        <View style={styles.rectangle_sub_view}>
+                            <Text style={[styles.rectangle_text, styles.rectangle_text_left]}>
+                                Leave Type:
+                            </Text>
+                            <TouchableWithoutFeedback onPress={this._pickLeaveType.bind(this)}>
+                                <View style={styles.flex}>
+                                    <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                        {this.state.leaveType || 'Please select'}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </View>
+                    <View style={styles.rectangle_view}>
+                        <View style={styles.rectangle_sub_view}>
+                            <Text style={[styles.rectangle_text, styles.rectangle_text_left]}>
+                                Available Time:
+                            </Text>
+                            <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                40h
+                            </Text>
                         </View>
                     </View>
                     <View style={[styles.rectangle_view,{
@@ -301,6 +383,20 @@ export default class OTApplyMain extends Component {
                                 <View style={styles.flex}>
                                     <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
                                         {this.state.reason || 'Please select'}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </View>
+                    <View style={styles.rectangle_view}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={[styles.rectangle_text, styles.rectangle_text_left]}>
+                                Backup
+                            </Text>
+                            <TouchableWithoutFeedback onPress={this._pickBackup.bind(this)}>
+                                <View style={styles.flex}>
+                                    <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
+                                        {this.state.backup || 'Please select'}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>

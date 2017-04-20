@@ -15,6 +15,7 @@ import HudView from 'react-native-easy-hud';
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
 import HomePage from "../homePage/homePage";
+import CallService from "../until/CallService";
 import Platform from 'Platform';
 const dismissKeyboard = require('dismissKeyboard');
 const {width} = Dimensions.get('window');
@@ -23,15 +24,16 @@ export default class ModifyPsw extends Component {
     constructor(props){
         super(props);
         this.state= {
-          //  staffId:this.props.pageData.staffId,
-          staffId:"1234567890",
-            //verifyCode:this.props.pageData.vCodes,
+            staffId:this.props.staffId,
+            verifyCode:this.props.vCode.vCode,
             newPsw:'',
-            verifyCode:'',
             timerCount:5,
+            resetTimerCount:5,
             timerTitle:'sec left for re-send code',
             conNewPsw:''
         };
+        console.log('this is ModifyPsw get state data ');
+        console.log(props);
     }
 
     componentWillMount() {
@@ -41,6 +43,7 @@ export default class ModifyPsw extends Component {
             BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
+
     componentWillUnmount() {
 		//clear the timer for resend verify code
         clearInterval(this.interval);
@@ -125,15 +128,15 @@ export default class ModifyPsw extends Component {
     _resendVerifyCodeCallService(){
         dismissKeyboard();
         if (this.state.staffId&&this.state.staffId.length===10) {
-            // this._callForgotPaw().then((res) => {
-            //     if (!res.err){
-                    // this.state.verifyCode = res.vCode.vCode;
+            this._callForgotPaw((res) => {
+                if (res){
+                    this.state.verifyCode = res.vCode.vCode;
                     this.refs.toast.show("send verify code successfully", 500);   
-                    this.state.timerCount=6;
+                    this.state.timerCount=this.state.resetTimerCount;
                     this._timeForResend();                 
-            //     }
-            //     this.refs.toast.show("send verify code FAILED", 500);
-            // });
+                }
+                this.refs.toast.show("send verify code FAILED", 500);
+            });
         } else {
                 this.refs.toast.show("staffId is : "+this.state.staffId, 500);
         }
@@ -160,14 +163,12 @@ export default class ModifyPsw extends Component {
                 this._hud.hide();
                 console.log(res);
                 return res;
+                //this.state.verifyCode= res;
             } else {
                 if (!res.vCode.validUesr){
                    return res.err="this is a error";
                 }
             }
-        }).then((error) => {
-            this._hud.hide();
-            console.log(error);
         }).catch((error) => {
             this._hud.hide();
             console.log(error);
@@ -176,9 +177,10 @@ export default class ModifyPsw extends Component {
 
     _checkValidation(){
         let pwExp=/^[0-9a-zA-Z]{6,12}$/;
-        let verifyExp=/^[0-9]{6}$/;
+        let verifyExp=/^[0-9a-zA-Z]{6}$/;
+        // let verifyExp=/^[0-9]{6}$/;
         let confirmExp=/^[0-9a-zA-Z]{6,12}$/;
-        return verifyExp.test(this.state.verifyCode)&&pwExp.test(this.state.newPsw)&&confirmExp.test(this.state.conNewPsw)&&(this.state.newPsw==this.state.conNewPsw);
+        return verifyExp.test(this.state.verifyCode)&&pwExp.test(this.state.newPsw)&&confirmExp.test(this.state.conNewPsw)&&(this.state.newPsw===this.state.conNewPsw);
 
     }
     _compareValue(conNewPsw){
