@@ -2,24 +2,16 @@ import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableHighlight,
-    TouchableWithoutFeedback,
-    Image,
-    Alert,
-    Console
+    View
 } from 'react-native';
 import RNAnimatedTabs from 'rn-animated-tabs';
-import Tabs from 'react-native-tabs';
-import OTApplication from "./otApplicationPage";
-import LeaveApplication from './leaveApplicationPage';
-import {BackBtnSvg} from '../image/backSvg';
-import {MenuBtnSvg} from '../image/meunSvg';
-const DATA = [OTApplication, LeaveApplication];
+import OTAppSubmitted from './otAppSubmittedPage';
+import OTAppApproved from './otAppApprovedPage';
+import OTAppDenied from './otAppDeniedPage';
+import OTAppHistory from './otAppHistoryPage';
+const DATA = [OTAppSubmitted, OTAppApproved, OTAppDenied, OTAppHistory];
 
-export default class ApplicationPage extends Component {
+export default class OTApplication extends Component {
 
     constructor(props) {
         super(props);
@@ -28,39 +20,20 @@ export default class ApplicationPage extends Component {
         }
     }
 
-    _pressBackButton() {
-        const {navigator} = this.props;
-        if (navigator) {
-            navigator.pop();
-        }
-    }
-
     handleTabChange = (value) => this.setState(
         {currentTab: DATA[value]}
     );
 
     render() {
-        var CurrentTab = OTApplication;
+        var CurrentTab = OTAppSubmitted;
         if (this.state.currentTab) {
             CurrentTab = this.state.currentTab;
         }
         return (
             <View style={styles.ApplicationCont}>
-                <View style={styles.header}>
-                    <TouchableWithoutFeedback onPress={this._pressBackButton.bind(this)}>
-                        {BackBtnSvg}
-                    </TouchableWithoutFeedback>
-
-                    <View style={styles.headerText}>
-                        <Text style={styles.fogtPswTxt}>My Application</Text>
-                    </View>
-                    <TouchableWithoutFeedback onPress={() => {
-
-                    }}>{MenuBtnSvg}</TouchableWithoutFeedback>
-                </View>
                 <View style={styles.container}>
                     <RNAnimatedTabs
-                        tabTitles={['OT Application', 'Leave Application']}
+                        tabTitles={['Submitted', 'Approved','Denied', 'History']}
                         onChangeTab={this.handleTabChange}/>
                     <View style={[styles.container, styles.center]}>
                         <CurrentTab/>
