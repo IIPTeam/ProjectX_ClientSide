@@ -11,6 +11,7 @@ import {
 import DatePicker from 'react-native-datepicker';
 import Platform from 'Platform';
 import PickerPage from '../common/pickerPage';
+import InputArea from '../common/inputAreaPage';
 
 export default class LeaveApplyMain extends Component {
     constructor(props) {
@@ -69,6 +70,7 @@ export default class LeaveApplyMain extends Component {
                         "value": "IIP",
                         "label": "IIP"
                     }],
+                    title: 'Project',
                     selectedOption: this.state.project,
                     getSelect: (option) => {
                         this.setState({
@@ -97,6 +99,7 @@ export default class LeaveApplyMain extends Component {
                         "value": "Exchange Leave",
                         "label": "Exchange Leave"
                     }],
+                    title: 'Leave Type',
                     selectedOption: this.state.leaveType,
                     getSelect: (option) => {
                         this.setState({
@@ -112,23 +115,14 @@ export default class LeaveApplyMain extends Component {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
-                name: 'pickerPage',
-                component: PickerPage,
+                name: 'InputArea',
+                component: InputArea,
                 params: {
-                    options: [{
-                        "value": "Sick",
-                        "label": "Sick"
-                    },{
-                        "value": "Annual",
-                        "label": "Annual"
-                    },{
-                        "value": "I do not want to work,I do not want to work",
-                        "label": "I do not want to work,I do not want to work"
-                    }],
+                    title: 'OT Reason',
                     selectedOption: this.state.reason,
-                    getSelect: (option) => {
-                        this.setState({
-                            reason: option
+                    getSelect: (content) => {
+                        this.getContent({
+                            reason: content
                         })
                     }
                 }
@@ -153,6 +147,7 @@ export default class LeaveApplyMain extends Component {
                         "value": "Bob Guo",
                         "label": "Bob Guo"
                     }],
+                    title: 'Backup',
                     selectedOption: this.state.backup,
                     getSelect: (option) => {
                         this.setState({
@@ -178,6 +173,7 @@ export default class LeaveApplyMain extends Component {
                         "value": "Darcy Yao",
                         "label": "Darcy Yao"
                     }],
+                    title: 'Supervisor',
                     selectedOption: this.state.supervisor,
                     getSelect: (option) => {
                         this.setState({
@@ -203,6 +199,7 @@ export default class LeaveApplyMain extends Component {
                         "value": "Xiao Rui",
                         "label": "Xiao Rui"
                     }],
+                    title: 'RM',
                     selectedOption: this.state.rm,
                     getSelect: (option) => {
                         this.setState({
@@ -211,6 +208,13 @@ export default class LeaveApplyMain extends Component {
                     }
                 }
             })
+        }
+    }
+
+    submitLeaveApply=()=>{
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.pop();
         }
     }
 
@@ -238,7 +242,7 @@ export default class LeaveApplyMain extends Component {
                                 Staff Name:
                             </Text>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                郭宝刚
+                                吴海涛
                             </Text>
                         </View>
                     </View>
@@ -382,7 +386,7 @@ export default class LeaveApplyMain extends Component {
                             <TouchableWithoutFeedback onPress={this._pickReason.bind(this)}>
                                 <View style={styles.flex}>
                                     <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                        {this.state.reason || 'Please select'}
+                                        {this.state.reason || 'Please input'}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -440,7 +444,7 @@ export default class LeaveApplyMain extends Component {
                 </ScrollView>
                 <TouchableHighlight
                     onPress={() => {
-
+                        this.submitLeaveApply()
                     }}
                     activeOpacity={0.7}
                     style={styles.button}

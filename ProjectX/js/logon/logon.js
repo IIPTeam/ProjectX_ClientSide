@@ -169,7 +169,19 @@ export default class Logon extends Component {
                             }
                         })
                     }
-                })
+                })*/
+
+                if (navigator) {
+                    navigator.push({
+                        name: 'HomePageComponent',
+                        component: HomePage,
+                        params: {
+                            userDetails: {
+                                chName: '吴海涛'
+                            }
+                        }
+                    })
+                }
             }
         }
     }
