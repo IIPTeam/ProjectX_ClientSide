@@ -13,6 +13,12 @@ import OTApplyMain from '../otApply/otApplyMain';
 import LeaveApplyMain from '../leaveApply/leaveApplyMain';
 import SwipeList from '../common/swipeList';
 import OfficeSupplyIcon from '../image/OfficeSupplyIcon';
+import TimeSheetIcon from '../image/TimeSheetIcon';
+import LeaveApplyIcon from '../image/LeaveApplyIcon';
+import OTApplyIcon from '../image/OTApplyIcon';
+import WorkflowIcon from '../image/WorkflowIcon';
+import KnowledgeIcon from '../image/KnowledgeIcon';
+import ActivityIcon from '../image/ActivityIcon';
 
 export default class MainPage extends Component {
     constructor(props) {
@@ -55,27 +61,27 @@ export default class MainPage extends Component {
                     <View style={styles.functionBar}>
                         <View style={styles.functionBarRow}>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='Time sheet'/>
+                                <TimeSheetIcon iconInfo='Time sheet'/>
                             </View>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='OT Apply' pressEvent={() => this._goToOTPage()}/>
+                                <OTApplyIcon iconInfo='OT Apply' pressEvent={() => this._goToOTPage()}/>
                             </View>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='Leave Apply' pressEvent={() => this._goToLeavePage()}/>
+                                <LeaveApplyIcon iconInfo='Leave Apply' pressEvent={() => this._goToLeavePage()}/>
                             </View>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='Cust-Workflow'/>
+                                <WorkflowIcon iconInfo='Cust-Workflow'/>
                             </View>
                         </View>
                         <View style={styles.functionBarRow}>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='Knowledge'/>
+                                <KnowledgeIcon iconInfo='Knowledge'/>
                             </View>
                             <View style={styles.functionIcon}>
                                 <OfficeSupplyIcon iconInfo='Office Supply'/>
                             </View>
                             <View style={styles.functionIcon}>
-                                <OfficeSupplyIcon iconInfo='Activity'/>
+                                <ActivityIcon iconInfo='Activity'/>
                             </View>
                             <View style={styles.functionIcon}>
                                 <OfficeSupplyIcon iconInfo='Other'/>

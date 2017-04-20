@@ -13,6 +13,8 @@ import MainPage from './mainPage';
 import Echarts from '../Test/echartsNew';
 import Personal from '../personalPage/personalPage';
 const {width} = Dimensions.get('window');
+import TestIcon from '../image/testIcon';
+import TestSelectIcon from '../image/testSelectIcon';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -43,8 +45,8 @@ export default class HomePage extends Component {
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'home'}
                     title="首页" //Tab文字
-                    renderIcon={() => <Image style={styles.img} source={require('../image/menuIcon.jpg') }/>}//默认图标
-                    renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}//选中图标
+                    renderIcon={() => <TestIcon/>}//默认图标
+                    renderSelectedIcon={() => <TestSelectIcon/>}//选中图标
                     badgeText="9+"//消息数目
                     onPress={() => this.setState({ selectedTab: 'home' })}
                 >
@@ -53,8 +55,8 @@ export default class HomePage extends Component {
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'setting'}
                     title="设置"
-                    renderIcon={() => <Image style={styles.img} source={require('../image/backIcon.png') }/>}
-                    renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
+                    renderIcon={() => <TestIcon/>}//默认图标
+                    renderSelectedIcon={() => <TestSelectIcon/>}//选中图标
                     onPress={() => this.setState({ selectedTab: 'setting' })}
                 >
                     {settingView}
@@ -62,8 +64,8 @@ export default class HomePage extends Component {
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'personal'}
                     title="personal"
-                    renderIcon={() => <Image style={styles.img} source={require('../image/personalPage/man.jpg') }/>}
-                    renderSelectedIcon={() => <Image style={styles.img} source={require('../image/chinaSoftLogo.jpg') }/>}
+                    renderIcon={() => <TestIcon/>}//默认图标
+                    renderSelectedIcon={() => <TestSelectIcon/>}//选中图标
                     onPress={() => this.setState({ selectedTab: 'personal' })}
                 >
                     <Personal homeProps={this.props}></Personal>
