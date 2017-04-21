@@ -120,8 +120,8 @@ export default class LeaveApplyMain extends Component {
                 params: {
                     title: 'OT Reason',
                     selectedOption: this.state.reason,
-                    getSelect: (content) => {
-                        this.getContent({
+                    getContent: (content) => {
+                        this.setState({
                             reason: content
                         })
                     }
