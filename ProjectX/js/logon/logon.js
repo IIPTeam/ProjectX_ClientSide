@@ -30,9 +30,10 @@ export default class Logon extends Component {
         super(props);
         this.state = {
             isShow:false,
-            password: '',
-            staffId: '',
-            // staffId: '1231231231',
+            // password: '',
+            // staffId: '',
+            staffId: '1231231231',
+            password: '123456',
         };
     }
 
@@ -122,7 +123,7 @@ export default class Logon extends Component {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
 
                 this._hud.show();
-                /*let url = 'http://192.168.1.103:8090/login/login';
+                let url = 'http://192.168.1.103:8090/login/login';
                 let options = {
                     method: 'POST',
                     headers: {
@@ -150,6 +151,7 @@ export default class Logon extends Component {
                                     }
                                 }
                             })
+                            console.log("[logon call service success] response data");
                             console.log(res);
                         } else {
                             Alert.alert("system messages", "logon failed!");
@@ -169,9 +171,9 @@ export default class Logon extends Component {
                             }
                         })
                     }
-                })*/
+                })
 
-                if (navigator) {
+                /* if (navigator) {
                     navigator.push({
                         name: 'HomePageComponent',
                         component: HomePage,
@@ -181,7 +183,7 @@ export default class Logon extends Component {
                             }
                         }
                     })
-                }
+                } */
             }
         }
     }
