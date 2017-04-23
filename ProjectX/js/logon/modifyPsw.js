@@ -75,7 +75,11 @@ export default class ModifyPsw extends Component {
     _pressConfirmButtoon(){
         dismissKeyboard();
         if(this._checkValidation()){
-            this._callModifyPsw();
+            if(false){
+                this._callModifyPsw();
+            }else{
+                this._gotoHomePage();
+            }
         } else {
             this.refs.toast.show(" 6 bit verify code or 6-12 bit new password", 1000);
         }
@@ -115,6 +119,7 @@ export default class ModifyPsw extends Component {
             }
         }).catch((error) => {
             this._hud.hide();
+            this.refs.toast.show("call service failed", 500);
             console.log("[reSet password ] call service exception");
             console.log(error);
         })  
