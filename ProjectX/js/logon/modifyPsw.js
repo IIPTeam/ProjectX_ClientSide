@@ -75,12 +75,49 @@ export default class ModifyPsw extends Component {
     _pressConfirmButtoon(){
         dismissKeyboard();
         if(this._checkValidation()){
-            this.refs.toast.show("successfully!!!", 500);
-
-            this._gotoHomePage();
+            this._callModifyPsw();
         } else {
             this.refs.toast.show(" 6 bit verify code or 6-12 bit new password", 1000);
         }
+        
+    }
+    
+    _callModifyPsw(){
+        this._hud.show();
+        let url = 'http://192.168.1.103:8084/resetPaswrd/resetPaswrd';
+        let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user": {
+                    "staffId": this.state.staffId,
+                    "nerPassword": this.state.newPsw,
+                    "vCode": this.state.verifyCode
+                }
+            })
+        }
+
+        CallService.fetchNetRepository(url, options).then((res) => {
+            if (res) {
+                this._hud.hide();
+                this.refs.toast.show("successfully!!!", 500);
+                this._gotoHomePage(res);
+                console.log("[reSet password ] successfully!!!");
+                console.log(res);
+            } else {
+                if (!res.vCode.validUesr){
+                   return "this is a error";
+                   console.log("[reSet password ]");
+                }
+            }
+        }).catch((error) => {
+            this._hud.hide();
+            console.log("[reSet password ] call service exception");
+            console.log(error);
+        })  
         
     }
 
@@ -93,7 +130,7 @@ export default class ModifyPsw extends Component {
                     // params: pageDate
                     params: {
                         userDetails: {
-                            chName: '吴海涛'
+                            chName: '吴海涛 Dummy'
                         }
                     }
             })
@@ -128,17 +165,9 @@ export default class ModifyPsw extends Component {
     _resendVerifyCodeCallService(){
         dismissKeyboard();
         if (this.state.staffId&&this.state.staffId.length===10) {
-            this._callForgotPaw((res) => {
-                if (res){
-                    this.state.verifyCode = res.vCode.vCode;
-                    this.refs.toast.show("send verify code successfully", 500);   
-                    this.state.timerCount=this.state.resetTimerCount;
-                    this._timeForResend();                 
-                }
-                this.refs.toast.show("send verify code FAILED", 500);
-            });
+            this._callForgotPaw();
         } else {
-                this.refs.toast.show("staffId is : "+this.state.staffId, 500);
+            this.refs.toast.show("staffId is : "+this.state.staffId, 500);
         }
     }
 
@@ -161,16 +190,20 @@ export default class ModifyPsw extends Component {
         CallService.fetchNetRepository(url, options).then((res) => {
             if (res) {
                 this._hud.hide();
+                this.refs.toast.show("send verify code successfully", 500);   
                 console.log(res);
-                return res;
-                //this.state.verifyCode= res;
+                this.state.verifyCode = res.vCode.vCode;
+                this.state.timerCount=this.state.resetTimerCount;
+                this._timeForResend();
             } else {
                 if (!res.vCode.validUesr){
-                   return res.err="this is a error";
+                   return "this is a error";
+                   console.log("[re-send verify code] use a undefined user");
                 }
             }
         }).catch((error) => {
             this._hud.hide();
+            console.log("[re-send verify code] call service exception");
             console.log(error);
         })
     }
@@ -183,12 +216,14 @@ export default class ModifyPsw extends Component {
         return verifyExp.test(this.state.verifyCode)&&pwExp.test(this.state.newPsw)&&confirmExp.test(this.state.conNewPsw)&&(this.state.newPsw===this.state.conNewPsw);
 
     }
+    
     _compareValue(conNewPsw){
         if(conNewPsw&&this.state.newPsw&&(conNewPsw!=this.state.newPsw)){
             this.refs.toast.show("please enter the same password", 500);
         }
 
     }
+    
     render(){
         return (
             <View style={styles.modifyPswCont}>
