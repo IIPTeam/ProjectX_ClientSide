@@ -44,7 +44,7 @@ export default class HomePage extends Component {
             >
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'home'}
-                    title="首页" //Tab文字
+                    title="Main Page" //Tab文字
                     renderIcon={() => <TestIcon/>}//默认图标
                     renderSelectedIcon={() => <TestSelectIcon/>}//选中图标
                     badgeText="9+"//消息数目
@@ -54,7 +54,7 @@ export default class HomePage extends Component {
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'setting'}
-                    title="设置"
+                    title="Test"
                     renderIcon={() => <TestIcon/>}//默认图标
                     renderSelectedIcon={() => <TestSelectIcon/>}//选中图标
                     onPress={() => this.setState({ selectedTab: 'setting' })}

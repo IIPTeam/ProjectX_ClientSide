@@ -135,7 +135,7 @@ export default class ModifyPsw extends Component {
                     // params: pageDate
                     params: {
                         userDetails: {
-                            chName: '吴海涛 Dummy'
+                            chName: '秦玉河'
                         }
                     }
             })

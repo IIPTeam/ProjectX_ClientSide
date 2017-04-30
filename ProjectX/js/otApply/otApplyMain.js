@@ -182,7 +182,7 @@ export default class OTApplyMain extends Component {
                                 Staff Name:
                             </Text>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                吴海涛
+                                秦玉河
                             </Text>
                         </View>
                     </View>
@@ -192,7 +192,7 @@ export default class OTApplyMain extends Component {
                                 Staff ID:
                             </Text>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                43845076
+                                66666
                             </Text>
                         </View>
                     </View>

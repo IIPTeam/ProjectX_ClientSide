@@ -123,7 +123,7 @@ export default class Logon extends Component {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
 
                 this._hud.show();
-                let url = 'http://192.168.1.103:8090/login/login';
+                let url = 'http://192.168.0.101:8090/login/login';
                 let options = {
                     method: 'POST',
                     headers: {
