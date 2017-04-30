@@ -12,13 +12,14 @@ import DatePicker from 'react-native-datepicker';
 import Platform from 'Platform';
 import PickerPage from '../common/pickerPage';
 import InputArea from '../common/inputAreaPage';
+import SearchPage from '../common/searchPage';
 
 export default class OTApplyMain extends Component {
     constructor(props) {
         super(props)
-        var dateFormat = require('dateformat');
-        var now = new Date();
-        var nowDate = dateFormat(now, "yyyy-mm-dd");
+        let dateFormat = require('dateformat');
+        let now = new Date();
+        let nowDate = dateFormat(now, "yyyy-mm-dd");
         this.state = {
             startTime: nowDate + " 08:00",
             endTime: nowDate + " 16:00",
@@ -129,16 +130,9 @@ export default class OTApplyMain extends Component {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
-                name: 'pickerPage',
-                component: PickerPage,
+                name: 'searchPage',
+                component: SearchPage,
                 params: {
-                    options: [{
-                        "value": "Xiao Su",
-                        "label": "Xiao Su"
-                    },{
-                        "value": "Xiao Rui",
-                        "label": "Xiao Rui"
-                    }],
                     title: 'RM',
                     selectedOption: this.state.rm,
                     getSelect: (option) => {

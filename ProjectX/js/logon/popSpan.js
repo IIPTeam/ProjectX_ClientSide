@@ -13,7 +13,7 @@ import {
 import Toast from 'react-native-easy-toast';
 import HudView from 'react-native-easy-hud';
 import ModifyPsw from "./modifyPsw";
-import CallService from "../until/CallService";
+import CallService from "../util/CallService";
 import Platform from 'Platform';
 const dismissKeyboard = require('dismissKeyboard');
 const {width, height} = Dimensions.get('window');  

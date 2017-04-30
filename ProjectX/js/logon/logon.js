@@ -12,7 +12,7 @@ import {
     BackAndroid
 } from 'react-native';
 import ModifyPsw from "./modifyPsw";
-import CallService from "../until/CallService";
+import CallService from "../util/CallService";
 import PopSpan from "./popSpan";
 import Platform from 'Platform';
 import HomePage from '../homePage/homePage';
@@ -122,7 +122,7 @@ export default class Logon extends Component {
         } else {
             if (this._validateData(this.state.staffId, 'si') && this._validateData(this.state.password, 'pw')) {
 
-                this._hud.show();
+                /*this._hud.show();
                 let url = 'http://192.168.0.101:8090/login/login';
                 let options = {
                     method: 'POST',
@@ -171,9 +171,9 @@ export default class Logon extends Component {
                             }
                         })
                     }
-                })
+                })*/
 
-                /* if (navigator) {
+                if (navigator) {
                     navigator.push({
                         name: 'HomePageComponent',
                         component: HomePage,
@@ -183,7 +183,7 @@ export default class Logon extends Component {
                             }
                         }
                     })
-                } */
+                }
             }
         }
     }

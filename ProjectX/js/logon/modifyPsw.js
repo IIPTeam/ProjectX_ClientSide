@@ -15,7 +15,7 @@ import HudView from 'react-native-easy-hud';
 import {BackBtnSvg} from '../image/backSvg';
 import {MenuBtnSvg} from '../image/meunSvg';
 import HomePage from "../homePage/homePage";
-import CallService from "../until/CallService";
+import CallService from "../util/CallService";
 import Platform from 'Platform';
 const dismissKeyboard = require('dismissKeyboard');
 const {width} = Dimensions.get('window');

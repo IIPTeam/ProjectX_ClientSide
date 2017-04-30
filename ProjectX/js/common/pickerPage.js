@@ -4,7 +4,7 @@ import {
     Text,
     View,
     ScrollView,
-    TouchableWithoutFeedback
+    TouchableOpacity
 } from 'react-native';
 
 export default class PickerPage extends Component {
@@ -33,7 +33,7 @@ export default class PickerPage extends Component {
                         _scrollView = scrollView;
                     }}>
                         {this.props.options.map((aOption) =>
-                            <TouchableWithoutFeedback key={aOption.value}
+                            <TouchableOpacity key={aOption.value}
                                                       onPress={() => this._selectOption(aOption.value)}>
                                 <View style={[styles.pickerItem, {
                                     backgroundColor: aOption.value == this.props.selectedOption ? '#dedfe0' : '#ffffff'
@@ -42,7 +42,7 @@ export default class PickerPage extends Component {
                                         <Text style={styles.pickerText}>{aOption.label}</Text>
                                     </View>
                                 </View>
-                            </TouchableWithoutFeedback>
+                            </TouchableOpacity>
                         )}
                     </ScrollView>
                 </View>
