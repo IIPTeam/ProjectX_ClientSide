@@ -36,7 +36,7 @@ export default class SearchPage extends Component {
         if (navigator) {
             navigator.pop();
         }
-    }
+    };
 
     onRightButtonClick() {
         if (this.state.rightButtonText === 'Go') {

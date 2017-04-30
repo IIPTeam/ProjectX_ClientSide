@@ -13,6 +13,9 @@ import Platform from 'Platform';
 import PickerPage from '../common/pickerPage';
 import InputArea from '../common/inputAreaPage';
 import SearchPage from '../common/searchPage';
+import CommUtil from '../util/CommUtil';
+import HudView from 'react-native-easy-hud';
+import _ from 'lodash';
 
 export default class LeaveApplyMain extends Component {
     constructor(props) {
@@ -22,13 +25,16 @@ export default class LeaveApplyMain extends Component {
         let nowDate = dateFormat(now, "yyyy-mm-dd");
         this.state = {
             startTime: nowDate + " 08:00",
+            maxStartTime: nowDate + " 16:00",
             endTime: nowDate + " 16:00",
+            minEndTime: nowDate + " 08:00",
             project: "",
             leaveType: "",
             reason: "",
             backup: "",
             Supervisor: "",
-            rm: ""
+            rm: "",
+            duration: 0
         }
     }
 
@@ -37,6 +43,7 @@ export default class LeaveApplyMain extends Component {
             BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
+
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
@@ -44,9 +51,9 @@ export default class LeaveApplyMain extends Component {
     }
 
     onBackAndroid = () => {
-        const { navigator } = this.props;
+        const {navigator} = this.props;
         const routers = navigator.getCurrentRoutes();
-        console.log('当前路由长度：'+routers.length);
+        console.log('当前路由长度：' + routers.length);
         if (routers.length > 1) {
             navigator.pop();
             return true;//接管默认行为
@@ -54,7 +61,7 @@ export default class LeaveApplyMain extends Component {
         return false;//默认行为
     };
 
-    _pickProject=()=> {
+    _pickProject = () => {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -64,10 +71,10 @@ export default class LeaveApplyMain extends Component {
                     options: [{
                         "value": "CMB",
                         "label": "CMB"
-                    },{
+                    }, {
                         "value": "SMP",
                         "label": "SMP"
-                    },{
+                    }, {
                         "value": "IIP",
                         "label": "IIP"
                     }],
@@ -81,9 +88,9 @@ export default class LeaveApplyMain extends Component {
                 }
             })
         }
-    }
+    };
 
-    _pickLeaveType=()=> {
+    _pickLeaveType = () => {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -93,10 +100,10 @@ export default class LeaveApplyMain extends Component {
                     options: [{
                         "value": "Annual Leave",
                         "label": "Annual Leave"
-                    },{
+                    }, {
                         "value": "Sick Leave",
                         "label": "Sick Leave"
-                    },{
+                    }, {
                         "value": "Exchange Leave",
                         "label": "Exchange Leave"
                     }],
@@ -110,9 +117,9 @@ export default class LeaveApplyMain extends Component {
                 }
             })
         }
-    }
+    };
 
-    _pickReason=()=> {
+    _pickReason = () => {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -129,9 +136,9 @@ export default class LeaveApplyMain extends Component {
                 }
             })
         }
-    }
+    };
 
-    _pickBackup=()=> {
+    _pickBackup = () => {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -141,10 +148,10 @@ export default class LeaveApplyMain extends Component {
                     options: [{
                         "value": "Jason Zhang",
                         "label": "Jason Zhang"
-                    },{
+                    }, {
                         "value": "Alice Wang",
                         "label": "Alice Wang"
-                    },{
+                    }, {
                         "value": "Bob Guo",
                         "label": "Bob Guo"
                     }],
@@ -158,9 +165,9 @@ export default class LeaveApplyMain extends Component {
                 }
             })
         }
-    }
+    };
 
-    _pickSupervisor=()=> {
+    _pickSupervisor = () => {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -170,7 +177,7 @@ export default class LeaveApplyMain extends Component {
                     options: [{
                         "value": "Frank Wu",
                         "label": "Frank Wu"
-                    },{
+                    }, {
                         "value": "Darcy Yao",
                         "label": "Darcy Yao"
                     }],
@@ -184,9 +191,9 @@ export default class LeaveApplyMain extends Component {
                 }
             })
         }
-    }
+    };
 
-    _pickRM=()=> {
+    _pickRM = () => {
         const {navigator} = this.props;
         if (navigator) {
             navigator.push({
@@ -203,14 +210,96 @@ export default class LeaveApplyMain extends Component {
                 }
             })
         }
-    }
+    };
 
-    submitLeaveApply=()=>{
-        const { navigator } = this.props;
+    getDuration = () => {
+        // this.getAllValidDate();
+        this.setState({
+            duration: 4
+        })
+    };
+
+    /*getAllValidDate = () => {
+        this._hud.show();
+        let allDate = [];
+        let dateFormat = require('dateformat');
+        let getDate = function (str) {
+            let tempDate = new Date();
+            let list = str.split("-");
+            tempDate.setFullYear(list[0]);
+            tempDate.setMonth(list[1] - 1);
+            tempDate.setDate(list[2]);
+            return tempDate;
+        };
+        let startDate = getDate(this.state.startTime.split(" ")[0]);
+        let endDate = getDate(this.state.endTime.split(" ")[0]);
+        while (endDate.getTime() - startDate.getTime() >= 0) {
+            allDate.push(dateFormat(_.cloneDeep(startDate), "yyyymmdd"));
+            startDate.setDate(startDate.getDate() + 1);
+        }
+
+        CommUtil.filterHoliday(allDate).then((res) => {
+                this._hud.hide();
+                let totalHour = 0;
+                if(res.length != 0){
+                    totalHour = this.calculateDuration(res);
+                }
+                this.setState({
+                    duration: totalHour
+                })
+            }
+        ).catch((error) => {
+            this._hud.hide();
+        })
+    };*/
+
+    /*calculateDuration = (days) => {
+        let dateFormat = require('dateformat');
+        let startTime = this.state.startTime;
+        let endTime = this.state.endTime;
+        let startHour = startTime.split(" ")[1].split(":")[0];
+        let startMinute = startTime.split(" ")[1].split(":")[1];
+        let endHour = endTime.split(" ")[1].split(":")[0];
+        let endMinute = endTime.split(" ")[1].split(":")[1];
+
+        let gapMinute = endMinute - startMinute;
+        let gapHour = endHour - startHour;
+        let tempHour = 0;
+        if (gapMinute > 0 && gapMinute / 60 <= 0.5) {
+            tempHour = 0.5;
+        } else if (gapMinute > 0 && gapMinute / 60 > 0.5) {
+            tempHour = 1;
+        }
+
+        if (gapHour > 8) {
+            gapHour = 8;
+            tempHour = 0;
+        } else if (gapHour < -8) {
+            gapHour = -8;
+            tempHour = 0;
+        }
+
+        if(endHour<=8){
+            gapHour = gapHour - 8;
+        }
+
+        if(days.indexOf(dateFormat(startTime, "yyyymmdd")) == -1){
+            gapHour = 0;
+        }
+
+        if(days.indexOf(dateFormat(endTime, "yyyymmdd")) == -1){
+            gapHour = 0;
+        }
+
+        return days.length * 8 + gapHour + tempHour;
+    };*/
+
+    submitLeaveApply = () => {
+        const {navigator} = this.props;
         if (navigator) {
             navigator.pop();
         }
-    }
+    };
 
     render() {
         return (
@@ -223,14 +312,14 @@ export default class LeaveApplyMain extends Component {
                 <ScrollView ref={(scrollView) => {
                     _scrollView = scrollView;
                 }}>
-                    <View style={[styles.rectangle_view,styles.sub_title_view]}>
+                    <View style={[styles.rectangle_view, styles.sub_title_view]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={styles.sub_title_text}>
                                 Apply info
                             </Text>
                         </View>
                     </View>
-                    <View style={[styles.rectangle_view,styles.first_rectangle_view]}>
+                    <View style={[styles.rectangle_view, styles.first_rectangle_view]}>
                         <View style={styles.rectangle_sub_view}>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_left]}>
                                 Staff Name:
@@ -288,7 +377,7 @@ export default class LeaveApplyMain extends Component {
                             </Text>
                         </View>
                     </View>
-                    <View style={[styles.rectangle_view,{
+                    <View style={[styles.rectangle_view, {
                         paddingTop: 0,
                         paddingBottom: 0,
                     }]}>
@@ -304,6 +393,7 @@ export default class LeaveApplyMain extends Component {
                                 <DatePicker
                                     style={{width: 200}}
                                     date={this.state.startTime}
+                                    maxDate={this.state.maxStartTime}
                                     mode="datetime"
                                     androidMode="spinner"
                                     placeholder="select date"
@@ -319,13 +409,14 @@ export default class LeaveApplyMain extends Component {
                                         }
                                     }}
                                     onDateChange={(startTime) => {
-                                        this.setState({startTime: startTime})
+                                        this.setState({startTime: startTime, minEndTime: startTime});
+                                        this.getDuration()
                                     }}
                                 />
                             </View>
                         </View>
                     </View>
-                    <View style={[styles.rectangle_view,{
+                    <View style={[styles.rectangle_view, {
                         paddingTop: 0,
                         paddingBottom: 0,
                     }]}>
@@ -341,6 +432,7 @@ export default class LeaveApplyMain extends Component {
                                 <DatePicker
                                     style={{width: 200}}
                                     date={this.state.endTime}
+                                    minDate={this.state.minEndTime}
                                     mode="datetime"
                                     androidMode="spinner"
                                     placeholder="select date"
@@ -356,7 +448,8 @@ export default class LeaveApplyMain extends Component {
                                         }
                                     }}
                                     onDateChange={(endTime) => {
-                                        this.setState({endTime: endTime})
+                                        this.setState({endTime: endTime, maxStartTime: endTime});
+                                        this.getDuration()
                                     }}
                                 />
                             </View>
@@ -368,7 +461,7 @@ export default class LeaveApplyMain extends Component {
                                 Duration
                             </Text>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_right]}>
-                                4h
+                                {this.state.duration + "h"}
                             </Text>
                         </View>
                     </View>
@@ -400,14 +493,14 @@ export default class LeaveApplyMain extends Component {
                             </TouchableWithoutFeedback>
                         </View>
                     </View>
-                    <View style={[styles.rectangle_view,styles.sub_title_view]}>
+                    <View style={[styles.rectangle_view, styles.sub_title_view]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={styles.sub_title_text}>
                                 Approval
                             </Text>
                         </View>
                     </View>
-                    <View style={[styles.rectangle_view,styles.first_rectangle_view]}>
+                    <View style={[styles.rectangle_view, styles.first_rectangle_view]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={[styles.rectangle_text, styles.rectangle_text_left]}>
                                 Supervisor
@@ -446,13 +539,19 @@ export default class LeaveApplyMain extends Component {
                 >
                     <Text style={styles.logonButtonText}>Submit</Text>
                 </TouchableHighlight>
+                <HudView
+                    ref={(hud) => {
+                        this._hud = hud
+                    }}
+                    delay={0}
+                />
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    flex:{
+    flex: {
         flex: 1
     },
     container: {
@@ -490,13 +589,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center'
     },
-    sub_title_view:{
+    sub_title_view: {
         marginTop: 5,
         marginBottom: 5,
         borderColor: '#00897b',
         borderWidth: 1
     },
-    sub_title_text:{
+    sub_title_text: {
         color: '#00897b',
         fontSize: 18,
         paddingLeft: 8,
@@ -523,7 +622,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    rectangle_text: {        
+    rectangle_text: {
         fontSize: 16,
         paddingLeft: 8,
     },
